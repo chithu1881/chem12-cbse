@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chem12 CBSE | Quick Revision</title>
+<style>
+  :root {
+    --primary: #6c63ff;
+    --secondary: #ff6584;
+    --accent: #43e97b;
+    --bg: #0f0f1a;
+    --card: #1a1a2e;
+    --card2: #16213e;
+    --text: #e0e0ff;
+    --muted: #888aaa;
+    --yellow: #ffd700;
+    --orange: #ff9a3c;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Segoe UI',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
+
+  /* NAV */
+  nav { background:var(--card); padding:12px 20px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:100; box-shadow:0 2px 20px #0005; }
+  .logo { font-size:1.4rem; font-weight:800; background:linear-gradient(90deg,var(--primary),var(--secondary)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+  .nav-tabs { display:flex; gap:8px; flex-wrap:wrap; }
+  .nav-tab { padding:6px 14px; border-radius:20px; border:none; cursor:pointer; font-size:0.85rem; font-weight:600; transition:all 0.2s; background:#ffffff15; color:var(--text); }
+  .nav-tab.active, .nav-tab:hover { background:var(--primary); color:#fff; }
+
+  /* PAGES */
+  .page { display:none; padding:20px; max-width:1100px; margin:0 auto; }
+  .page.active { display:block; }
+
+  /* HOME */
+  .hero { text-align:center; padding:40px 20px; }
+  .hero h1 { font-size:2.5rem; font-weight:900; background:linear-gradient(135deg,var(--primary),var(--secondary),var(--accent)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+  .hero p { color:var(--muted); margin:10px 0 30px; font-size:1.1rem; }
+  .chapter-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:16px; margin-top:20px; }
+  .ch-card { background:var(--card); border-radius:16px; padding:20px; cursor:pointer; border:2px solid transparent; transition:all 0.25s; position:relative; overflow:hidden; }
+  .ch-card:hover { border-color:var(--primary); transform:translateY(-4px); box-shadow:0 8px 30px #6c63ff33; }
+  .ch-num { font-size:2rem; font-weight:900; color:var(--primary); opacity:0.3; position:absolute; top:10px; right:16px; }
+  .ch-title { font-size:1rem; font-weight:700; margin-bottom:6px; }
+  .ch-tags { display:flex; flex-wrap:wrap; gap:4px; }
+  .tag { font-size:0.7rem; padding:2px 8px; border-radius:10px; background:#ffffff10; color:var(--muted); }
+  .tag.hot { background:#ff658420; color:var(--secondary); }
+
+  /* CHAPTER VIEW */
+  .back-btn { background:none; border:none; color:var(--primary); cursor:pointer; font-size:1rem; margin-bottom:16px; display:flex; align-items:center; gap:6px; }
+  .section-title { font-size:1.4rem; font-weight:800; margin:24px 0 12px; color:var(--yellow); display:flex; align-items:center; gap:8px; }
+  .concept-box { background:var(--card); border-left:4px solid var(--primary); border-radius:0 12px 12px 0; padding:16px; margin-bottom:12px; }
+  .concept-box h4 { color:var(--accent); margin-bottom:6px; font-size:1rem; }
+  .concept-box p, .concept-box li { font-size:0.92rem; color:var(--text); line-height:1.7; }
+  .concept-box ul { padding-left:18px; }
+  .mnemonic-box { background:linear-gradient(135deg,#6c63ff20,#ff658420); border:2px dashed var(--primary); border-radius:12px; padding:16px; margin-bottom:12px; }
+  .mnemonic-box .label { font-size:0.75rem; font-weight:700; color:var(--primary); letter-spacing:1px; margin-bottom:4px; }
+  .mnemonic-box p { color:var(--yellow); font-size:1rem; font-weight:700; }
+  .mnemonic-box small { color:var(--muted); font-size:0.82rem; }
+  .formula-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:10px; margin-bottom:12px; }
+  .formula-card { background:var(--card2); border-radius:10px; padding:12px; text-align:center; }
+  .formula-card .f { font-size:1.1rem; color:var(--accent); font-weight:700; font-family:monospace; }
+  .formula-card small { color:var(--muted); font-size:0.78rem; }
+  .pyq-item { background:var(--card); border-radius:12px; padding:14px; margin-bottom:10px; border-left:4px solid var(--secondary); }
+  .pyq-item .year { font-size:0.75rem; color:var(--secondary); font-weight:700; margin-bottom:4px; }
+  .pyq-item p { font-size:0.9rem; }
+  .pyq-item .marks { float:right; background:#ff658420; color:var(--secondary); padding:1px 8px; border-radius:8px; font-size:0.75rem; }
+  .ans-toggle { background:none; border:1px solid var(--primary); color:var(--primary); border-radius:8px; padding:4px 10px; font-size:0.8rem; cursor:pointer; margin-top:8px; }
+  .ans-box { display:none; background:#6c63ff10; border-radius:8px; padding:10px; margin-top:8px; font-size:0.88rem; line-height:1.6; }
+
+  /* FLASHCARDS */
+  .fc-controls { display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:20px; }
+  .fc-controls select { background:var(--card); color:var(--text); border:1px solid var(--primary); border-radius:8px; padding:8px 12px; }
+  .fc-scene { perspective:1000px; width:100%; max-width:600px; margin:0 auto; height:320px; cursor:pointer; }
+  .fc-card { width:100%; height:100%; position:relative; transform-style:preserve-3d; transition:transform 0.5s; }
+  .fc-card.flipped { transform:rotateY(180deg); }
+  .fc-front, .fc-back { position:absolute; width:100%; height:100%; backface-visibility:hidden; border-radius:20px; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:30px; text-align:center; }
+  .fc-front { background:linear-gradient(135deg,var(--primary),#9b59b6); }
+  .fc-back { background:linear-gradient(135deg,#11998e,#38ef7d); transform:rotateY(180deg); color:#111; }
+  .fc-front h3 { font-size:1.3rem; margin-bottom:10px; }
+  .fc-front p { font-size:0.9rem; opacity:0.85; }
+  .fc-back h3 { font-size:1.2rem; margin-bottom:10px; color:#111; }
+  .fc-back p { font-size:0.88rem; color:#222; }
+  .fc-nav { display:flex; gap:12px; justify-content:center; margin-top:20px; }
+  .btn { padding:10px 24px; border-radius:12px; border:none; cursor:pointer; font-weight:700; font-size:0.9rem; transition:all 0.2s; }
+  .btn-primary { background:var(--primary); color:#fff; }
+  .btn-secondary { background:var(--card); color:var(--text); border:1px solid var(--primary); }
+  .btn:hover { opacity:0.85; transform:scale(0.98); }
+  .fc-counter { text-align:center; color:var(--muted); margin-top:10px; font-size:0.9rem; }
+  .fc-hint { text-align:center; color:var(--muted); font-size:0.82rem; margin-top:6px; }
+  .fc-all { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:14px; margin-top:20px; }
+  .fc-mini { background:var(--card); border-radius:12px; padding:16px; border-left:4px solid var(--accent); }
+  .fc-mini .q { font-weight:700; margin-bottom:6px; font-size:0.92rem; }
+  .fc-mini .a { color:var(--accent); font-size:0.88rem; }
+
+  /* PERIODIC TRICKS */
+  .trick-card { background:var(--card); border-radius:14px; padding:18px; margin-bottom:14px; }
+  .trick-card h4 { color:var(--orange); margin-bottom:8px; }
+  .trick-card p { font-size:0.9rem; line-height:1.7; }
+  .highlight { color:var(--yellow); font-weight:700; }
+
+  /* TABS inside chapter */
+  .ctabs { display:flex; gap:8px; margin:16px 0; flex-wrap:wrap; }
+  .ctab { padding:7px 16px; border-radius:20px; border:none; cursor:pointer; font-size:0.83rem; font-weight:600; background:#ffffff10; color:var(--muted); transition:all 0.2s; }
+  .ctab.active { background:var(--primary); color:#fff; }
+  .ctab-content { display:none; }
+  .ctab-content.active { display:block; }
+
+  /* SEARCH */
+  .search-bar { width:100%; padding:12px 18px; border-radius:12px; border:2px solid var(--primary); background:var(--card); color:var(--text); font-size:1rem; margin-bottom:20px; outline:none; }
+  .search-bar:focus { box-shadow:0 0 0 3px #6c63ff33; }
+
+  /* Responsive */
+  @media(max-width:600px) {
+    .hero h1 { font-size:1.6rem; }
+    .fc-scene { height:260px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">⚗️ Chem12</div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showPage('home')">Chapters</button>
+    <button class="nav-tab" onclick="showPage('flashcards')">Flashcards</button>
+    <button class="nav-tab" onclick="showPage('mnemonics')">Mnemonics</button>
+    <button class="nav-tab" onclick="showPage('pyq')">PYQ Bank</button>
+  </div>
+</nav>
+
+<!-- HOME PAGE -->
+<div id="home" class="page active">
+  <div class="hero">
+    <h1>CBSE Class 12 Chemistry</h1>
+    <p>Quick Revision · Mnemonics · Flashcards · PYQ — All in one place</p>
+    <input class="search-bar" placeholder="🔍  Search topics, reactions, concepts..." oninput="searchChapters(this.value)" style="max-width:500px;">
+  </div>
+  <div class="chapter-grid" id="chapterGrid"></div>
+</div>
+
+<!-- CHAPTER VIEW -->
+<div id="chapterView" class="page">
+  <button class="back-btn" onclick="showPage('home')">← Back to Chapters</button>
+  <div id="chapterContent"></div>
+</div>
+
+<!-- FLASHCARDS PAGE -->
+<div id="flashcards" class="page">
+  <div class="section-title">🃏 Flashcards</div>
+  <div class="fc-controls">
+    <select id="fcChapter" onchange="loadFlashcards()">
+      <option value="all">All Chapters</option>
+    </select>
+    <button class="btn btn-primary" onclick="shuffleCards()">🔀 Shuffle</button>
+    <button class="btn btn-secondary" onclick="toggleAllCards()">📋 View All</button>
+  </div>
+  <div class="fc-scene" onclick="flipCard()">
+    <div class="fc-card" id="fcCard">
+      <div class="fc-front">
+        <h3 id="fcQ">Click a chapter to start</h3>
+        <p id="fcHint"></p>
+      </div>
+      <div class="fc-back">
+        <h3 id="fcA">Answer appears here</h3>
+        <p id="fcExtra"></p>
+      </div>
+    </div>
+  </div>
+  <div class="fc-hint">👆 Tap card to flip · Use buttons to navigate</div>
+  <div class="fc-nav">
+    <button class="btn btn-secondary" onclick="prevCard()">← Prev</button>
+    <button class="btn btn-primary" onclick="nextCard()">Next →</button>
+  </div>
+  <div class="fc-counter" id="fcCounter"></div>
+  <div id="allCardsContainer"></div>
+</div>
+
+<!-- MNEMONICS PAGE -->
+<div id="mnemonics" class="page">
+  <div class="section-title">🧠 Master Mnemonics</div>
+  <div id="mnemonicsList"></div>
+</div>
+
+<!-- PYQ BANK -->
+<div id="pyq" class="page">
+  <div class="section-title">📋 Previous Year Questions Bank</div>
+  <div class="fc-controls">
+    <select id="pyqChapter" onchange="filterPYQ()">
+      <option value="all">All Chapters</option>
+    </select>
+    <select id="pyqYear" onchange="filterPYQ()">
+      <option value="all">All Years</option>
+      <option>2024</option><option>2023</option><option>2022</option><option>2020</option><option>2019</option>
+    </select>
+  </div>
+  <div id="pyqList"></div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════════
+const chapters = [
+  {
+    id:1, title:"The Solid State",
+    tags:["3 marks","5 marks"], hotTopics:["Defects","Packing efficiency","Unit cells"],
+    concepts:[
+      {h:"Types of Solids",p:"Crystalline (definite geometry, sharp MP): NaCl, diamond. Amorphous (no order, range MP): glass, rubber."},
+      {h:"Unit Cells – Cubic Systems",p:"SC: 1 atom/cell, CN=6, PF=52.4%<br>BCC: 2 atoms/cell, CN=8, PF=68%<br>FCC/CCP: 4 atoms/cell, CN=12, PF=74%"},
+      {h:"Voids",p:"Tetrahedral void: radius ratio 0.225–0.414<br>Octahedral void: radius ratio 0.414–0.732<br>In FCC: 8 TV, 4 OV"},
+      {h:"Defects",p:"Schottky: ion pairs missing (density ↓). Frenkel: cation displaced to void (density same). F-centres: trapped e⁻ → colour. Metal excess/deficiency defects."},
+      {h:"Electrical Properties",p:"Conductors: overlapping bands. Semiconductors: small gap (Si, Ge). Insulators: large gap. n-type: Group 15 doped. p-type: Group 13 doped."},
+    ],
+    mnemonics:[
+      {m:"SBC FCC — 'Some Boys Count Friends Carefully'", exp:"SC→BCC→FCC packing efficiency: 52→68→74%"},
+      {m:"'SchottKy → Saathi Kayam nahi' (pair missing)", exp:"Both cation & anion leave → Schottky"},
+      {m:"'Frenkel = Farak padta hai position se'", exp:"Cation shifts to interstitial void"},
+    ],
+    formulas:[
+      {f:"Z·M = ρ·a³·Nₐ", label:"Density of unit cell"},
+      {f:"r⁺/r⁻ = 0.414", label:"Octahedral void"},
+      {f:"PF(FCC)=74%", label:"Closest packing"},
+    ],
+    pyqs:[
+      {y:"2024",m:3,q:"An element with molar mass 27 g/mol forms FCC lattice with edge length 4.05×10⁻⁸ cm. If density is 2.7 g/cm³, calculate Avogadro's number.",ans:"Use ρ = ZM/a³Nₐ → Nₐ = ZM/ρa³ = (4×27)/(2.7×(4.05×10⁻⁸)³) ≈ 6.02×10²³"},
+      {y:"2023",m:2,q:"What is a Schottky defect? How does it affect density of a crystal?",ans:"Equal number of cation and anion vacancies. Density decreases because mass decreases but volume stays same."},
+      {y:"2022",m:3,q:"In a compound, oxide ions are arranged in CCP. Cations A occupy 1/8 of tetrahedral voids and cations B occupy 1/2 of octahedral voids. Find formula.",ans:"O=4, TV=8→A=1, OV=4→B=2. Formula: AB₂O₄ (spinel structure)"},
+      {y:"2020",m:1,q:"Which point defect does not alter the density of a crystal?",ans:"Frenkel defect (cation just shifts to interstitial, no change in overall mass or volume)"},
+    ],
+    flashcards:[
+      {q:"Coordination number in FCC?",a:"12",extra:"Each atom touches 4 in same layer, 4 above, 4 below"},
+      {q:"Which defect causes colour in crystals?",a:"F-centre (Frenkel + electron trapped)",extra:"e.g., NaCl in Na vapour → yellow colour"},
+      {q:"Packing efficiency of BCC?",a:"68%",extra:"2 atoms per unit cell, CN = 8"},
+      {q:"Formula for density of unit cell?",a:"ρ = ZM / (a³ · Nₐ)",extra:"Z=atoms/cell, M=molar mass, a=edge length"},
+      {q:"Difference: Schottky vs Frenkel?",a:"Schottky: pair vacancies (density↓). Frenkel: cation in void (density same)",extra:"Schottky common in NaCl; Frenkel in ZnS, AgCl"},
+    ]
+  },
+  {
+    id:2, title:"Solutions",
+    tags:["5 marks","numericals"], hotTopics:["Colligative properties","Henry's law","Raoult's law"],
+    concepts:[
+      {h:"Raoult's Law",p:"p_A = x_A · p°_A. Total pressure = x_A·p°_A + x_B·p°_B. Positive deviation: ΔH_mix>0, interactions weaker (ethanol+acetone). Negative deviation: ΔH_mix<0, interactions stronger (CHCl₃+acetone)."},
+      {h:"Colligative Properties",p:"1. Relative lowering of VP: Δp/p° = x_solute<br>2. Elevation of BP: ΔTb = Kb·m<br>3. Depression of FP: ΔTf = Kf·m<br>4. Osmotic pressure: π = iMRT"},
+      {h:"Van't Hoff Factor (i)",p:"i = observed colligative property / expected. i>1: dissociation. i<1: association. i=1: no change. For NaCl: i=2, Na₂SO₄: i=3, Acetic acid in benzene: i=0.5"},
+      {h:"Henry's Law",p:"p = K_H · x (mole fraction). Higher K_H → less solubility. Used for gas dissolution. CO₂ in soft drinks."},
+    ],
+    mnemonics:[
+      {m:"'BODE' — Boiling elevation, Osmotic pressure, Depression of FP, Elevation of VP lowering",exp:"All 4 colligative properties remembered"},
+      {m:"'Raoult FAILS when interactions CHANGE'",exp:"Deviations from Raoult's law when solute-solvent ≠ solvent-solvent interactions"},
+      {m:"'Higher KH = Henry HATES dissolving'",exp:"High Henry's constant → gas less soluble"},
+    ],
+    formulas:[
+      {f:"ΔTb = Kb · m · i",label:"Boiling pt elevation"},
+      {f:"ΔTf = Kf · m · i",label:"Freezing pt depression"},
+      {f:"π = i · M · R · T",label:"Osmotic pressure"},
+      {f:"p = KH · x",label:"Henry's Law"},
+    ],
+    pyqs:[
+      {y:"2024",m:3,q:"18g of glucose (M=180) dissolved in 1 kg water. Calculate ΔTb if Kb=0.512 K·kg/mol.",ans:"m = 18/180 = 0.1 mol/kg. ΔTb = 0.512 × 0.1 = 0.0512 K"},
+      {y:"2023",m:2,q:"Define osmotic pressure. How is it related to molar mass of solute?",ans:"π = CRT = (w/MV)RT → M = wRT/πV. Higher osmotic pressure → lower molar mass (for same concentration)."},
+      {y:"2022",m:3,q:"Explain why aquatic animals are more comfortable in cold water.",ans:"Solubility of O₂ increases at lower temperature (Henry's law: lower T → more gas dissolves). So cold water has more dissolved O₂."},
+      {y:"2020",m:1,q:"What is van't Hoff factor for K₂SO₄?",ans:"K₂SO₄ → 2K⁺ + SO₄²⁻, i = 3"},
+    ],
+    flashcards:[
+      {q:"What is molality?",a:"Moles of solute per kg of solvent",extra:"m = n_solute / kg_solvent (temperature independent)"},
+      {q:"Henry's law constant KH for O₂ vs N₂ — which is higher?",a:"KH(N₂) > KH(O₂)",extra:"So N₂ is less soluble in blood (bends disease uses N₂)"},
+      {q:"i for CH₃COOH in benzene?",a:"i = 0.5",extra:"Acetic acid dimerizes in benzene — association"},
+      {q:"Which colligative property is best for molar mass determination?",a:"Osmotic pressure",extra:"Because π is large even for dilute solutions — measurable"},
+      {q:"Positive deviation from Raoult's law example?",a:"Ethanol + Acetone",extra:"Interactions weaker than pure components → VP > expected"},
+    ]
+  },
+  {
+    id:3, title:"Electrochemistry",
+    tags:["5 marks","numericals","hot🔥"], hotTopics:["Nernst equation","Kohlrausch","Faraday's laws"],
+    concepts:[
+      {h:"EMF and Cell Notation",p:"Anode (oxidation) on LEFT | Cathode (reduction) on RIGHT. E°cell = E°cathode − E°anode. Positive E°cell → spontaneous. ΔG° = −nFE°cell."},
+      {h:"Nernst Equation",p:"E = E° − (RT/nF)ln Q = E° − (0.0591/n)log Q at 25°C. At equilibrium: E=0, so log K = nE°/0.0591."},
+      {h:"Conductance",p:"Resistance R = ρ·l/A. Conductivity κ = 1/ρ. Molar conductivity Λm = (κ×1000)/M. Λm increases with dilution. Strong electrolyte: Λm = Λ°m − A√C (Debye-Hückel)."},
+      {h:"Kohlrausch's Law",p:"Λ°m(electrolyte) = Σ λ°(ions). Used to find Λ°m of weak electrolytes. Degree of dissociation α = Λm/Λ°m."},
+      {h:"Faraday's Laws",p:"1st: m ∝ Q (charge). 2nd: m ∝ equivalent weight. m = (M/nF)×I×t. 1 Faraday = 96500 C = charge of 1 mol e⁻."},
+    ],
+    mnemonics:[
+      {m:"'AN OX, RED CAT' — ANode=OXidation, REDuction=CAThode",exp:"Never forget which electrode does what"},
+      {m:"'NICE GIRLS DON'T KISS' — Nernst: log K = nE°/0.0591",exp:"Remember Nernst equation link to equilibrium"},
+      {m:"'Faraday's First: More Charge = More Mass'",exp:"m ∝ Q = I×t"},
+    ],
+    formulas:[
+      {f:"E°cell = E°c − E°a",label:"Cell EMF"},
+      {f:"E = E° − 0.0591/n · log Q",label:"Nernst (25°C)"},
+      {f:"ΔG° = −nFE°",label:"Gibbs free energy"},
+      {f:"m = MIt/nF",label:"Faraday's law"},
+      {f:"log K = nE°/0.0591",label:"Equilibrium from EMF"},
+    ],
+    pyqs:[
+      {y:"2024",m:3,q:"Calculate E°cell for: Zn²⁺/Zn = −0.76V, Cu²⁺/Cu = +0.34V. Also find ΔG°.",ans:"E°cell = 0.34−(−0.76) = 1.10V. ΔG° = −nFE° = −2×96500×1.10 = −212300 J = −212.3 kJ"},
+      {y:"2023",m:3,q:"Conductivity of 0.02M acetic acid is 5.8×10⁻⁵ S/cm. If Λ°m(CH₃COOH)=390.5, find α.",ans:"Λm = (5.8×10⁻⁵ × 1000)/0.02 = 2.9 S·cm²/mol. α = 2.9/390.5 = 0.0074 = 0.74%"},
+      {y:"2022",m:2,q:"State Kohlrausch's law. How is it used to find molar conductivity of CH₃COOH?",ans:"Λ°m = Σλ°(ions). Λ°m(CH₃COOH) = λ°(CH₃COO⁻) + λ°(H⁺). These values come from strong electrolytes NaCl, HCl, CH₃COONa."},
+      {y:"2019",m:3,q:"How many Faradays are needed to deposit 20g of Ca (M=40) from CaCl₂?",ans:"Ca²⁺ + 2e⁻ → Ca. Moles Ca = 20/40 = 0.5. Charge = 0.5×2 = 1 Faraday = 96500 C"},
+    ],
+    flashcards:[
+      {q:"Which electrode undergoes oxidation?",a:"Anode",extra:"AN OX = ANodE OXidation"},
+      {q:"Nernst equation at 25°C?",a:"E = E° − (0.0591/n) log Q",extra:"Derived from ΔG = ΔG° + RT ln Q"},
+      {q:"1 Faraday = ?",a:"96500 Coulombs",extra:"= charge of 1 mole of electrons"},
+      {q:"What happens to Λm as dilution increases?",a:"Λm increases and approaches Λ°m",extra:"More ions free to move at high dilution"},
+      {q:"Relationship between E° and K?",a:"log K = nE° / 0.0591",extra:"At equilibrium E=0, so 0 = E° − (0.0591/n) log K"},
+    ]
+  },
+  {
+    id:4, title:"Chemical Kinetics",
+    tags:["5 marks","numericals","hot🔥"], hotTopics:["Order of reaction","Arrhenius","Half-life"],
+    concepts:[
+      {h:"Rate of Reaction",p:"Rate = −d[A]/dt = −d[B]/dt = +d[P]/dt (adjusted for stoichiometry). Average rate vs Instantaneous rate (tangent method)."},
+      {h:"Rate Law & Order",p:"Rate = k[A]^m [B]^n. Order = m+n (experimentally determined, NOT from equation). Zero order: [A]t = [A]₀ − kt. First order: ln[A]t = ln[A]₀ − kt."},
+      {h:"Half-life",p:"Zero order: t½ = [A]₀/2k. First order: t½ = 0.693/k (concentration independent — most important). Second order: t½ = 1/k[A]₀."},
+      {h:"Arrhenius Equation",p:"k = A·e^(−Ea/RT). ln k = ln A − Ea/RT. log(k₂/k₁) = Ea/2.303R · (1/T₁ − 1/T₂). Ea = activation energy (kJ/mol). Rule of thumb: rate doubles every 10°C rise."},
+      {h:"Collision Theory",p:"Not all collisions lead to reaction — need proper orientation AND energy ≥ Ea. Threshold energy = Ea + average KE of reactants."},
+    ],
+    mnemonics:[
+      {m:"'ZOF' — Zero Order: [A] vs t is straight line",exp:"Zero=linear, First=ln[A] vs t linear, Second=1/[A] vs t linear"},
+      {m:"'FAKE' — First-order: t½ = 0.693/k (Always Konstant for Exponential decay)",exp:"Half-life of 1st order is k-dependent only, NOT on concentration"},
+      {m:"Arrhenius: 'Ea High = k Low = Slow'",exp:"Higher activation energy → slower reaction"},
+    ],
+    formulas:[
+      {f:"t½ = 0.693/k",label:"First order half-life"},
+      {f:"k = 2.303/t · log([A]₀/[A]t)",label:"First order k"},
+      {f:"log(k₂/k₁) = Ea/2.303R·(1/T₁−1/T₂)",label:"Arrhenius"},
+      {f:"Rate = k[A]^m[B]^n",label:"Rate law"},
+    ],
+    pyqs:[
+      {y:"2024",m:3,q:"A first-order reaction takes 40 min for 30% decomposition. Calculate t½.",ans:"k = 2.303/40 × log(100/70) = 2.303/40 × 0.1549 = 0.00891 min⁻¹. t½ = 0.693/0.00891 = 77.8 min"},
+      {y:"2023",m:2,q:"Define activation energy. How does a catalyst affect it?",ans:"Ea = minimum extra energy reactants need to react. Catalyst provides alternative pathway with lower Ea, so more molecules can react."},
+      {y:"2022",m:3,q:"Rate = k[A][B]². If [A] doubles and [B] halved, what happens to rate?",ans:"New rate = k[2A][B/2]² = k×2×(1/4)×[A][B]² = 0.5 rate. Rate becomes half."},
+      {y:"2020",m:1,q:"For zero order reaction, what is the half-life?",ans:"t½ = [A]₀ / 2k"},
+    ],
+    flashcards:[
+      {q:"Half-life of first order reaction?",a:"t½ = 0.693 / k",extra:"Independent of initial concentration!"},
+      {q:"Which graph is linear for first-order reaction?",a:"ln[A] vs time (slope = −k)",extra:"Also: log[A] vs t (slope = −k/2.303)"},
+      {q:"What does Arrhenius factor 'A' represent?",a:"Frequency factor / pre-exponential factor",extra:"Related to frequency of collisions with proper orientation"},
+      {q:"Temperature coefficient of a reaction?",a:"~2 (rate doubles per 10°C rise)",extra:"Only approximate — depends on Ea"},
+      {q:"Unit of rate constant for first-order reaction?",a:"s⁻¹ (or min⁻¹)",extra:"Zero order: mol/L/s. Second order: L/mol/s"},
+    ]
+  },
+  {
+    id:5, title:"Surface Chemistry",
+    tags:["2 marks","3 marks"], hotTopics:["Adsorption","Colloids","Emulsions"],
+    concepts:[
+      {h:"Adsorption vs Absorption",p:"Adsorption: surface phenomenon (adsorbate on adsorbent). Absorption: bulk phenomenon. Physisorption: weak van der Waals, reversible, low Ea. Chemisorption: chemical bonds, irreversible, high Ea, specific."},
+      {h:"Freundlich Isotherm",p:"x/m = k·P^(1/n). log(x/m) = log k + (1/n)log P. Plot: log(x/m) vs log P → straight line, slope=1/n."},
+      {h:"Colloids",p:"Size: 1–1000 nm. Lyophilic: 'solvent loving', stable (starch, protein). Lyophobic: 'solvent fearing', unstable, need stabiliser (gold sol, As₂S₃). Tyndall effect: scattering of light by colloid particles."},
+      {h:"Hardy-Schulze Rule",p:"Coagulation of a negative colloid: cation with HIGHER charge coagulates FASTER. Al³⁺ > Ca²⁺ > Na⁺. Coagulating power ∝ charge of oppositely charged ion."},
+    ],
+    mnemonics:[
+      {m:"'PHYSI-Cal = Low Energy, CHEMI-Cal = High Energy'",exp:"Physisorption reversible+low heat; Chemisorption specific+high heat"},
+      {m:"'Lyophilic LOVES solvent → Stable'",exp:"Lyophilic colloids don't need extra stabilisation"},
+      {m:"'Hardy-Schulze: Higher charge → FASTER coagulation'",exp:"Al³⁺ coagulates faster than Na⁺ for negative sols"},
+    ],
+    formulas:[
+      {f:"log(x/m) = log k + (1/n)log P",label:"Freundlich isotherm"},
+    ],
+    pyqs:[
+      {y:"2024",m:2,q:"Distinguish between physisorption and chemisorption.",ans:"Physisorption: weak forces, low heat, reversible, no specificity. Chemisorption: chemical bonds, high heat, irreversible, specific."},
+      {y:"2023",m:1,q:"What is Tyndall effect?",ans:"Scattering of light by colloidal particles making the path visible. E.g., beam of light in a dusty room."},
+      {y:"2022",m:2,q:"Which electrolyte is most effective in coagulating Fe(OH)₃ sol?",ans:"Fe(OH)₃ sol is positive. Need anion. K₃[Fe(CN)₆] provides [Fe(CN)₆]³⁻ (charge 3) > SO₄²⁻ > Cl⁻. So K₃[Fe(CN)₆] is most effective."},
+    ],
+    flashcards:[
+      {q:"Size range of colloidal particles?",a:"1 to 1000 nm",extra:"Smaller = true solution; Larger = suspension"},
+      {q:"Tyndall effect is shown by?",a:"Colloids (not true solutions)",extra:"Due to scattering of light by large colloidal particles"},
+      {q:"Lyophilic vs Lyophobic — which is more stable?",a:"Lyophilic",extra:"It has affinity for solvent → hydration layer → stable"},
+      {q:"Hardy-Schulze rule states?",a:"Higher the charge of ion, greater the coagulating power",extra:"Al³⁺ > Mg²⁺ > Na⁺ for negative sols"},
+    ]
+  },
+  {
+    id:6, title:"p-Block Elements",
+    tags:["5 marks","hot🔥"], hotTopics:["Group 15,16,17,18","Ozone","Halides"],
+    concepts:[
+      {h:"Group 15 (N, P, As, Sb, Bi)",p:"Config: ns²np³. All show +3, +5 oxidation states. N shows −3 to +5. Anomalous N: no d-orbitals, small size, high electronegativity. N₂ is very stable (N≡N bond, 941 kJ/mol)."},
+      {h:"Oxoacids of Phosphorus",p:"Phosphinic acid H₃PO₂ (1 OH, basicity 1). Phosphonic H₃PO₃ (2 OH, basicity 2). Phosphoric H₃PO₄ (3 OH, basicity 3). P=O and P−H bonds present (not acidic)."},
+      {h:"Group 16 (O, S, Se, Te)",p:"O₃ (Ozone): bent shape, bond angle 117°, resonance. SO₂: V-shape. SO₃: trigonal planar. H₂SO₄: strong acid, dehydrating & oxidising agent."},
+      {h:"Group 17 Halogens",p:"Oxidising power: F>Cl>Br>I. Bond energy: Cl₂>Br₂>F₂>I₂ (F₂ low due to e⁻-e⁻ repulsion). HF has H-bonding → higher BP than HCl. Bleaching powder = Ca(OCl)Cl."},
+      {h:"Group 18 Noble Gases",p:"All except Xe form NO compounds (Xe forms XeF₂, XeF₄, XeF₆). He has lowest BP. Ar is most abundant noble gas in atmosphere (0.93%)."},
+    ],
+    mnemonics:[
+      {m:"'PhosPhorus acids: 1 H, 2 H, 3 H → 1, 2, 3 basic'",exp:"Count OH groups = basicity"},
+      {m:"'Halogens OXIDISE in order: F Cl Br I — 'Fat Cats Bite Independently''",exp:"F is strongest oxidiser, I is weakest"},
+      {m:"'Xe is XENIAL (friendly) — only noble gas to form compounds'",exp:"XeF₂, XeF₄, XeF₆"},
+    ],
+    formulas:[
+      {f:"Bleaching: Cl₂+H₂O→HCl+HOCl",label:"Bleaching action"},
+      {f:"H₃PO₂: basicity=1",label:"Phosphinic acid"},
+    ],
+    pyqs:[
+      {y:"2024",m:3,q:"Account for the following: (i) N₂ is less reactive than P. (ii) NH₃ is more basic than PH₃.",ans:"(i) N≡N triple bond (941kJ/mol) very stable. P has P-P single bonds, weaker. (ii) NH₃: N has higher electronegativity, lone pair more available. PH₃: P is larger, lone pair in diffused orbital."},
+      {y:"2023",m:2,q:"Draw structure of XeF₄ and give its hybridization.",ans:"Square planar, sp³d² hybrid, 2 lone pairs and 4 F. Bond angle 90°."},
+      {y:"2022",m:2,q:"Explain why fluorine does not show positive oxidation state.",ans:"F has no d-orbitals to expand valence shell. Also most electronegative element — never positive O.S."},
+    ],
+    flashcards:[
+      {q:"Why is N₂ very stable?",a:"N≡N triple bond with bond energy 941 kJ/mol",extra:"Also no d-orbitals → limited reactivity"},
+      {q:"Hybridization of SF₆?",a:"sp³d²",extra:"Octahedral geometry, 6 F atoms"},
+      {q:"Which noble gas is most abundant in atmosphere?",a:"Argon (Ar) — 0.93%",extra:"He is most abundant in universe"},
+      {q:"Bond angle of H₂O vs H₂S?",a:"H₂O: 104.5°, H₂S: 92°",extra:"Larger S atom → less repulsion → smaller angle"},
+      {q:"What is bleaching powder?",a:"Ca(OCl)Cl — calcium oxychloride",extra:"Chlorine+slaked lime. Active agent: HOCl"},
+    ]
+  },
+  {
+    id:7, title:"d & f Block Elements",
+    tags:["3 marks","5 marks","hot🔥"], hotTopics:["Properties of TM","KMnO₄","K₂Cr₂O₇"],
+    concepts:[
+      {h:"Transition Metals — General Properties",p:"Partly filled d-orbitals (3d, 4d, 5d). Variable oxidation states (due to comparable energy of ns and (n−1)d). Highest OS = group number usually. Mn shows +2 to +7."},
+      {h:"Why Coloured?",p:"d-d transition: electron absorbs visible light and jumps between d-sublevels (crystal field splitting). Colour depends on ligand, oxidation state, geometry. Cu²⁺ is blue, Cr³⁺ is violet."},
+      {h:"Magnetic Properties",p:"Paramagnetic: unpaired e⁻. Diamagnetic: all paired. Magnetic moment μ = √(n(n+2)) BM where n = unpaired e⁻. Mn²⁺ has 5 unpaired → highest μ."},
+      {h:"KMnO₄",p:"Strong oxidising agent (purple → colourless). Acidic: 2KMnO₄+H₂SO₄ → MnSO₄ (Mn: +7→+2). Neutral/alkaline: Mn→+4 (MnO₂, brown). Oxidises: FeSO₄, H₂C₂O₄, H₂S, SO₂."},
+      {h:"K₂Cr₂O₇",p:"Orange crystals. In acidic medium: Cr₂O₇²⁻ → 2Cr³⁺ (Cr: +6→+3). Oxidises: I⁻, Fe²⁺, H₂S. Cr₂O₇²⁻+14H⁺+6e⁻→2Cr³⁺+7H₂O. pH: acidic ↔ CrO₄²⁻ (yellow)."},
+    ],
+    mnemonics:[
+      {m:"'Colour comes from d-d transition (Crystal field split)'",exp:"Incomplete d-subshell → absorb specific light → colour"},
+      {m:"'MnO₄⁻ in ACID = Mn²⁺ (colourless). In BASE = MnO₂ (brown)'",exp:"Products of KMnO₄ depend on medium"},
+      {m:"'μ = √n(n+2) BM — More unpaired, MORE magnetic'",exp:"Mn²⁺ (5 unpaired, μ=5.92 BM) most magnetic"},
+    ],
+    formulas:[
+      {f:"μ = √(n(n+2)) BM",label:"Magnetic moment"},
+      {f:"MnO₄⁻+8H⁺+5e⁻→Mn²⁺+4H₂O",label:"KMnO₄ acidic"},
+    ],
+    pyqs:[
+      {y:"2024",m:3,q:"Why do transition metals show variable oxidation states? Give examples for Cr.",ans:"ns and (n-1)d electrons have similar energies → both can be used in bonding. Cr: +2,+3,+6 (Cr³⁺ most stable, Cr⁶⁺ in K₂Cr₂O₇)."},
+      {y:"2023",m:2,q:"Calculate magnetic moment of Fe²⁺ (Z=26).",ans:"Fe²⁺: [Ar]3d⁶. 4 unpaired electrons. μ = √(4×6) = √24 = 4.90 BM"},
+      {y:"2022",m:3,q:"How does KMnO₄ act as oxidising agent in acidic medium? Give one reaction.",ans:"MnO₄⁻ + 8H⁺ + 5e⁻ → Mn²⁺ + 4H₂O. E.g., 2MnO₄⁻ + 5C₂O₄²⁻ + 16H⁺ → 2Mn²⁺ + 10CO₂ + 8H₂O"},
+    ],
+    flashcards:[
+      {q:"Why are transition metal compounds coloured?",a:"d-d transition — electron absorbs visible light",extra:"Only when d-orbitals are partially filled"},
+      {q:"Magnetic moment formula?",a:"μ = √(n(n+2)) BM, n = unpaired electrons",extra:"Mn²⁺ has 5 unpaired → μ = 5.92 BM (highest)"},
+      {q:"Product of KMnO₄ in acidic medium?",a:"Mn²⁺ (colourless) — Mn goes from +7 to +2",extra:"In neutral/alkaline: MnO₂ (brown precipitate)"},
+      {q:"Why is Zn not a transition metal?",a:"Zn²⁺ has completely filled d-orbitals (d¹⁰)",extra:"TM must have partially filled d in atom OR common ion"},
+    ]
+  },
+  {
+    id:8, title:"Coordination Compounds",
+    tags:["5 marks","hot🔥"], hotTopics:["IUPAC naming","EAN rule","Isomerism"],
+    concepts:[
+      {h:"Werner's Theory & Terms",p:"Central metal atom surrounded by ligands. Coordination number = no. of ligand donor atoms. Primary valence = OS of metal. Secondary valence = CN. [Co(NH₃)₆]Cl₃: CN=6, OS=+3."},
+      {h:"Types of Ligands",p:"Monodentate: NH₃, Cl⁻, H₂O. Bidentate: en (ethylenediamine), ox²⁻. Polydentate: EDTA⁴⁻ (hexadentate). Ambidentate: SCN⁻ (via S or N). Chelate: ring-forming bidentate."},
+      {h:"IUPAC Naming",p:"1. Cation first, anion last. 2. Ligands before metal (alphabetical). 3. Anionic ligands end in -o: Cl⁻=chlorido, CN⁻=cyanido. 4. Neutral: aqua, ammine, carbonyl. 5. OS in brackets."},
+      {h:"Isomerism",p:"Structural: linkage, ionisation, solvate, coordination. Stereo: geometric (cis-trans, only in square planar with 2 diff ligands) and optical (non-superimposable mirror images, [Co(en)₃]³⁺)."},
+      {h:"VBT & CFT",p:"VBT: hybridisation explains geometry. Inner orbital: d²sp³ or dsp² (stronger field). Outer orbital: sp³d² (weaker field). CFT: Δo = crystal field splitting. Strong field → large Δo → low spin → more paired."},
+    ],
+    mnemonics:[
+      {m:"'ACAL' — Anion Cation Alphabetical Ligands: naming order",exp:"Name cation complex first, then anion; ligands alphabetical"},
+      {m:"'LICE' = Linkage, Ionisation, Coordination, Solvate — structural isomers",exp:"4 types of structural isomerism"},
+      {m:"'dsp² = Square Planar' (Ni²⁺, Pt²⁺ with strong ligands)",exp:"Strong field → dsp² → square planar"},
+    ],
+    pyqs:[
+      {y:"2024",m:5,q:"Give IUPAC name: [CrCl₂(en)₂]⁺. State its type of isomerism and draw isomers.",ans:"Dichloridobis(ethane-1,2-diamine)chromium(III) ion. Geometric isomerism: cis (Cl on same side) and trans (Cl opposite)."},
+      {y:"2023",m:3,q:"Explain why [Fe(CN)₆]⁴⁻ is more stable than [Fe(H₂O)₆]²⁺.",ans:"CN⁻ is strong field ligand → large Δo → low spin → more stable. H₂O is weak field → high spin → less stable. Also CN⁻ forms stronger bonds."},
+      {y:"2022",m:2,q:"What is chelate effect? Give example.",ans:"Chelate effect: enhanced stability when polydentate ligands form rings. Example: [Cu(en)₂]²⁺ more stable than [Cu(NH₃)₄]²⁺ because ring formation increases entropy."},
+    ],
+    flashcards:[
+      {q:"EDTA is how many dentate?",a:"Hexadentate (6 donor atoms)",extra:"4 O and 2 N donor atoms"},
+      {q:"Which complex shows optical isomerism?",a:"[Co(en)₃]³⁺",extra:"Tris-chelate complexes — non-superimposable mirror images"},
+      {q:"dsp² hybridisation gives what geometry?",a:"Square planar",extra:"Ni²⁺, Pt²⁺, Pd²⁺ with strong field ligands"},
+      {q:"EAN rule?",a:"Total electrons on metal+ligands = 36 (like Kr)",extra:"EAN = Z − OS + 2×CN"},
+      {q:"SCN⁻ is which type of ligand?",a:"Ambidentate",extra:"Can bond via S (thiocyanate) or N (isothiocyanate)"},
+    ]
+  },
+  {
+    id:9, title:"Haloalkanes & Haloarenes",
+    tags:["3 marks","5 marks","hot🔥"], hotTopics:["SN1 vs SN2","Elimination","Grignard"],
+    concepts:[
+      {h:"Reactivity Order",p:"Alkyl halides: RI>RBr>RCl>RF (bond strength). SN1: 3°>2°>1° (stable carbocation). SN2: 1°>2°>3° (steric hindrance). Haloarenes: LESS reactive than haloalkanes (resonance, sp² C)."},
+      {h:"SN1 vs SN2",p:"SN1: 2 steps, carbocation intermediate, racemisation. SN2: one step, backside attack, inversion (Walden inversion). Polar aprotic solvent → SN2 favoured. Polar protic → SN1."},
+      {h:"Important Reactions",p:"Finkelstein: R-Cl + NaI(acetone) → R-I (exchange). Swarts: R-Cl + AgF/SbF₃ → R-F. Grignard: R-X + Mg/dry ether → RMgX. Wurtz: 2R-X + 2Na → R-R + 2NaX."},
+      {h:"Haloarenes",p:"Halobenzene: C-X bond has partial double bond character (resonance). Nucleophilic substitution very difficult (π-electrons repel Nu). Electrophilic substitution easier — halogens are o/p directors."},
+    ],
+    mnemonics:[
+      {m:"'SN2 = Back attack → Boot kick → Inversion'",exp:"Nucleophile attacks from back → umbrella inversion of configuration"},
+      {m:"'SN1 = Slow-N-break-bond-first = Carbocation forms first'",exp:"Rate depends only on substrate (unimolecular)"},
+      {m:"'FSWG — Finkelstein, Swarts, Wurtz, Grignard' — 4 important reactions",exp:"Remember the 4 named reactions of haloalkanes"},
+    ],
+    pyqs:[
+      {y:"2024",m:3,q:"(R)-2-bromobutane undergoes SN2 with OH⁻. Give the product and configuration.",ans:"Inversion (Walden inversion) → (S)-2-butanol. SN2 = backside attack = complete inversion of configuration."},
+      {y:"2023",m:2,q:"Why is C-X bond shorter in haloarenes than in haloalkanes?",ans:"In haloarenes, C-X has partial double bond character due to resonance of lone pair of X with benzene ring → shorter, stronger bond."},
+      {y:"2022",m:3,q:"Give Finkelstein, Swarts, Wurtz reactions.",ans:"Finkelstein: R-Cl+NaI→R-I+NaCl (dry acetone). Swarts: R-Cl+AgF→R-F+AgCl. Wurtz: 2R-Cl+2Na→R-R+2NaCl"},
+    ],
+    flashcards:[
+      {q:"Walden Inversion occurs in which reaction?",a:"SN2",extra:"Backside attack → umbrella flip → configuration inverts"},
+      {q:"Why are haloarenes less reactive than haloalkanes?",a:"Resonance → partial double bond C-X → stronger, shorter bond",extra:"Also sp² carbon less susceptible to nucleophilic attack"},
+      {q:"Grignard reagent is?",a:"RMgX (alkylmagnesium halide)",extra:"Made in dry ether. Very reactive — reacts with CO₂, ketones, etc."},
+      {q:"Which solvent favours SN2?",a:"Polar aprotic (acetone, DMSO)",extra:"Doesn't solvate nucleophile → Nu is more reactive"},
+    ]
+  },
+  {
+    id:10, title:"Alcohols, Phenols & Ethers",
+    tags:["3 marks","5 marks"], hotTopics:["Lucas test","Acidity","Kolbe reaction"],
+    concepts:[
+      {h:"Classification",p:"1° alcohol: R-CH₂OH. 2°: R₂CHOH. 3°: R₃COH. Phenol: ArOH. Ether: R-O-R'. Order of dehydration: 3°>2°>1°. Order of reactivity with Lucas reagent: 3°>2°>1°."},
+      {h:"Acidity",p:"Phenol > water > alcohol (due to resonance stabilisation of phenoxide ion C₆H₅O⁻). EWG on ring: increase acidity. EDG on ring: decrease acidity. p-nitrophenol > phenol > p-cresol."},
+      {h:"Important Reactions",p:"Lucas test: conc HCl + ZnCl₂. 3° → instant turbidity. 2° → turbidity in 5 min. 1° → no turbidity. Kolbe reaction: phenol + CO₂ + NaOH, 130°C → salicylic acid. Reimer-Tiemann: phenol + CHCl₃ + NaOH → salicylaldehyde."},
+      {h:"Ethers",p:"Crown ethers: macrocyclic, complex alkali metals. Williamson synthesis: R-ONa + R'X → R-O-R'. Cleavage by HI: ether + HI → alcohol + alkyl iodide. Phenyl ethers: HI cannot cleave C-O of ArO (too strong)."},
+    ],
+    mnemonics:[
+      {m:"'Lucas 3-2-1: Instant-5min-Never'",exp:"3° turb immediately, 2° in 5 min, 1° no turbidity with Lucas"},
+      {m:"'Phenol is MORE acidic than water because PhO⁻ has resonance'",exp:"Phenoxide ion stabilised by delocalisation into ring"},
+      {m:"'Kolbe = CO₂ enters phenol ortho to OH at 130°C'",exp:"Kolbe reaction → salicylic acid (aspirin precursor)"},
+    ],
+    pyqs:[
+      {y:"2024",m:2,q:"Arrange in increasing order of acidity: phenol, water, ethanol, p-nitrophenol.",ans:"Ethanol < Water < Phenol < p-nitrophenol. (EWG -NO₂ stabilises phenoxide, increases acidity)"},
+      {y:"2023",m:2,q:"Give mechanism of Kolbe's reaction.",ans:"Phenol + NaOH → sodium phenoxide. CO₂ attacks ortho position of phenoxide (electrophilic) at 130°C, 5 atm → sodium salicylate → acidify → salicylic acid."},
+    ],
+    flashcards:[
+      {q:"Lucas test identifies what?",a:"Type of alcohol (1°, 2°, 3°)",extra:"3°: immediate turbidity. 1°: no turbidity at room temp"},
+      {q:"Why is phenol more acidic than ethanol?",a:"Phenoxide ion stabilised by resonance with benzene ring",extra:"Ethoxide has no such stabilisation"},
+      {q:"Williamson synthesis gives?",a:"Ethers (R-O-R')",extra:"R-ONa + R'X → R-O-R' + NaX. Best for asymmetric ethers"},
+      {q:"Reimer-Tiemann reaction product from phenol?",a:"Salicylaldehyde (2-hydroxybenzaldehyde)",extra:"Uses CHCl₃ + NaOH → CCl₂ (dichlorocarbene) electrophile"},
+    ]
+  },
+  {
+    id:11, title:"Aldehydes, Ketones & Carboxylic Acids",
+    tags:["5 marks","hot🔥"], hotTopics:["Nucleophilic addition","Cannizzaro","Aldol"],
+    concepts:[
+      {h:"Preparation & Reactivity",p:"Aldehydes more reactive than ketones (less steric hindrance, more electrophilic C). Tests: Tollens (silver mirror), Fehling (brick-red Cu₂O) — only aldehydes. Ketones: iodoform test (CH₃COR)."},
+      {h:"Named Reactions",p:"Aldol condensation: 2 CH₃CHO + NaOH → CH₃CH(OH)CH₂CHO (3-hydroxybutanal). Cannizzaro: 2HCHO+NaOH→CH₃OH+HCOONa (no α-H). Clemmensen: C=O→CH₂ (Zn-Hg/HCl). Wolff-Kishner: C=O→CH₂ (NH₂NH₂/KOH/Δ)."},
+      {h:"Carboxylic Acid Reactions",p:"More acidic than phenol and alcohol. RCOOH + SOCl₂ → RCOCl (acid chloride). Hell-Volhard-Zelinsky: α-halogenation using X₂+red P. Decarboxylation: dry distil with soda lime → alkane."},
+    ],
+    mnemonics:[
+      {m:"'Tollens = Silver mirror, Fehling = Red mirror (Cu₂O)'",exp:"Both test for aldehydes only — distinguish from ketones"},
+      {m:"'Cannizzaro = Can't do aldol? No α-H → disproportionate!'",exp:"Cannizzaro works only when no α-hydrogen present (HCHO, (CH₃)₃CCHO)"},
+      {m:"'Clemmensen = Cold (Zn-Hg in acid), Wolff = Warm (hydrazine in base)'",exp:"Two methods to reduce C=O to CH₂"},
+    ],
+    pyqs:[
+      {y:"2024",m:5,q:"How will you distinguish between: (a) Aldehyde & Ketone (b) Formic acid & Acetic acid",ans:"(a) Tollens/Fehling test — aldehyde gives +ve. (b) Formic acid gives Tollens +ve (has aldehyde character); acetic acid doesn't. Also NaHCO₃ — both fizz (CO₂)."},
+      {y:"2023",m:3,q:"Write Aldol condensation reaction of acetaldehyde.",ans:"2CH₃CHO → NaOH → CH₃CH(OH)CH₂CHO → 3-hydroxybutanal (aldol). On heating: loses H₂O → CH₃CH=CHCHO (crotonaldehyde)."},
+      {y:"2022",m:2,q:"Why is benzoic acid stronger than acetic acid?",ans:"Benzene ring withdraws electrons from −COOH by induction (sp² C more electronegative) → destabilises benzoate less → actually acetic acid < benzoic acid? No: benzoic acid (pKa 4.2) > acetic acid (pKa 4.75) — benzoate stabilised by resonance with ring."},
+    ],
+    flashcards:[
+      {q:"Which test is specific for methyl ketones?",a:"Iodoform test (CHI₃ yellow precipitate)",extra:"CH₃COR or CH₃CHOH-R gives positive iodoform"},
+      {q:"Cannizzaro reaction requires?",a:"Aldehydes with NO α-hydrogen",extra:"HCHO, (CH₃)₃CCHO. Products: alcohol + carboxylate"},
+      {q:"Clemmensen reduction converts?",a:"C=O → CH₂ using Zn-Hg / conc HCl",extra:"Used in acidic conditions; for acid-sensitive compounds use Wolff-Kishner"},
+      {q:"Strongest acid among: phenol, ethanol, water, acetic acid?",a:"Acetic acid",extra:"pKa: CH₃COOH(4.7) < phenol(10) < water(15.7) < ethanol(16)"},
+    ]
+  },
+  {
+    id:12, title:"Amines",
+    tags:["3 marks","5 marks"], hotTopics:["Basicity order","Diazonium salts","Gabriel synthesis"],
+    concepts:[
+      {h:"Basicity Order",p:"Aliphatic amines: 2°>1°>3° (aqueous, steric vs inductive+solvation). Gas phase: 3°>2°>1°. Aromatic amines: aniline << aliphatic (lone pair in resonance with ring → less available). EWG decreases basicity."},
+      {h:"Preparation",p:"Gabriel synthesis: phthalimide + KOH → K-phthalimide + RX → N-alkylphthalimide → hydrolysis → 1° amine. Gives ONLY primary amines. Hofmann bromamide: RCONH₂ + Br₂ + NaOH → RNH₂ (1° amine, 1 carbon less)."},
+      {h:"Diazonium Salts",p:"ArNH₂ + HNO₂ (0–5°C) → ArN₂⁺Cl⁻. Reactions: Sandmeyer (Cu₂X₂→ArX), Balz-Schiemann (ArF with BF₄⁻), coupling with phenol/aniline → azo dye. Must stay cold (decomposes above 5°C)."},
+    ],
+    mnemonics:[
+      {m:"'Gabriel = Only Primary amines (Gabriel = G for 1st grade)'",exp:"Gabriel synthesis gives exclusively 1° aliphatic amines"},
+      {m:"'Diazonium = DIE above 5°C' (decomposes)",exp:"Keep diazonium salt below 5°C — unstable"},
+      {m:"'Aniline basicity LOW = lone pair LOST to ring'",exp:"Resonance donates lone pair into benzene ring → less basic than NH₃"},
+    ],
+    pyqs:[
+      {y:"2024",m:3,q:"Arrange in decreasing order of basicity: (CH₃)₂NH, C₆H₅NH₂, NH₃, (CH₃)₃N",ans:"(CH₃)₂NH > (CH₃)₃N > NH₃ > C₆H₅NH₂. (2° amine most basic in aqueous; aniline least — resonance)"},
+      {y:"2023",m:2,q:"What is Gabriel synthesis? Why does it give only 1° amines?",ans:"Phthalimide → K-phthalimide (with KOH) → N-alkylation (with RX) → hydrolysis → 1° amine. Only 1° because phthalimide N-H is the only reactive H; N gets only one alkyl group."},
+      {y:"2022",m:3,q:"How is benzene diazonium chloride prepared? Give two reactions.",ans:"C₆H₅NH₂ + HNO₂ + HCl, 0–5°C → C₆H₅N₂⁺Cl⁻. Reactions: (i) Sandmeyer: +Cu₂Cl₂ → C₆H₅Cl. (ii) Coupling with phenol → p-hydroxyazobenzene (orange dye)."},
+    ],
+    flashcards:[
+      {q:"Which synthesis gives only primary amines?",a:"Gabriel synthesis",extra:"Uses phthalimide → avoids 2° and 3° amine formation"},
+      {q:"Why is aniline less basic than NH₃?",a:"Lone pair delocalised into benzene ring — less available for protonation",extra:"pKb aniline = 9.4, NH₃ = 4.7"},
+      {q:"Temperature for diazonium salt formation?",a:"0–5°C",extra:"Higher T → unstable, decomposes. Use NaNO₂ + HCl"},
+      {q:"Sandmeyer reaction?",a:"ArN₂⁺ + Cu₂X₂ → ArX (X = Cl, Br, CN)",extra:"Named after Traugott Sandmeyer. Balz-Schiemann gives ArF"},
+    ]
+  },
+  {
+    id:13, title:"Biomolecules",
+    tags:["2 marks","3 marks"], hotTopics:["DNA structure","Amino acids","Enzymes"],
+    concepts:[
+      {h:"Carbohydrates",p:"Monosaccharides: glucose (6C), fructose (6C, sweetest). Disaccharides: sucrose (glucose+fructose, non-reducing), maltose & lactose (reducing). Polysaccharides: starch (amylose+amylopectin), cellulose (β-1,4 glycosidic)."},
+      {h:"Amino Acids & Proteins",p:"20 standard amino acids. All have α-amino and α-carboxyl groups. Primary: peptide bond. Secondary: α-helix, β-pleated sheet (H-bonds). Tertiary: 3D fold. Quaternary: multiple subunits. Denaturation: loss of 3D structure."},
+      {h:"DNA vs RNA",p:"DNA: deoxyribose, thymine (T). RNA: ribose, uracil (U). Base pairs: A=T (2 H-bonds), G≡C (3 H-bonds). Double helix: antiparallel. mRNA: template. tRNA: brings amino acids. rRNA: ribosomal."},
+      {h:"Enzymes & Vitamins",p:"Enzymes: biological catalysts, protein nature. Lock & key model (Fischer). Induced fit model (Koshland). Coenzyme: non-protein organic part. Vitamins: A,D,E,K (fat-soluble), B complex, C (water-soluble)."},
+    ],
+    mnemonics:[
+      {m:"'AT park, GC Triple (A=T 2 bonds, G≡C 3 bonds)'",exp:"G-C bond is stronger (3 H-bonds) than A-T (2 H-bonds)"},
+      {m:"'ADEK = fat-soluble vitamins: A Dog Eats Kibble'",exp:"Vitamins A, D, E, K stored in fat; rest water-soluble"},
+      {m:"'Sucrose = Non-reducing, Maltose = Reducing' — Sugar can't reduce if locked'",exp:"Sucrose has no free anomeric OH → non-reducing"},
+    ],
+    pyqs:[
+      {y:"2024",m:2,q:"Why is sucrose a non-reducing sugar?",ans:"In sucrose, anomeric C1 of glucose and C2 of fructose are both involved in glycosidic bond. No free anomeric -OH → cannot open to aldehydic form → non-reducing."},
+      {y:"2023",m:3,q:"Distinguish between primary, secondary, and tertiary structure of proteins.",ans:"1°: sequence of amino acids linked by peptide bonds. 2°: folding into α-helix or β-sheet via H-bonds. 3°: overall 3D shape via disulphide bonds, H-bonds, van der Waals forces."},
+    ],
+    flashcards:[
+      {q:"Base pairing in DNA: A pairs with? G pairs with?",a:"A=T (2 H-bonds), G≡C (3 H-bonds)",extra:"G-C more stable — higher melting point"},
+      {q:"What is the sweetest sugar?",a:"Fructose",extra:"Fructose > sucrose > glucose > maltose > lactose"},
+      {q:"Which vitamins are fat-soluble?",a:"A, D, E, K",extra:"'ADEK'. Stored in fat — can accumulate to toxic levels"},
+      {q:"Enzyme specificity model names?",a:"Lock & Key (Fischer) and Induced Fit (Koshland)",extra:"Induced fit: enzyme changes shape when substrate binds"},
+    ]
+  },
+  {
+    id:14, title:"Polymers",
+    tags:["2 marks","3 marks"], hotTopics:["Addition vs Condensation","Nylon","Bakelite"],
+    concepts:[
+      {h:"Types of Polymerisation",p:"Addition (chain growth): monomers with C=C (no byproduct). Examples: polyethene, PVC, PTFE, polystyrene, neoprene, buna-S. Condensation (step growth): byproduct (H₂O, HCl). Examples: nylon, dacron, bakelite."},
+      {h:"Important Polymers",p:"Nylon-6,6: hexamethylenediamine + adipic acid (condensation). Nylon-6: caprolactam (ring-opening). Dacron/Terylene: ethylene glycol + PTA. Bakelite: phenol + formaldehyde (thermosetting). Buna-S: styrene+butadiene (copolymer)."},
+      {h:"Classification",p:"Thermoplastic: soften on heating (polyethene, PVC, nylon). Thermosetting: harden permanently (bakelite, melamine). Biodegradable: PHBV, nylon-2-nylon-6. Natural: rubber (polyisoprene), starch, cellulose."},
+    ],
+    mnemonics:[
+      {m:"'Nylon-6,6: 6 and 6 come from TWO monomers (each with 6 C)'",exp:"Hexamethylenediamine (6C) + Adipic acid (6C) → Nylon 6,6"},
+      {m:"'Bakelite BAKES = sets hard on heating (thermosetting)'",exp:"Cannot be remoulded — cross-linked 3D structure"},
+      {m:"'Addition = No byproduct. Condensation = loses small molecule'",exp:"Key difference between two types"},
+    ],
+    pyqs:[
+      {y:"2024",m:2,q:"Distinguish between addition and condensation polymerisation.",ans:"Addition: unsaturated monomers, no byproduct, chain growth (PVC, polyethene). Condensation: bifunctional monomers, small molecule lost (H₂O), step growth (nylon, dacron)."},
+      {y:"2023",m:2,q:"Write the monomers of Dacron.",ans:"Ethylene glycol (HOCH₂CH₂OH) + Terephthalic acid (HOOC-C₆H₄-COOH). Linked by ester bonds → polyester."},
+    ],
+    flashcards:[
+      {q:"Monomers of Nylon-6,6?",a:"Hexamethylenediamine + Adipic acid",extra:"Both have 6 carbons. Joined by amide (-CO-NH-) bonds"},
+      {q:"Monomer of Nylon-6?",a:"Caprolactam (ring opening polymerisation)",extra:"Single monomer, not two — note difference from Nylon-6,6"},
+      {q:"Bakelite is thermosetting or thermoplastic?",a:"Thermosetting",extra:"Cross-linked network — cannot be remelted"},
+      {q:"What are biodegradable polymers? Example?",a:"Polymers that degrade naturally. PHBV, nylon-2-nylon-6",extra:"PHBV = poly(β-hydroxybutyrate-co-β-hydroxyvalerate)"},
+    ]
+  },
+  {
+    id:15, title:"Chemistry in Everyday Life",
+    tags:["2 marks","3 marks"], hotTopics:["Drug classifications","Soaps","Artificial sweeteners"],
+    concepts:[
+      {h:"Drugs & Medicines",p:"Analgesics: aspirin, paracetamol (non-narcotic), morphine (narcotic). Antibiotics: bactericidal (penicillin, ciprofloxacin), bacteriostatic (tetracycline, chloramphenicol). Antacids: Mg(OH)₂, Al(OH)₃, NaHCO₃. Antihistamines: brompheniramine, terfenadine."},
+      {h:"Drug-Receptor Interaction",p:"Receptor: protein macro-molecule. Agonist: mimics natural messenger (binds and activates). Antagonist: blocks receptor (no activation). Enzymes as drug targets: competitive inhibition (eg. sulphonamides compete with PABA)."},
+      {h:"Cleansing Action",p:"Soap = sodium salt of fatty acid (saponification). Hydrophilic head (ionic) + hydrophobic tail (non-polar). Micelle formation. Hard water: Ca/Mg soap = scum. Syndet: synthetic detergent (works in hard water). Cationic detergents: germicidal."},
+      {h:"Artificial Sweeteners",p:"Saccharin (1st, 300× sweet), Aspartame (200×, used in cold drinks), Sucralose (600×), Alitame (2000×). Aspartame: unstable at high T. Sucralose: made from sucrose+chlorine."},
+    ],
+    mnemonics:[
+      {m:"'PAMA — Paracetamol+Aspirin=Non-narcotic, Morphine+Heroin=Narcotic analgesics'",exp:"Non-narcotic for mild pain, narcotic for severe pain (addictive)"},
+      {m:"'Soap = Saponification: fat+NaOH→soap+glycerol'",exp:"Saponification is the process of soap making"},
+      {m:"'Sweeteners: SAS 2 — Saccharin, Aspartame, Sucralose: 300, 200, 600×'",exp:"Remember relative sweetness: sucralose is sweetest of common ones"},
+    ],
+    pyqs:[
+      {y:"2024",m:2,q:"What is the difference between bactericidal and bacteriostatic antibiotics?",ans:"Bactericidal: kill bacteria (penicillin, ciprofloxacin). Bacteriostatic: inhibit bacterial growth/reproduction (tetracycline, chloramphenicol)."},
+      {y:"2023",m:2,q:"Why do soaps not work in hard water?",ans:"Hard water has Ca²⁺, Mg²⁺. They react with soap (sodium stearate) to form insoluble Ca/Mg stearate (scum). No micelles form → no cleansing."},
+    ],
+    flashcards:[
+      {q:"Which antibiotic is bactericidal?",a:"Penicillin, Ciprofloxacin",extra:"Kills bacteria. Bacteriostatic (tetracycline) only inhibits growth"},
+      {q:"What is saponification?",a:"Hydrolysis of fat with NaOH → soap + glycerol",extra:"Fat (triglyceride) + 3NaOH → 3 soap molecules + glycerol"},
+      {q:"Sweetest artificial sweetener?",a:"Alitame (2000× sucrose)",extra:"But sucralose (600×) is most common in use"},
+      {q:"Agonist vs Antagonist drug?",a:"Agonist activates receptor. Antagonist blocks it.",extra:"e.g., Morphine = agonist (pain receptor). Antihistamine = antagonist"},
+    ]
+  }
+];
+
+// ═══════════════════════════════════════════════
+// ALL MNEMONICS
+// ═══════════════════════════════════════════════
+const allMnemonics = chapters.flatMap(ch =>
+  (ch.mnemonics||[]).map(m => ({chapter: ch.title, chId: ch.id, ...m}))
+);
+
+// ═══════════════════════════════════════════════
+// ALL PYQS
+// ═══════════════════════════════════════════════
+const allPYQs = chapters.flatMap(ch =>
+  (ch.pyqs||[]).map(p => ({chapter: ch.title, chId: ch.id, ...p}))
+);
+
+// ═══════════════════════════════════════════════
+// ALL FLASHCARDS
+// ═══════════════════════════════════════════════
+const allFlashcards = chapters.flatMap(ch =>
+  (ch.flashcards||[]).map(f => ({chapter: ch.title, chId: ch.id, ...f}))
+);
+
+// ═══════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════
+let currentCards = [...allFlashcards];
+let fcIndex = 0;
+let showAllCards = false;
+
+// ═══════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════
+function init() {
+  // Render chapter grid
+  renderChapterGrid(chapters);
+
+  // Populate selects
+  const fcSel = document.getElementById('fcChapter');
+  const pyqSel = document.getElementById('pyqChapter');
+  chapters.forEach(ch => {
+    [fcSel, pyqSel].forEach(sel => {
+      const opt = document.createElement('option');
+      opt.value = ch.id; opt.textContent = `Ch ${ch.id}: ${ch.title}`;
+      sel.appendChild(opt);
+    });
+  });
+
+  loadFlashcards();
+  renderMnemonics();
+  renderPYQ();
+}
+
+function renderChapterGrid(list) {
+  const grid = document.getElementById('chapterGrid');
+  grid.innerHTML = list.map(ch => `
+    <div class="ch-card" onclick="openChapter(${ch.id})">
+      <div class="ch-num">${ch.id}</div>
+      <div class="ch-title">${ch.title}</div>
+      <div class="ch-tags">
+        ${ch.tags.map(t => `<span class="tag ${t.includes('🔥')||t.includes('hot')?'hot':''}">${t}</span>`).join('')}
+        <span class="tag">${(ch.flashcards||[]).length} cards</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+function searchChapters(val) {
+  if (!val.trim()) { renderChapterGrid(chapters); return; }
+  const v = val.toLowerCase();
+  const filtered = chapters.filter(ch =>
+    ch.title.toLowerCase().includes(v) ||
+    (ch.hotTopics||[]).some(t => t.toLowerCase().includes(v)) ||
+    (ch.concepts||[]).some(c => c.h.toLowerCase().includes(v) || c.p.toLowerCase().includes(v))
+  );
+  renderChapterGrid(filtered);
+}
+
+// ═══════════════════════════════════════════════
+// CHAPTER VIEW
+// ═══════════════════════════════════════════════
+function openChapter(id) {
+  const ch = chapters.find(c => c.id === id);
+  const content = document.getElementById('chapterContent');
+  content.innerHTML = `
+    <h2 style="font-size:1.6rem;font-weight:900;margin-bottom:4px;">Chapter ${ch.id}: ${ch.title}</h2>
+    <div style="color:var(--muted);margin-bottom:16px;">Hot topics: ${(ch.hotTopics||[]).join(' · ')}</div>
+
+    <div class="ctabs">
+      <button class="ctab active" onclick="switchCtab(this,'ctab-concepts')">📖 Concepts</button>
+      <button class="ctab" onclick="switchCtab(this,'ctab-mnemonics')">🧠 Mnemonics</button>
+      <button class="ctab" onclick="switchCtab(this,'ctab-formulas')">⚗️ Formulas</button>
+      <button class="ctab" onclick="switchCtab(this,'ctab-pyq')">📋 PYQ</button>
+      <button class="ctab" onclick="switchCtab(this,'ctab-fc')">🃏 Flashcards</button>
+    </div>
+
+    <div class="ctab-content active" id="ctab-concepts">
+      ${(ch.concepts||[]).map(c => `
+        <div class="concept-box">
+          <h4>${c.h}</h4>
+          <p>${c.p}</p>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="ctab-content" id="ctab-mnemonics">
+      ${(ch.mnemonics||[]).map(m => `
+        <div class="mnemonic-box">
+          <div class="label">🧠 MNEMONIC</div>
+          <p>"${m.m}"</p>
+          <small>${m.exp}</small>
+        </div>
+      `).join('') || '<p style="color:var(--muted)">No mnemonics for this chapter yet.</p>'}
+    </div>
+
+    <div class="ctab-content" id="ctab-formulas">
+      <div class="formula-grid">
+        ${(ch.formulas||[]).map(f => `
+          <div class="formula-card">
+            <div class="f">${f.f}</div>
+            <small>${f.label}</small>
+          </div>
+        `).join('') || '<p style="color:var(--muted)">Add formulas in the data.</p>'}
+      </div>
+    </div>
+
+    <div class="ctab-content" id="ctab-pyq">
+      ${(ch.pyqs||[]).map((p,i) => `
+        <div class="pyq-item">
+          <span class="year">${p.y} Board</span>
+          <span class="marks">${p.m} Marks</span>
+          <p>${p.q}</p>
+          <button class="ans-toggle" onclick="toggleAns('ans-${id}-${i}',this)">Show Answer</button>
+          <div class="ans-box" id="ans-${id}-${i}">${p.ans}</div>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="ctab-content" id="ctab-fc">
+      <div class="fc-all">
+        ${(ch.flashcards||[]).map(f => `
+          <div class="fc-mini">
+            <div class="q">Q: ${f.q}</div>
+            <div class="a">A: ${f.a}</div>
+            <div style="color:var(--muted);font-size:0.8rem;margin-top:4px;">${f.extra||''}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+  showPage('chapterView');
+}
+
+function switchCtab(btn, tabId) {
+  document.querySelectorAll('.ctab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.ctab-content').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(tabId).classList.add('active');
+}
+
+function toggleAns(id, btn) {
+  const box = document.getElementById(id);
+  if (box.style.display === 'block') { box.style.display='none'; btn.textContent='Show Answer'; }
+  else { box.style.display='block'; btn.textContent='Hide Answer'; }
+}
+
+// ═══════════════════════════════════════════════
+// FLASHCARDS
+// ═══════════════════════════════════════════════
+function loadFlashcards() {
+  const sel = document.getElementById('fcChapter').value;
+  currentCards = sel === 'all' ? [...allFlashcards]
+    : allFlashcards.filter(f => f.chId == sel);
+  fcIndex = 0;
+  showCard();
+}
+
+function showCard() {
+  const card = document.getElementById('fcCard');
+  card.classList.remove('flipped');
+  if (!currentCards.length) return;
+  const f = currentCards[fcIndex];
+  document.getElementById('fcQ').textContent = f.q;
+  document.getElementById('fcHint').textContent = `Chapter: ${f.chapter}`;
+  document.getElementById('fcA').textContent = f.a;
+  document.getElementById('fcExtra').textContent = f.extra || '';
+  document.getElementById('fcCounter').textContent = `${fcIndex + 1} / ${currentCards.length}`;
+}
+
+function flipCard() { document.getElementById('fcCard').classList.toggle('flipped'); }
+function nextCard() { fcIndex = (fcIndex + 1) % currentCards.length; showCard(); }
+function prevCard() { fcIndex = (fcIndex - 1 + currentCards.length) % currentCards.length; showCard(); }
+function shuffleCards() {
+  currentCards = currentCards.sort(() => Math.random() - 0.5);
+  fcIndex = 0; showCard();
+}
+
+function toggleAllCards() {
+  showAllCards = !showAllCards;
+  const container = document.getElementById('allCardsContainer');
+  if (showAllCards) {
+    container.innerHTML = `
+      <div class="section-title" style="margin-top:30px;">📋 All Cards</div>
+      <div class="fc-all">
+        ${currentCards.map(f => `
+          <div class="fc-mini">
+            <div style="font-size:0.7rem;color:var(--primary);margin-bottom:4px;">${f.chapter}</div>
+            <div class="q">Q: ${f.q}</div>
+            <div class="a">A: ${f.a}</div>
+            <div style="color:var(--muted);font-size:0.78rem;margin-top:4px;">${f.extra||''}</div>
+          </div>
+        `).join('')}
+      </div>`;
+  } else { container.innerHTML = ''; }
+}
+
+// ═══════════════════════════════════════════════
+// MNEMONICS PAGE
+// ═══════════════════════════════════════════════
+function renderMnemonics() {
+  const div = document.getElementById('mnemonicsList');
+  div.innerHTML = chapters.filter(ch => ch.mnemonics?.length).map(ch => `
+    <div class="trick-card">
+      <h4>Chapter ${ch.id}: ${ch.title}</h4>
+      ${ch.mnemonics.map(m => `
+        <div class="mnemonic-box" style="margin-bottom:10px;">
+          <div class="label">🧠 MNEMONIC</div>
+          <p>"${m.m}"</p>
+          <small>${m.exp}</small>
+        </div>
+      `).join('')}
+    </div>
+  `).join('');
+}
+
+// ═══════════════════════════════════════════════
+// PYQ PAGE
+// ═══════════════════════════════════════════════
+function renderPYQ(list) {
+  const pyqs = list || allPYQs;
+  document.getElementById('pyqList').innerHTML = pyqs.map((p,i) => `
+    <div class="pyq-item">
+      <span class="year">${p.y} Board · ${p.chapter}</span>
+      <span class="marks">${p.m} Marks</span>
+      <p>${p.q}</p>
+      <button class="ans-toggle" onclick="toggleAns('pyq-ans-${i}',this)">Show Answer</button>
+      <div class="ans-box" id="pyq-ans-${i}">${p.ans}</div>
+    </div>
+  `).join('');
+}
+
+function filterPYQ() {
+  const ch = document.getElementById('pyqChapter').value;
+  const yr = document.getElementById('pyqYear').value;
+  let list = allPYQs;
+  if (ch !== 'all') list = list.filter(p => p.chId == ch);
+  if (yr !== 'all') list = list.filter(p => p.y == yr);
+  renderPYQ(list);
+}
+
+// ═══════════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════════
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  const map = {home:0, flashcards:1, mnemonics:2, pyq:3, chapterView:-1};
+  const tabs = document.querySelectorAll('.nav-tab');
+  if (map[id] >= 0) tabs[map[id]].classList.add('active');
+}
+
+init();
+</script>
+</body>
+</html>
