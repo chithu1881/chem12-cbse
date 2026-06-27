@@ -160,7 +160,8 @@ nav{background:var(--card);padding:10px 16px;display:flex;align-items:center;jus
 <script src="chapters-data.js"></script>
 <script src="ch5_16.js"></script>
 <script>
-let currentCards=[...[]],fcIndex=0,showAllCards=false;
+const chapters = [...chaptersPart1, ...chaptersPart2].sort((a,b)=>a.id-b.id);
+let currentCards=[],fcIndex=0,showAllCards=false;
 
 function init(){
   renderChapterGrid(chapters);

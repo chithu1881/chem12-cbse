@@ -1,4 +1,4 @@
-const chapters2 = [
+const chaptersPart2 = [
 {
   id:5, title:"Surface Chemistry", unit:"III", marks:4,
   tags:["2–3 marks"],
@@ -455,6 +455,3 @@ const chapters2 = [
 }
 ];
 
-// Merge into single chapters array
-chapters.push(...chapters2);
-chapters.sort((a,b) => a.id - b.id);

@@ -1,4 +1,4 @@
-const chapters = [
+const chaptersPart1 = [
 {
   id:1, title:"The Solid State", unit:"I", marks:4,
   tags:["4 marks","numericals","hot🔥"],
@@ -190,4 +190,4 @@ const chapters = [
     {q:"What is pseudo-first order reaction?",a:"Higher order reaction behaving as first order when one reactant is in large excess",extra:"e.g. ester hydrolysis in dilute acid/water. k'=k[H₂O]"},
   ]
 },
-]; // chapters array continues in next chunk — see ch5_16.js
+];
