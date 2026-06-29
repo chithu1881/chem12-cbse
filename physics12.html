@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Physics12 CBSE | Quick Revision</title>
+<style>
+:root{--primary:#6c63ff;--secondary:#ff6584;--accent:#43e97b;--bg:#0f0f1a;--card:#1a1a2e;--card2:#16213e;--text:#e0e0e0;--muted:#888;--border:#2a2a4a}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI',sans-serif;min-height:100vh}
+header{background:linear-gradient(135deg,#0f0f1a 0%,#1a1a2e 50%,#16213e 100%);border-bottom:1px solid var(--border);padding:20px;text-align:center;position:sticky;top:0;z-index:100}
+header h1{font-size:1.8rem;background:linear-gradient(135deg,var(--primary),var(--secondary));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+header p{color:var(--muted);font-size:.85rem;margin-top:4px}
+.nav-pills{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+.nav-pills button{background:var(--card);border:1px solid var(--border);color:var(--text);padding:6px 14px;border-radius:20px;cursor:pointer;font-size:.8rem;transition:all .2s}
+.nav-pills button.active,.nav-pills button:hover{background:var(--primary);border-color:var(--primary);color:#fff}
+.container{max-width:1100px;margin:0 auto;padding:20px}
+.page{display:none}.page.active{display:block}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:24px}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center}
+.stat-card .num{font-size:1.8rem;font-weight:700;color:var(--primary)}
+.stat-card .lbl{font-size:.75rem;color:var(--muted);margin-top:4px}
+.chapter-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.ch-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;cursor:pointer;transition:all .25s;position:relative;overflow:hidden}
+.ch-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--primary),var(--secondary))}
+.ch-card:hover{border-color:var(--primary);transform:translateY(-3px);box-shadow:0 8px 24px rgba(108,99,255,.2)}
+.ch-card .ch-num{font-size:.7rem;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px}
+.ch-card h3{font-size:.95rem;color:#fff;margin-bottom:8px}
+.ch-card .tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{background:rgba(108,99,255,.15);border:1px solid rgba(108,99,255,.3);color:var(--primary);padding:2px 8px;border-radius:10px;font-size:.7rem}
+.tag.hot{background:rgba(255,101,132,.15);border-color:rgba(255,101,132,.3);color:var(--secondary)}
+.hot-topics{margin-top:10px;font-size:.78rem;color:var(--muted)}
+.hot-topics span{color:var(--accent)}
+.back-btn{background:none;border:1px solid var(--border);color:var(--text);padding:8px 16px;border-radius:8px;cursor:pointer;margin-bottom:16px;display:flex;align-items:center;gap:6px;font-size:.85rem}
+.back-btn:hover{border-color:var(--primary);color:var(--primary)}
+.ch-header{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:16px}
+.ch-header h2{font-size:1.3rem;color:#fff;margin-bottom:8px}
+.ch-header .meta{display:flex;gap:12px;flex-wrap:wrap;font-size:.8rem;color:var(--muted)}
+.tab-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.tab-btn{background:var(--card);border:1px solid var(--border);color:var(--muted);padding:7px 16px;border-radius:8px;cursor:pointer;font-size:.82rem;transition:all .2s}
+.tab-btn.active{background:var(--primary);border-color:var(--primary);color:#fff}
+.tab-content{display:none}.tab-content.active{display:block}
+.concept-block{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:12px}
+.concept-block h4{color:var(--primary);font-size:.95rem;margin-bottom:8px}
+.concept-block p,.concept-block li{font-size:.88rem;line-height:1.7;color:var(--text)}
+.concept-block ul{padding-left:20px}
+.mnemonic-card{background:linear-gradient(135deg,rgba(108,99,255,.1),rgba(255,101,132,.05));border:1px solid rgba(108,99,255,.25);border-radius:12px;padding:16px;margin-bottom:12px}
+.mnemonic-card .mtext{font-size:1rem;font-weight:700;color:var(--accent);letter-spacing:.5px;margin-bottom:8px}
+.mnemonic-card .mexp{font-size:.85rem;color:var(--text);line-height:1.6}
+.formula-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.formula-card{background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:14px}
+.formula-card .f{font-family:'Courier New',monospace;font-size:.92rem;color:var(--accent);margin-bottom:6px;word-break:break-all}
+.formula-card .fl{font-size:.78rem;color:var(--muted)}
+.pyq-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:12px}
+.pyq-meta{display:flex;gap:10px;margin-bottom:8px;font-size:.75rem;flex-wrap:wrap}
+.pyq-meta .year{color:var(--secondary);font-weight:600}
+.pyq-meta .marks{color:var(--muted)}
+.pyq-q{font-size:.88rem;line-height:1.6;margin-bottom:10px}
+.ans-toggle{background:none;border:1px solid var(--primary);color:var(--primary);padding:5px 12px;border-radius:6px;cursor:pointer;font-size:.78rem}
+.ans-toggle:hover{background:var(--primary);color:#fff}
+.ans-box{background:rgba(67,233,123,.05);border:1px solid rgba(67,233,123,.2);border-radius:8px;padding:12px;margin-top:10px;font-size:.85rem;line-height:1.6;display:none}
+.ans-box.show{display:block}
+.fc-controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+.fc-controls button{background:var(--card);border:1px solid var(--border);color:var(--text);padding:7px 14px;border-radius:8px;cursor:pointer;font-size:.82rem}
+.fc-controls button:hover,.fc-controls button.on{background:var(--primary);border-color:var(--primary);color:#fff}
+.fc-progress{color:var(--muted);font-size:.82rem;margin-left:auto}
+.fc-wrap{perspective:1000px;margin-bottom:14px}
+.fc{width:100%;min-height:200px;position:relative;transform-style:preserve-3d;transition:transform .5s;cursor:pointer}
+.fc.flipped{transform:rotateY(180deg)}
+.fc-face{position:absolute;width:100%;min-height:200px;backface-visibility:hidden;border-radius:14px;padding:28px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.fc-front{background:linear-gradient(135deg,var(--card),var(--card2));border:2px solid var(--primary)}
+.fc-back{background:linear-gradient(135deg,rgba(67,233,123,.1),rgba(108,99,255,.1));border:2px solid var(--accent);transform:rotateY(180deg)}
+.fc-front .q{font-size:1rem;color:#fff;line-height:1.5}
+.fc-back .a{font-size:.95rem;color:var(--accent);font-weight:600;margin-bottom:8px}
+.fc-back .ex{font-size:.8rem;color:var(--muted);margin-top:6px}
+.fc-nav{display:flex;gap:10px;justify-content:center}
+.pyq-search{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.pyq-search input{background:var(--card);border:1px solid var(--border);color:var(--text);padding:8px 14px;border-radius:8px;font-size:.85rem;flex:1;min-width:160px}
+.pyq-search select{background:var(--card);border:1px solid var(--border);color:var(--text);padding:8px 12px;border-radius:8px;font-size:.82rem}
+.unit-block{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:16px}
+.unit-block h3{color:var(--primary);font-size:1rem;margin-bottom:12px;display:flex;justify-content:space-between}
+.unit-block h3 span{color:var(--secondary);font-size:.85rem}
+.unit-block ul{list-style:none;padding:0}
+.unit-block ul li{padding:6px 0;border-bottom:1px solid var(--border);font-size:.85rem;display:flex;justify-content:space-between}
+.unit-block ul li:last-child{border-bottom:none}
+.unit-block ul li span{color:var(--muted);font-size:.78rem}
+@media(max-width:600px){header h1{font-size:1.3rem}.ch-card h3{font-size:.85rem}.fc-face{padding:18px}}
+</style>
+</head>
+<body>
+<header>
+  <h1>⚡ Physics12 CBSE | Quick Revision</h1>
+  <p>Class 12 Physics — CBSE 2026 | All 14 Chapters | Concepts · Mnemonics · Formulas · PYQ · Flashcards</p>
+  <nav class="nav-pills">
+    <button class="active" onclick="showPage('home',this)">🏠 Chapters</button>
+    <button onclick="showPage('pyqAll',this)">📋 All PYQ</button>
+    <button onclick="showPage('syllabus',this)">📚 Syllabus</button>
+  </nav>
+</header>
+<div class="container">
+
+<div id="home" class="page active">
+  <div class="stats-grid">
+    <div class="stat-card"><div class="num">14</div><div class="lbl">Chapters</div></div>
+    <div class="stat-card"><div class="num">70</div><div class="lbl">Theory Marks</div></div>
+    <div class="stat-card"><div class="num">30</div><div class="lbl">Practical Marks</div></div>
+    <div class="stat-card"><div class="num">110+</div><div class="lbl">PYQ</div></div>
+    <div class="stat-card"><div class="num">110+</div><div class="lbl">Flashcards</div></div>
+  </div>
+  <div class="chapter-grid" id="chapterGrid"></div>
+</div>
+
+<div id="chapterDetail" class="page">
+  <button class="back-btn" onclick="showPage('home',null)">← Back to Chapters</button>
+  <div class="ch-header" id="chHeader"></div>
+  <div class="tab-bar" id="tabBar"></div>
+  <div id="tabContents"></div>
+</div>
+
+<div id="pyqAll" class="page">
+  <h2 style="margin-bottom:14px;color:var(--primary)">All Previous Year Questions</h2>
+  <div class="pyq-search">
+    <input id="pyqSearch" type="text" placeholder="Search questions..." oninput="renderAllPYQ()">
+    <select id="pyqYear" onchange="renderAllPYQ()"><option value="">All Years</option></select>
+    <select id="pyqMarks" onchange="renderAllPYQ()"><option value="">All Marks</option><option value="1">1M</option><option value="2">2M</option><option value="3">3M</option><option value="4">4M</option><option value="5">5M</option></select>
+    <select id="pyqChapter" onchange="renderAllPYQ()"><option value="">All Chapters</option></select>
+  </div>
+  <div id="pyqAllList"></div>
+</div>
+
+<div id="syllabus" class="page">
+  <h2 style="margin-bottom:14px;color:var(--primary)">CBSE 2026 Physics Syllabus</h2>
+  <div id="syllabusContent"></div>
+</div>
+
+</div>
+<script>
+const chapters = [
+  {
+    id:1, title:"Electric Charges and Fields", unit:"I", marks:8,
+    tags:["8 marks","Coulomb's law","Gauss law","hot🔥"],
+    hotTopics:["Coulomb's Law","Electric field lines","Gauss's theorem","Electric dipole"],
+    concepts:[
+      {h:"Electric Charge",p:"Two types: positive and negative. Like charges repel, unlike attract. Charge is quantized: q = ne (n is integer, e = 1.6×10⁻¹⁹ C). Charge is conserved — total charge of isolated system remains constant."},
+      {h:"Coulomb's Law",p:"Force between two point charges: F = kq₁q₂/r² = q₁q₂/(4πε₀r²)<br>k = 9×10⁹ Nm²C⁻², ε₀ = 8.85×10⁻¹² C²N⁻¹m⁻²<br>In medium: F = q₁q₂/(4πεr²), ε = ε₀εᵣ. Electrostatic force obeys superposition principle."},
+      {h:"Electric Field",p:"E = F/q₀ (force per unit positive test charge). Point charge: E = kq/r². Direction: away from +q, towards -q.<br>Field lines: start on +, end on -, never cross, density ∝ field strength."},
+      {h:"Electric Dipole",p:"Two equal & opposite charges ±q separated by distance 2a. Dipole moment p⃗ = q·2a (from -q to +q).<br>Field on axial line: E = 2kp/r³. Field on equatorial line: E = kp/r³ (opposite to p⃗)."},
+      {h:"Gauss's Law",p:"Total electric flux through closed surface = q_enc/ε₀. φ = ∮E⃗·dA⃗ = q/ε₀<br>Applications: infinite line charge E=λ/(2πε₀r), infinite plane E=σ/(2ε₀), sphere E=q/(4πε₀r²) outside."}
+    ],
+    mnemonics:[
+      {m:"CQCS = Charge is Quantized, Conserved, Source of field",exp:"Three key properties of charge: Quantized (q=ne), Conserved (total remains same), Source of electric field. 'CQCS = Charge Qualities: Count, Save.'"},
+      {m:"Axial = 2kp/r³, Equatorial = kp/r³ — Axial is double",exp:"Dipole field on axial (end-on) position is TWICE that on equatorial (broadside) position. 'A for Axial = 2, E for Equatorial = 1.' Both ∝ 1/r³."},
+      {m:"Gauss: φ = q_enc/ε₀ — only enclosed charge matters",exp:"Electric flux through any closed surface depends only on charge INSIDE (enclosed). Charges outside contribute zero net flux. 'Gauss sees only what's inside the box.'"},
+      {m:"Field lines never cross — crossing = two directions at one point (impossible)",exp:"If two field lines crossed, there'd be two directions of E at that point — impossible. Electric field at any point has unique direction."}
+    ],
+    formulas:[
+      {f:"F = kq₁q₂/r²  (k=9×10⁹)",label:"Coulomb's Law"},
+      {f:"E = kq/r²",label:"Field due to point charge"},
+      {f:"p = q×2a",label:"Electric dipole moment"},
+      {f:"E_axial = 2kp/r³",label:"Dipole axial field"},
+      {f:"φ = q_enc/ε₀",label:"Gauss's Law"},
+      {f:"E = σ/(2ε₀)",label:"Field due to infinite plane sheet"}
+    ],
+    pyqs:[
+      {y:"2024",m:2,q:"Two point charges +q and -q are placed at a distance d apart. What is the electric field at the midpoint of the line joining them?",ans:"Both fields point in the same direction (away from +q towards -q) at midpoint. E_net = 2×kq/(d/2)² = 8kq/d²."},
+      {y:"2023",m:3,q:"State Gauss's law. Apply it to find electric field due to a uniformly charged infinite plane sheet.",ans:"Gauss law: φ=q_enc/ε₀. For plane sheet (charge density σ): draw cylindrical Gaussian surface. Flux through two flat faces = E×2A. Charge enclosed = σA. So E×2A=σA/ε₀ → E=σ/(2ε₀)."},
+      {y:"2022",m:2,q:"Define electric flux. Write its SI unit.",ans:"Electric flux is the number of electric field lines passing through a surface. φ = ∫E⃗·dA⃗. SI unit: Nm²C⁻¹ or Vm."},
+      {y:"2020",m:3,q:"An electric dipole of dipole moment 10⁻⁸ Cm is placed in uniform electric field of 10³ N/C with dipole axis at 30° to field. Find torque.",ans:"τ = pEsinθ = 10⁻⁸×10³×sin30° = 10⁻⁸×10³×0.5 = 5×10⁻⁶ Nm."}
+    ],
+    flashcards:[
+      {q:"Coulomb's constant k value",a:"9×10⁹ Nm²C⁻²",extra:"k = 1/(4πε₀)"},
+      {q:"Charge quantization means?",a:"q = ne, where n is integer and e = 1.6×10⁻¹⁹ C",extra:"Charge comes in discrete packets"},
+      {q:"Gauss's Law formula",a:"φ = q_enc/ε₀",extra:"Only enclosed charge matters"},
+      {q:"Dipole field on axial vs equatorial",a:"Axial = 2kp/r³; Equatorial = kp/r³",extra:"Axial is double, both decrease as 1/r³"},
+      {q:"Electric field due to infinite plane sheet",a:"E = σ/(2ε₀)",extra:"Uniform, perpendicular to sheet"}
+    ]
+  },
+  {
+    id:2, title:"Electrostatic Potential and Capacitance", unit:"I", marks:8,
+    tags:["8 marks","potential","capacitance","energy","hot🔥"],
+    hotTopics:["Electric potential","Equipotential surfaces","Capacitors","Energy stored"],
+    concepts:[
+      {h:"Electric Potential",p:"V = W/q₀ = kq/r. Work done to bring unit positive charge from infinity to a point. SI unit: Volt (V = J/C).<br>Relation with field: E = -dV/dr. Potential decreases in direction of field."},
+      {h:"Equipotential Surfaces",p:"Surfaces where potential is same everywhere. No work done moving charge on it. Field lines ⊥ equipotential surfaces. For point charge: concentric spheres. For uniform field: parallel planes."},
+      {h:"Capacitance",p:"C = Q/V. SI unit: Farad (F). Parallel plate: C = ε₀A/d. With dielectric: C = Kε₀A/d (K = dielectric constant).<br>Series: 1/C = 1/C₁+1/C₂+... Parallel: C = C₁+C₂+..."},
+      {h:"Energy Stored in Capacitor",p:"U = ½CV² = Q²/(2C) = QV/2. Energy density = ½ε₀E². On inserting dielectric at constant voltage: C increases, U increases (source does work). At constant charge: C increases, U decreases."}
+    ],
+    mnemonics:[
+      {m:"V = kq/r — Potential is kq over r (not r squared!)",exp:"Electric field E = kq/r² (r squared). Potential V = kq/r (only r). 'Potential falls slowly than field.' Easy to mix up — Potential has ONE r."},
+      {m:"Series Capacitors: Less (1/C_total = sum of 1/C). Parallel: More (C adds directly)",exp:"Capacitors in Series → total capacitance DECREASES (like resistors in parallel). In Parallel → total capacitance INCREASES (like resistors in series). Opposite of resistors!"},
+      {m:"U = ½CV² — half C V squared",exp:"Energy stored = ½CV². Three equivalent forms: ½CV² = Q²/2C = QV/2. 'Half See Vee squared' — like KE = ½mv²."},
+      {m:"E lines ⊥ equipotential — they never run along the surface",exp:"Field lines always cut equipotential surfaces at right angles (90°). If a charge moves along equipotential, E does no work (force ⊥ displacement)."}
+    ],
+    formulas:[
+      {f:"V = kq/r",label:"Potential due to point charge"},
+      {f:"C = ε₀A/d",label:"Parallel plate capacitor"},
+      {f:"C = Kε₀A/d",label:"With dielectric (K = dielectric constant)"},
+      {f:"U = ½CV² = Q²/2C",label:"Energy stored in capacitor"},
+      {f:"1/C_series = 1/C₁+1/C₂",label:"Series combination"},
+      {f:"C_parallel = C₁+C₂+...",label:"Parallel combination"}
+    ],
+    pyqs:[
+      {y:"2024",m:3,q:"A parallel plate capacitor has plate area 100 cm² and plate separation 5 mm. Find its capacitance. If connected to 200V battery, find charge and energy stored.",ans:"C = ε₀A/d = 8.85×10⁻¹²×100×10⁻⁴/(5×10⁻³) = 1.77×10⁻¹¹ F. Q=CV=1.77×10⁻¹¹×200=3.54×10⁻⁹ C. U=½CV²=½×1.77×10⁻¹¹×40000=3.54×10⁻⁷ J."},
+      {y:"2023",m:2,q:"What is the work done in moving a charge of 2C from a point of potential -12V to a point of potential +4V?",ans:"W = q(V₂-V₁) = 2×(4-(-12)) = 2×16 = 32 J."},
+      {y:"2022",m:3,q:"Derive expression for energy stored in a capacitor. How does energy change when dielectric is inserted at constant charge?",ans:"dW=V·dq=q/C·dq. U=∫₀^Q q/C dq = Q²/2C = ½CV². At constant Q: inserting dielectric increases C, so U=Q²/2C decreases (energy is released as heat/mechanical work)."},
+      {y:"2020",m:2,q:"Two capacitors of 2μF and 3μF are connected (a) in series (b) in parallel. Find equivalent capacitance.",ans:"(a) 1/C=1/2+1/3=5/6 → C=6/5=1.2μF. (b) C=2+3=5μF."}
+    ],
+    flashcards:[
+      {q:"Formula for capacitance of parallel plate capacitor",a:"C = ε₀A/d",extra:"With dielectric: C = Kε₀A/d"},
+      {q:"Energy stored in capacitor",a:"U = ½CV² = Q²/2C = QV/2",extra:"Three equivalent forms"},
+      {q:"What happens to C when dielectric inserted?",a:"C increases by factor K (dielectric constant)",extra:"K > 1 always"},
+      {q:"Capacitors in parallel: total C?",a:"C = C₁ + C₂ + ... (adds directly)",extra:"Unlike resistors in parallel!"},
+      {q:"Relation between E and V",a:"E = -dV/dr (field = negative potential gradient)",extra:"Field points from high to low potential"}
+    ]
+  },
+  {
+    id:3, title:"Current Electricity", unit:"II", marks:7,
+    tags:["7 marks","Ohm's law","Kirchhoff","Wheatstone","hot🔥"],
+    hotTopics:["Ohm's law & resistance","Kirchhoff's laws","Wheatstone bridge","Potentiometer"],
+    concepts:[
+      {h:"Drift Velocity and Current",p:"Current I = nAev_d. n=electron density, A=area, e=charge, v_d=drift velocity.<br>Current density J = I/A = nev_d. Ohm's law: V = IR. Resistance R = ρL/A (ρ = resistivity)."},
+      {h:"Kirchhoff's Laws",p:"<b>KCL (Junction rule):</b> Sum of currents at a junction = 0. (ΣI_in = ΣI_out) — charge conservation.<br><b>KVL (Loop rule):</b> Sum of EMFs = Sum of voltage drops. (ΣE = ΣIR) — energy conservation."},
+      {h:"Wheatstone Bridge",p:"Four resistors P,Q,R,S in diamond. Balanced when: P/Q = R/S (no current through galvanometer). Used to find unknown resistance. Metre bridge is practical form."},
+      {h:"Potentiometer",p:"Long wire of uniform resistance. Potential drop ∝ length. Used to: (1) Compare EMFs: E₁/E₂ = l₁/l₂. (2) Find internal resistance: r = R(l₁-l₂)/l₂. Advantage over voltmeter: draws no current."},
+      {h:"Cells in Series and Parallel",p:"Series: E_net = E₁+E₂, r_net = r₁+r₂. Parallel (identical): E_net = E, r_net = r/n. Power dissipated: P = I²R = V²/R = VI."}
+    ],
+    mnemonics:[
+      {m:"KCL = Keep Currents Level (in=out at junction)",exp:"KCL: what comes in must go out. ΣI_in = ΣI_out at any junction. Based on conservation of charge. 'Keep Currents Level — no charge piles up.'"},
+      {m:"Wheatstone balance: P/Q = R/S (cross multiply: PS = QR)",exp:"Balanced bridge condition: P/Q = R/S → PS = QR. No current through galvanometer. 'Products of opposite arms are equal.'"},
+      {m:"Potentiometer compares EMFs: E₁/E₂ = l₁/l₂",exp:"Longer balance length → higher EMF. Potentiometer gives accurate comparison because it draws no current from cell being measured. 'Length ratio = EMF ratio.'"},
+      {m:"R = ρL/A — Resistance is ρ times Length over Area",exp:"Longer wire → more resistance (L↑). Thicker wire → less resistance (A↑). ρ depends on material. 'Resistance Loves length, Avoids area.'"}
+    ],
+    formulas:[
+      {f:"I = nAev_d",label:"Current and drift velocity"},
+      {f:"R = ρL/A",label:"Resistance formula"},
+      {f:"P/Q = R/S",label:"Wheatstone bridge balance"},
+      {f:"E₁/E₂ = l₁/l₂",label:"Potentiometer EMF comparison"},
+      {f:"r = R(l₁-l₂)/l₂",label:"Internal resistance by potentiometer"},
+      {f:"P = I²R = V²/R = VI",label:"Power formulas"}
+    ],
+    pyqs:[
+      {y:"2024",m:3,q:"State Kirchhoff's laws. Using them, find the current in each branch of the circuit with E₁=3V,r₁=1Ω; E₂=2V,r₂=2Ω; R=5Ω (all in series loop).",ans:"By KVL: E₁-E₂=I(r₁+r₂+R) → 1=I(8) → I=1/8 A = 0.125 A."},
+      {y:"2023",m:3,q:"In a Wheatstone bridge P=10Ω, Q=15Ω, R=30Ω, find S for balance. If S is shunted by 10Ω, find galvanometer current direction.",ans:"P/Q=R/S → 10/15=30/S → S=45Ω. If S shunted: S'=10×45/55=450/55≈8.18Ω. Now P/Q>R/S', bridge unbalanced, current flows."},
+      {y:"2022",m:2,q:"A wire of resistance 8Ω is bent in the form of a circle. What is resistance between two diametrically opposite points?",ans:"Wire is bent into circle. Each half = 4Ω. Parallel combination: R = 4×4/(4+4) = 2Ω."},
+      {y:"2020",m:5,q:"Explain potentiometer principle. How is it used to determine internal resistance of a cell?",ans:"Principle: VAB ∝ length AB (uniform wire). For internal resistance: l₁=balance with cell in open circuit, l₂=with external resistance R. r=R(l₁-l₂)/l₂."}
+    ],
+    flashcards:[
+      {q:"Wheatstone bridge balanced condition",a:"P/Q = R/S (no current through galvanometer)",extra:"Cross multiply: PS = QR"},
+      {q:"Potentiometer advantage over voltmeter",a:"Draws no current from cell — gives accurate EMF",extra:"Voltmeter draws some current, gives terminal voltage not EMF"},
+      {q:"KCL is based on conservation of?",a:"Conservation of charge",extra:"KVL is based on conservation of energy"},
+      {q:"Current I in terms of drift velocity",a:"I = nAev_d",extra:"n=electron density, A=area, e=charge"},
+      {q:"Power dissipated in resistor",a:"P = I²R = V²/R = VI",extra:"Use which formula based on what's given"}
+    ]
+  },
+  {
+    id:4, title:"Moving Charges and Magnetism", unit:"III", marks:8,
+    tags:["8 marks","Biot-Savart","Ampere","force","hot🔥"],
+    hotTopics:["Biot-Savart law","Ampere's law","Force on conductor","Cyclotron","Moving coil galvanometer"],
+    concepts:[
+      {h:"Biot-Savart Law",p:"dB = μ₀/4π × Idl sinθ/r²<br>For circular loop at centre: B = μ₀I/2R<br>For infinite straight wire: B = μ₀I/(2πr)<br>Direction by right-hand thumb rule."},
+      {h:"Ampere's Circuital Law",p:"∮B⃗·dl⃗ = μ₀I_enc. Analogous to Gauss's law for magnetism. Used for: infinite wire, toroid, solenoid.<br>Solenoid: B = μ₀nI (n = turns per unit length)."},
+      {h:"Force on Moving Charge & Conductor",p:"F = q(v⃗×B⃗) = qvB sinθ. Lorentz force.<br>For straight conductor: F = BIL sinθ.<br>Direction by Fleming's Left Hand Rule (FLHR).<br>Two parallel wires: F/L = μ₀I₁I₂/(2πd). Like currents attract, unlike repel."},
+      {h:"Galvanometer & Cyclotron",p:"Moving coil galvanometer: τ = NIAB = kφ. Current sensitivity = NBA/k.<br>Cyclotron: frequency f = qB/(2πm) — independent of speed. Used to accelerate charged particles."}
+    ],
+    mnemonics:[
+      {m:"FLHR = Force, current Left, field up = Fleming's Left Hand Rule",exp:"Fleming's Left Hand Rule for force on current-carrying conductor in magnetic field: Fore-finger=Field, Middle-finger=Current, Thumb=Force (Motion). FBI: Force-B-I with left hand."},
+      {m:"Solenoid B = μ₀nI — n is turns per metre",exp:"Inside long solenoid, field B = μ₀nI. n = N/L (number of turns per unit length). Field is uniform inside, nearly zero outside. 'μ-n-I = Solenoid magic.'"},
+      {m:"Like currents attract, unlike currents repel (opposite of charges!)",exp:"Two parallel wires with current in same direction: attract. Opposite directions: repel. Opposite behaviour compared to electric charges. 'Currents: Like loves Like!'"},
+      {m:"Cyclotron frequency doesn't depend on speed — f = qB/2πm",exp:"Cyclotron frequency f = qB/(2πm). No v in formula! This is why cyclotron works — as particle speeds up, radius increases but time per revolution stays constant."}
+    ],
+    formulas:[
+      {f:"B = μ₀I/(2πr)",label:"Field due to infinite straight wire"},
+      {f:"B = μ₀I/2R",label:"Field at centre of circular loop"},
+      {f:"B = μ₀nI",label:"Field inside solenoid"},
+      {f:"F = BIL sinθ",label:"Force on current-carrying conductor"},
+      {f:"F/L = μ₀I₁I₂/(2πd)",label:"Force between parallel wires"},
+      {f:"f = qB/(2πm)",label:"Cyclotron frequency"}
+    ],
+    pyqs:[
+      {y:"2024",m:3,q:"A circular coil of 30 turns, radius 8 cm carries a current of 0.6 A. Find magnetic field at centre.",ans:"B = μ₀NI/(2R) = (4π×10⁻⁷×30×0.6)/(2×0.08) = 1.41×10⁻⁴ T."},
+      {y:"2023",m:3,q:"State Ampere's law. Apply it to find field inside a solenoid.",ans:"Ampere's law: ∮B·dl = μ₀I_enc. For solenoid: choose rectangular Amperian loop. Only inner side contributes: B·L = μ₀(nL)I → B = μ₀nI."},
+      {y:"2022",m:2,q:"Two long parallel wires carry currents 3A and 5A in opposite directions, separated by 10 cm. Find force per unit length.",ans:"F/L = μ₀I₁I₂/(2πd) = 4π×10⁻⁷×3×5/(2π×0.1) = 3×10⁻⁵ N/m. Force is repulsive (opposite directions)."},
+      {y:"2020",m:3,q:"A proton enters a magnetic field of 0.5T with velocity 10⁶ m/s perpendicular to field. Find radius of circular path.",ans:"r = mv/(qB) = 1.67×10⁻²⁷×10⁶/(1.6×10⁻¹⁹×0.5) = 0.021 m ≈ 2.1 cm."}
+    ],
+    flashcards:[
+      {q:"B at centre of circular loop of radius R",a:"B = μ₀I/2R",extra:"N turns: B = μ₀NI/2R"},
+      {q:"Fleming's Left Hand Rule gives?",a:"Direction of force on current-carrying conductor in magnetic field",extra:"Fore=Field, Middle=Current, Thumb=Force"},
+      {q:"Cyclotron frequency formula",a:"f = qB/(2πm)",extra:"Independent of speed — key principle!"},
+      {q:"Field inside solenoid",a:"B = μ₀nI (n = turns per unit length)",extra:"Uniform inside, zero outside"},
+      {q:"Two parallel wires: like currents?",a:"Attract each other",extra:"Unlike currents repel — opposite of charges!"}
+    ]
+  },
+  {
+    id:5, title:"Magnetism and Matter", unit:"III", marks:5,
+    tags:["5 marks","bar magnet","earth's magnetism","magnetic materials"],
+    hotTopics:["Bar magnet","Earth's magnetism","Dia/Para/Ferromagnetic","Hysteresis"],
+    concepts:[
+      {h:"Bar Magnet",p:"Magnetic dipole moment M = m×2l. Field on axial line: B = μ₀/4π × 2M/r³. Field on equatorial line: B = μ₀/4π × M/r³. Torque in uniform field: τ = MB sinθ."},
+      {h:"Earth's Magnetism",p:"Geographic north = magnetic south. Three elements: Declination (angle between geographic & magnetic meridian), Inclination/Dip (angle B makes with horizontal), Horizontal component H = Bcosδ. V = Btanδ/Hcosδ. tanδ = V/H."},
+      {h:"Magnetic Materials",p:"<b>Diamagnetic:</b> weakly repelled, χ slightly negative (Bi, Cu, water). μᵣ<1.<br><b>Paramagnetic:</b> weakly attracted, χ small positive (Al, O₂). Curie law: χ ∝ 1/T.<br><b>Ferromagnetic:</b> strongly attracted, large χ (Fe, Ni, Co). Curie temperature — above it becomes paramagnetic."},
+      {h:"Hysteresis",p:"B-H curve for ferromagnet. Retentivity: residual magnetism when H=0. Coercivity: reverse field to demagnetize. Soft iron: thin loop (easy to magnetize/demagnetize) — transformers. Steel: thick loop — permanent magnets."}
+    ],
+    mnemonics:[
+      {m:"DPF = Dia Para Ferro — D repels, P attracts weakly, F attracts strongly",exp:"Diamagnetic: repelled (negative susceptibility). Paramagnetic: weakly attracted. Ferromagnetic: strongly attracted. 'DPF = Decreasing Pull-Force.'"},
+      {m:"Axial = 2M, Equatorial = M (bar magnet field)",exp:"Field on axial (end-on) = μ₀2M/(4πr³). Equatorial (broad-side) = μ₀M/(4πr³). Axial is double. Same pattern as electric dipole!"},
+      {m:"tanδ = V/H (dip angle uses tan)",exp:"Dip angle δ: tanδ = vertical component/horizontal component = V/H. 'D-dip angle uses division: V divided by H, takes tan.'"},
+      {m:"Soft iron = Transformer cores (easy cycle). Steel = Permanent magnets (hard to demagnetize)",exp:"Soft iron: low coercivity, low retentivity, thin hysteresis loop → low energy loss → transformer cores. Steel: high retentivity, high coercivity → permanent magnets."}
+    ],
+    formulas:[
+      {f:"B_axial = μ₀/4π × 2M/r³",label:"Field on axial line of bar magnet"},
+      {f:"B_equatorial = μ₀/4π × M/r³",label:"Field on equatorial line"},
+      {f:"τ = MB sinθ",label:"Torque on magnetic dipole"},
+      {f:"tanδ = V/H",label:"Angle of dip"},
+      {f:"χ ∝ 1/T",label:"Curie law for paramagnetic materials"}
+    ],
+    pyqs:[
+      {y:"2024",m:2,q:"At a place, horizontal component of earth's field is 0.3×10⁻⁴ T and dip angle is 60°. Find total field B.",ans:"H = Bcosδ → B = H/cosδ = 0.3×10⁻⁴/cos60° = 0.3×10⁻⁴/0.5 = 0.6×10⁻⁴ T."},
+      {y:"2023",m:2,q:"Distinguish between diamagnetic, paramagnetic, and ferromagnetic substances.",ans:"Dia: weakly repelled, χ<0 (Bi,Cu). Para: weakly attracted, small +χ, follows Curie law (Al,O₂). Ferro: strongly attracted, large χ, has domains (Fe,Ni,Co). Ferro→Para above Curie temperature."},
+      {y:"2022",m:3,q:"What is hysteresis? Why is soft iron preferred over steel for transformer cores?",ans:"Hysteresis: lag of B behind H in ferromagnet. Soft iron has smaller hysteresis loop (less area = less energy loss per cycle). In transformers, core is repeatedly magnetized/demagnetized → soft iron minimizes heat loss."}
+    ],
+    flashcards:[
+      {q:"Three magnetic elements of Earth",a:"Declination, Inclination (dip), Horizontal component (H)",extra:"tanδ = V/H"},
+      {q:"Diamagnetic susceptibility χ",a:"Small and negative (χ < 0)",extra:"Examples: Bi, Cu, water — weakly repelled"},
+      {q:"Curie law states",a:"χ ∝ 1/T for paramagnetic materials",extra:"Susceptibility decreases with temperature"},
+      {q:"Why soft iron for transformer cores?",a:"Low coercivity → small hysteresis loop → less energy loss",extra:"Steel used for permanent magnets (high retentivity)"}
+    ]
+  },
+  {
+    id:6, title:"Electromagnetic Induction", unit:"IV", marks:8,
+    tags:["8 marks","Faraday","Lenz","self inductance","hot🔥"],
+    hotTopics:["Faraday's laws","Lenz's law","Motional EMF","Self & Mutual inductance"],
+    concepts:[
+      {h:"Faraday's Laws of EMI",p:"1st Law: Whenever magnetic flux through a coil changes, an EMF is induced.<br>2nd Law: Induced EMF e = -dφ/dt = -N·dφ/dt (N turns). Negative sign → Lenz's law."},
+      {h:"Lenz's Law",p:"Induced current always opposes the cause producing it (conservation of energy). If flux increases, induced current creates opposing flux; if flux decreases, current supports original flux."},
+      {h:"Motional EMF",p:"Conductor of length L moving with velocity v in field B (perpendicular): e = BLv. If circuit closed: I = BLv/R. Force on conductor: F = BIL = B²L²v/R (opposing motion)."},
+      {h:"Self and Mutual Inductance",p:"Self inductance: L = Nφ/I. e = -L(dI/dt). Unit: Henry (H). Solenoid: L = μ₀n²V.<br>Mutual inductance: M = N₂φ₂/I₁. e₂ = -M(dI₁/dt). Energy stored in inductor: U = ½LI²."}
+    ],
+    mnemonics:[
+      {m:"Lenz = Lazy — induced current opposes change (lazy to change)",exp:"Lenz's law: induced current opposes whatever is changing the flux. If you push a magnet in, current fights you. 'Electromagnetically lazy — opposes every change.' This ensures energy conservation."},
+      {m:"e = -N dφ/dt — EMF = Negative N times rate of flux change",exp:"Negative sign is Lenz's law built in. N = number of turns. More turns → more EMF. Faster change → more EMF. 'e = minus N dee-phi-dee-t.'"},
+      {m:"Motional EMF = BLv (B, L, v all perpendicular)",exp:"When a rod of length L moves with velocity v perpendicular to magnetic field B: e = BLv. 'BLv = BaLLV = Ball speed!' All three must be mutually perpendicular for maximum EMF."},
+      {m:"Energy in inductor U = ½LI² (like capacitor ½CV²)",exp:"Energy stored in inductor = ½LI². Parallel with capacitor energy ½CV². L is to inductor as C is to capacitor. 'Half L I squared — inductors store magnetic energy.'"}
+    ],
+    formulas:[
+      {f:"e = -N dφ/dt",label:"Faraday's law (N turns)"},
+      {f:"e = BLv",label:"Motional EMF"},
+      {f:"L = μ₀n²V",label:"Self inductance of solenoid"},
+      {f:"U = ½LI²",label:"Energy stored in inductor"},
+      {f:"e₂ = -M(dI₁/dt)",label:"Mutual inductance EMF"}
+    ],
+    pyqs:[
+      {y:"2024",m:3,q:"A rectangular coil of 200 turns, area 0.1 m² is placed in a magnetic field of 0.5T. Field reverses in 0.02s. Find induced EMF.",ans:"Δφ = 2BAcosθ = 2×0.5×0.1×1 = 0.1 Wb. e = N×Δφ/Δt = 200×0.1/0.02 = 1000 V."},
+      {y:"2023",m:3,q:"A rod of length 0.5m moves at 2 m/s perpendicular to magnetic field 1T. Find EMF and current if circuit resistance is 5Ω.",ans:"e = BLv = 1×0.5×2 = 1V. I = e/R = 1/5 = 0.2 A."},
+      {y:"2022",m:2,q:"State Lenz's law. How does it follow from conservation of energy?",ans:"Lenz's law: induced current opposes the change in flux causing it. If induced current aided the flux change, it would increase the EMF further → infinite current → violates energy conservation. So it must oppose."},
+      {y:"2020",m:3,q:"An inductor of 200 mH is connected to AC supply changing at 5A/s. Find back EMF.",ans:"e = L(dI/dt) = 200×10⁻³×5 = 1V."}
+    ],
+    flashcards:[
+      {q:"Faraday's law formula",a:"e = -N dφ/dt",extra:"Negative sign represents Lenz's law"},
+      {q:"Motional EMF when rod moves in magnetic field",a:"e = BLv",extra:"B, L, v must be mutually perpendicular"},
+      {q:"Energy stored in an inductor",a:"U = ½LI²",extra:"L in Henry, I in Ampere, U in Joule"},
+      {q:"What does Lenz's law state?",a:"Induced current opposes the change in magnetic flux causing it",extra:"Consequence of energy conservation"},
+      {q:"Unit of self inductance",a:"Henry (H) = Vs/A = Ωs",extra:"1H = when 1A/s change induces 1V"}
+    ]
+  },
+  {
+    id:7, title:"Alternating Current", unit:"IV", marks:8,
+    tags:["8 marks","RLC circuit","resonance","transformer","hot🔥"],
+    hotTopics:["RMS values","Impedance","LC resonance","Power factor","Transformer"],
+    concepts:[
+      {h:"AC Quantities",p:"V = V₀sinωt, I = I₀sin(ωt±φ).<br>V_rms = V₀/√2, I_rms = I₀/√2 ≈ 0.707×peak.<br>For resistor: I & V in phase. For inductor: I lags V by π/2. For capacitor: I leads V by π/2."},
+      {h:"Impedance and Reactance",p:"Inductive reactance: X_L = ωL = 2πfL<br>Capacitive reactance: X_C = 1/(ωC) = 1/(2πfC)<br>Impedance of LCR: Z = √(R²+(X_L-X_C)²)<br>Phase angle: tanφ = (X_L-X_C)/R"},
+      {h:"Resonance in LCR Circuit",p:"At resonance: X_L = X_C → ω₀ = 1/√(LC). Z = R (minimum). Current maximum. Quality factor Q = ω₀L/R = 1/(ω₀CR) = (1/R)√(L/C)."},
+      {h:"Power and Transformer",p:"Apparent power = V_rms×I_rms. True power P = V_rms×I_rms×cosφ. Power factor cosφ = R/Z (=1 for pure R, =0 for pure L or C).<br>Transformer: V_s/V_p = N_s/N_p = I_p/I_s. Ideal: P_p = P_s. Step-up: N_s>N_p."}
+    ],
+    mnemonics:[
+      {m:"CIVIL = C leads, I leads V; for Inductor, V leads I (VIL)",exp:"In Capacitor: Current leads Voltage (Civil). In Inductor: Voltage leads Current (VIL). 'CIVIL engineering: C-I-V-I-L.' For L: V before I. Easy to remember with the word CIVIL."},
+      {m:"At resonance: X_L = X_C, Z = R minimum, I maximum",exp:"LCR circuit at resonance: inductive and capacitive reactances cancel. Impedance = R (pure resistive, minimum). Current is maximum. 'Resonance: X's cancel, Z = R, I goes max!'"},
+      {m:"V_rms = V₀/√2 ≈ 0.707 V₀",exp:"RMS value of sinusoidal AC = peak value divided by √2. 'RMS is Root Mean Square, always 0.707 times peak.' For household 230V AC: peak = 230√2 ≈ 325V."},
+      {m:"Transformer ratio: V_s/V_p = N_s/N_p (turns ratio)",exp:"Voltage ratio = turns ratio. Current ratio is inverse: I_p/I_s = N_s/N_p (more turns = less current on that side, for same power). 'More turns = more voltage, less current.'"}
+    ],
+    formulas:[
+      {f:"V_rms = V₀/√2, I_rms = I₀/√2",label:"RMS values"},
+      {f:"Z = √(R²+(X_L-X_C)²)",label:"Impedance of LCR circuit"},
+      {f:"ω₀ = 1/√(LC)",label:"Resonant frequency"},
+      {f:"P = V_rms·I_rms·cosφ",label:"True power"},
+      {f:"V_s/V_p = N_s/N_p",label:"Transformer equation"},
+      {f:"X_L = ωL; X_C = 1/(ωC)",label:"Reactances"}
+    ],
+    pyqs:[
+      {y:"2024",m:3,q:"An LCR series circuit has R=100Ω, L=0.5H, C=8μF. Find resonant frequency and Q factor.",ans:"ω₀=1/√(LC)=1/√(0.5×8×10⁻⁶)=500 rad/s. f₀=500/(2π)≈79.6Hz. Q=ω₀L/R=500×0.5/100=2.5."},
+      {y:"2023",m:2,q:"A transformer has 500 turns in primary and 2000 in secondary. Primary voltage is 220V. Find secondary voltage and turns ratio.",ans:"N_s/N_p=2000/500=4. V_s=V_p×N_s/N_p=220×4=880V. Step-up transformer."},
+      {y:"2022",m:3,q:"Explain why the power factor of a purely inductive circuit is zero. What is the average power consumed?",ans:"For pure inductor: current lags voltage by 90°. cosφ=cos90°=0. P=V_rms·I_rms·cos90°=0. Energy oscillates between source and inductor — no net consumption."},
+      {y:"2020",m:2,q:"Find impedance of LCR circuit at resonance. What is current at resonance?",ans:"At resonance X_L=X_C. Z=√(R²+(X_L-X_C)²)=√(R²+0)=R. Current I_rms=V_rms/R (maximum)."}
+    ],
+    flashcards:[
+      {q:"CIVIL mnemonic explains?",a:"In Capacitor: Current leads Voltage. In Inductor: Voltage leads Current (VIL)",extra:"C-I-V-I-L: phase relationships in AC"},
+      {q:"Resonant frequency of LCR",a:"ω₀ = 1/√(LC)",extra:"At resonance: Z = R (minimum), I is maximum"},
+      {q:"Power factor formula",a:"cosφ = R/Z",extra:"= 1 for pure R, = 0 for pure L or C"},
+      {q:"V_rms in terms of peak voltage",a:"V_rms = V₀/√2 ≈ 0.707 V₀",extra:"230V AC has peak ≈ 325V"},
+      {q:"Transformer turns ratio",a:"V_s/V_p = N_s/N_p = I_p/I_s",extra:"Step-up: N_s > N_p → V_s > V_p"}
+    ]
+  },
+  {
+    id:8, title:"Electromagnetic Waves", unit:"V", marks:3,
+    tags:["3 marks","EM spectrum","properties"],
+    hotTopics:["Properties of EM waves","EM spectrum","Displacement current"],
+    concepts:[
+      {h:"Displacement Current & Maxwell",p:"Conduction current: due to flow of charges. Displacement current: I_d = ε₀ dφ_E/dt (due to changing electric field). Maxwell added this to Ampere's law. Modified Ampere's law: ∮B·dl = μ₀(I + I_d)."},
+      {h:"Properties of EM Waves",p:"<ul><li>Transverse waves — E and B perpendicular to each other and to direction of propagation</li><li>Speed in vacuum c = 1/√(μ₀ε₀) = 3×10⁸ m/s</li><li>E₀/B₀ = c</li><li>Carry energy and momentum, no charge required</li><li>Not deflected by electric or magnetic fields</li></ul>"},
+      {h:"EM Spectrum",p:"Radio waves (λ largest, f lowest) → Microwaves → Infrared → Visible → UV → X-rays → Gamma rays (λ smallest, f highest).<br>Radio: communication. Micro: radar, microwave oven. IR: heat, remote. Visible: sight. UV: sterilization. X-ray: medical. Gamma: nuclear, cancer treatment."}
+    ],
+    mnemonics:[
+      {m:"RMIVU-XG = Radio, Micro, IR, Visible, UV, X-ray, Gamma",exp:"EM spectrum from longest to shortest wavelength (lowest to highest frequency): 'Ramu Meets India Via Udupi, eXtra Gorgeous.' Gamma has highest energy (E=hf)."},
+      {m:"E and B are perpendicular to each other AND to wave direction (transverse)",exp:"EM wave: E⃗ ⊥ B⃗ ⊥ direction of travel. All three mutually perpendicular. 'Three-axis relationship: E, B, and motion form a right-handed system.'"},
+      {m:"c = E₀/B₀ = 3×10⁸ m/s",exp:"Speed of EM wave in vacuum relates E and B amplitudes: c = E₀/B₀. This is always true for EM waves in vacuum."}
+    ],
+    formulas:[
+      {f:"c = 1/√(μ₀ε₀) = 3×10⁸ m/s",label:"Speed of EM waves in vacuum"},
+      {f:"E₀/B₀ = c",label:"Relation between E and B amplitudes"},
+      {f:"I_d = ε₀(dφ_E/dt)",label:"Displacement current"},
+      {f:"c = fλ",label:"Wave equation"}
+    ],
+    pyqs:[
+      {y:"2024",m:2,q:"Name the EM radiations used in (a) radar systems (b) cancer treatment.",ans:"(a) Microwaves (b) Gamma rays."},
+      {y:"2023",m:2,q:"What is displacement current? Write its formula.",ans:"Displacement current: current due to changing electric flux (not due to moving charges). I_d = ε₀(dφ_E/dt). Maxwell added it to make Ampere's law consistent."},
+      {y:"2022",m:3,q:"Write properties of EM waves. What is the ratio E₀/B₀?",ans:"Properties: transverse, speed c=3×10⁸ m/s, carry energy and momentum, not affected by E or B fields, E and B perpendicular to each other and propagation direction. E₀/B₀ = c."}
+    ],
+    flashcards:[
+      {q:"Speed of EM waves in vacuum",a:"c = 3×10⁸ m/s = 1/√(μ₀ε₀)",extra:"Same speed regardless of frequency"},
+      {q:"EM spectrum order (low f to high f)",a:"Radio→Micro→IR→Visible→UV→X-ray→Gamma",extra:"Mnemonic: RMIVU-XG"},
+      {q:"What is displacement current?",a:"I_d = ε₀(dφ_E/dt) — due to changing electric flux",extra:"Added by Maxwell to complete Ampere's law"},
+      {q:"E₀/B₀ = ?",a:"c (speed of light)",extra:"Ratio of electric to magnetic amplitude = c"}
+    ]
+  },
+  {
+    id:9, title:"Ray Optics and Optical Instruments", unit:"VI", marks:8,
+    tags:["8 marks","mirrors","lenses","refraction","hot🔥"],
+    hotTopics:["Mirror/Lens formula","Refraction at surfaces","TIR","Optical instruments"],
+    concepts:[
+      {h:"Reflection: Mirror Formula",p:"1/v + 1/u = 1/f = 2/R. Sign convention: all distances from pole, incident ray direction is positive.<br>Magnification m = -v/u = f/(f-u). Concave mirror: converging. Convex mirror: diverging, always virtual image."},
+      {h:"Refraction: Snell's Law",p:"n₁sinθ₁ = n₂sinθ₂. Refractive index n = c/v = sinθ_i/sinθ_r.<br>Refraction at spherical surface: n₂/v - n₁/u = (n₂-n₁)/R.<br>Total Internal Reflection (TIR): when n₁>n₂ and θ > θ_c. sinθ_c = n₂/n₁."},
+      {h:"Lenses",p:"Lens maker's formula: 1/f = (n-1)[1/R₁-1/R₂].<br>Lens formula: 1/v - 1/u = 1/f.<br>Magnification m = v/u. Power P = 1/f (in metres). Combined lenses: P = P₁+P₂."},
+      {h:"Optical Instruments",p:"Simple microscope: m = 1+D/f (D=25cm). Compound microscope: m = m_o × m_e = -L/f_o × (1+D/f_e). Telescope (astronomical): m = f_o/f_e. Length = f_o+f_e."}
+    ],
+    mnemonics:[
+      {m:"Mirror: 1/v + 1/u = 1/f. Lens: 1/v - 1/u = 1/f",exp:"Mirror formula adds, Lens formula subtracts (1/v minus 1/u). 'Mirror is a Plus, Lens has a Minus.' Very common exam confusion — remember this distinction!"},
+      {m:"TIR needs: denser to rarer AND angle > critical angle",exp:"Total Internal Reflection: (1) light goes from denser to rarer medium, AND (2) angle of incidence > critical angle. Both conditions MUST be satisfied. 'Two T's for TIR: denser-To-rarer, angle Too large.'"},
+      {m:"Power of lens: P = 1/f (metres). Convex = +ve, Concave = -ve",exp:"Convex lens converges (positive focal length → positive power). Concave lens diverges (negative focal length → negative power). Powers simply add: P_total = P₁+P₂."},
+      {m:"Telescope: m = f_o/f_e. Big objective, small eyepiece = high magnification",exp:"Astronomical telescope magnification = f_o/f_e. To increase magnification: increase f_o (objective focal length) or decrease f_e (eyepiece focal length). 'FOE: Focal length of Objective over Eyepiece.'"}
+    ],
+    formulas:[
+      {f:"1/v + 1/u = 1/f (mirror)",label:"Mirror formula"},
+      {f:"1/v - 1/u = 1/f (lens)",label:"Lens formula"},
+      {f:"n₁sinθ₁ = n₂sinθ₂",label:"Snell's law"},
+      {f:"sinθ_c = n₂/n₁",label:"Critical angle for TIR"},
+      {f:"P = 1/f(m), P_total = P₁+P₂",label:"Power of lens"},
+      {f:"m_telescope = f_o/f_e",label:"Telescope magnification"}
+    ],
+    pyqs:[
+      {y:"2024",m:3,q:"A convex lens of focal length 20 cm is placed in contact with concave lens of focal length 30 cm. Find effective focal length.",ans:"P = P₁+P₂ = 1/0.2 + 1/(-0.3) = 5 - 3.33 = 1.67 D. f = 1/P = 0.6 m = 60 cm."},
+      {y:"2023",m:3,q:"Derive mirror formula 1/v+1/u=1/f for a concave mirror using geometry.",ans:"Use similar triangles formed by object, image, focus and pole. ΔA'B'F ~ ΔMPF gives B'F/PM = A'B'/MP. Also ΔA'B'C ~ ΔABC gives expressions. Combining and simplifying with sign convention gives 1/v+1/u=1/f."},
+      {y:"2022",m:2,q:"What is critical angle? Find it for glass-air interface if n_glass = 1.5.",ans:"Critical angle: angle of incidence in denser medium for which refracted ray grazes the surface (r=90°). sinθ_c=n_air/n_glass=1/1.5=2/3. θ_c=sin⁻¹(2/3)≈41.8°."},
+      {y:"2020",m:5,q:"Draw ray diagram for compound microscope. Derive expression for its magnifying power.",ans:"m = m_o × m_e. m_o = -L/f_o (L=image distance from objective minus f_o). m_e = 1+D/f_e. Total m = -(L/f_o)(1+D/f_e). For final image at infinity: m = -(L/f_o)(D/f_e)."}
+    ],
+    flashcards:[
+      {q:"Lens formula (not mirror!)",a:"1/v - 1/u = 1/f",extra:"Mirror formula adds: 1/v + 1/u = 1/f"},
+      {q:"Critical angle formula",a:"sinθ_c = n₂/n₁ (n₁ > n₂, denser medium)",extra:"TIR occurs when θ > θ_c"},
+      {q:"Telescope magnification",a:"m = f_o/f_e",extra:"Large f_o and small f_e → high magnification"},
+      {q:"Power of a lens in diopters",a:"P = 1/f (f in metres)",extra:"Convex: +P, Concave: -P"},
+      {q:"Condition for Total Internal Reflection",a:"1) Denser to rarer medium 2) i > critical angle",extra:"Both conditions must hold simultaneously"}
+    ]
+  },
+  {
+    id:10, title:"Wave Optics", unit:"VI", marks:7,
+    tags:["7 marks","interference","diffraction","polarisation","hot🔥"],
+    hotTopics:["Huygens principle","Young's double slit","Diffraction","Polarisation"],
+    concepts:[
+      {h:"Huygens' Principle",p:"Every point on a wavefront acts as a source of secondary wavelets. New wavefront = envelope of all secondary wavelets. Explains reflection and refraction using wave theory."},
+      {h:"Young's Double Slit Experiment (YDSE)",p:"Conditions: coherent sources (same frequency, constant phase difference).<br>Fringe width β = λD/d. Central bright fringe at y=0. Bright fringes: y = nλD/d. Dark fringes: y = (2n-1)λD/2d.<br>Fringe width β = λD/d — increases with λ and D, decreases with d."},
+      {h:"Diffraction",p:"Bending of waves around corners. Single slit: minima at nλ = a sinθ (a=slit width). Central maximum width = 2λ/a. Diffraction grating: d sinθ = nλ."},
+      {h:"Polarisation",p:"Only transverse waves can be polarised (proves light is transverse). Malus's Law: I = I₀cos²θ (θ = angle between polaroid axis and polarised light). Brewster's law: tanθ_B = n. Reflected ray is completely polarised at Brewster's angle."}
+    ],
+    mnemonics:[
+      {m:"β = λD/d — Fringe width = lambda × Distance / slit separation",exp:"YDSE fringe width β = λD/d. More wavelength (λ) → wider fringes. More distance from screen (D) → wider fringes. More slit separation (d) → narrower fringes. 'Big Lambda and Distance, small d = big beta.'"},
+      {m:"Malus: I = I₀cos²θ — intensity drops as cos²",exp:"When polarised light passes through an analyser at angle θ: intensity = I₀cos²θ. At θ=0°: full intensity. At θ=90°: zero intensity. 'Malus means cos squared.'"},
+      {m:"Diffraction: minima at a sinθ = nλ (a = slit width)",exp:"Single slit diffraction: dark fringes (minima) where a sinθ = nλ. Wider slit → less diffraction. 'Dark at a-sin-theta = n-lambda.' Central maximum is widest and brightest."},
+      {m:"Brewster's angle: tanθ_B = n (reflected ray fully polarised)",exp:"At Brewster's angle, reflected light is completely plane polarised. tanθ_B = n (refractive index). Reflected and refracted rays are perpendicular to each other at this angle."}
+    ],
+    formulas:[
+      {f:"β = λD/d",label:"Fringe width in YDSE"},
+      {f:"y_n = nλD/d (bright), y_n=(2n-1)λD/2d (dark)",label:"Fringe positions"},
+      {f:"I = I₀cos²θ",label:"Malus's law"},
+      {f:"tanθ_B = n",label:"Brewster's law"},
+      {f:"a sinθ = nλ",label:"Diffraction minima (single slit)"}
+    ],
+    pyqs:[
+      {y:"2024",m:3,q:"In YDSE, slit separation is 0.3mm, screen at 1.5m, wavelength 589nm. Find fringe width.",ans:"β = λD/d = 589×10⁻⁹×1.5/(0.3×10⁻³) = 2.945×10⁻³ m ≈ 2.95 mm."},
+      {y:"2023",m:2,q:"State Malus's law. A polaroid is placed at 45° to a polarised beam of intensity I₀. Find transmitted intensity.",ans:"Malus's law: I = I₀cos²θ. I = I₀cos²45° = I₀×(1/√2)² = I₀/2."},
+      {y:"2022",m:3,q:"What is Brewster's angle? Find it for glass of refractive index 1.732.",ans:"Brewster's angle: angle of incidence at which reflected light is completely polarised. tanθ_B=n=1.732=tan60°. θ_B=60°."},
+      {y:"2020",m:3,q:"How does fringe width in YDSE change when (a) wavelength decreases (b) slit separation increases?",ans:"β=λD/d. (a) λ decreases → β decreases (fringes become narrower). (b) d increases → β decreases (fringes become narrower)."}
+    ],
+    flashcards:[
+      {q:"Fringe width formula in YDSE",a:"β = λD/d",extra:"Increases with λ and D; decreases with d"},
+      {q:"Malus's law",a:"I = I₀cos²θ",extra:"θ = angle between polariser and analyser axes"},
+      {q:"What does polarisation prove about light?",a:"Light is a transverse wave (only transverse waves can be polarised)",extra:"Longitudinal waves cannot be polarised"},
+      {q:"Brewster's law",a:"tanθ_B = n",extra:"At Brewster's angle, reflected ray is fully polarised"},
+      {q:"Condition for bright fringe in YDSE",a:"Path difference = nλ (n = 0,1,2,...)",extra:"Dark fringe: path diff = (2n-1)λ/2"}
+    ]
+  },
+  {
+    id:11, title:"Dual Nature of Radiation and Matter", unit:"VII", marks:4,
+    tags:["4 marks","photoelectric","de Broglie","wave-particle"],
+    hotTopics:["Photoelectric effect","Einstein's equation","de Broglie wavelength","Davisson-Germer"],
+    concepts:[
+      {h:"Photoelectric Effect",p:"Emission of electrons from metal surface when light of frequency ≥ threshold frequency (ν₀) falls on it. Work function φ = hν₀ = hc/λ₀. Einstein's equation: KE_max = hν - φ = h(ν-ν₀). Stopping potential: eV₀ = KE_max. KE independent of intensity; depends only on frequency."},
+      {h:"Photon Properties",p:"Energy E = hν = hc/λ. Momentum p = h/λ = E/c. Rest mass = 0. Speed = c always. Intensity increases → more photons (not more energy per photon)."},
+      {h:"de Broglie Wavelength",p:"Every moving particle has an associated wave: λ = h/p = h/(mv). For electron: λ = h/√(2meV). Smaller mass and/or higher speed → smaller wavelength. Davisson-Germer experiment confirmed wave nature of electrons."}
+    ],
+    mnemonics:[
+      {m:"KE_max = hν - φ (Einstein's photoelectric equation)",exp:"Einstein: KE of emitted electron = energy of photon (hν) MINUS work function (φ). If hν < φ, no emission. 'Photon pays the entry fee (φ), leftover is kinetic energy.'"},
+      {m:"Intensity increases photon COUNT, not photon ENERGY",exp:"Brighter light = more photons per second = more electrons per second (more current). But each photon's energy = hν (depends on frequency, not intensity). 'Intensity = quantity, Frequency = quality.'"},
+      {m:"de Broglie: λ = h/mv — wavelength is h divided by momentum",exp:"Wave-particle duality: λ = h/p = h/(mv). Larger momentum → smaller wavelength. 'Lambda = h over momentum.' Electrons, protons, even baseballs have a de Broglie wavelength!"},
+      {m:"Stopping potential: eV₀ = hν - φ",exp:"Stopping potential V₀ is the voltage needed to stop the fastest electrons. eV₀ = KE_max = hν - φ. 'Stop the fastest electron: pay eV₀ energy.'"}
+    ],
+    formulas:[
+      {f:"KE_max = hν - φ = eV₀",label:"Einstein's photoelectric equation"},
+      {f:"φ = hν₀ = hc/λ₀",label:"Work function"},
+      {f:"E = hν = hc/λ",label:"Photon energy"},
+      {f:"λ = h/mv = h/p",label:"de Broglie wavelength"},
+      {f:"λ = h/√(2meV)",label:"de Broglie for accelerated electron"}
+    ],
+    pyqs:[
+      {y:"2024",m:2,q:"Light of frequency 7×10¹⁴ Hz falls on a metal with work function 2.65 eV. Find maximum KE of emitted electrons.",ans:"KE_max = hν - φ = 6.63×10⁻³⁴×7×10¹⁴ - 2.65×1.6×10⁻¹⁹ = 4.641×10⁻¹⁹ - 4.24×10⁻¹⁹ = 4×10⁻²⁰ J = 0.25 eV."},
+      {y:"2023",m:2,q:"What is de Broglie wavelength of an electron accelerated through 100V?",ans:"λ = h/√(2meV) = 6.63×10⁻³⁴/√(2×9.1×10⁻³¹×1.6×10⁻¹⁹×100) = 1.23×10⁻¹⁰ m = 0.123 nm."},
+      {y:"2022",m:3,q:"Explain why photoelectric current depends on intensity but stopping potential does not.",ans:"Intensity = number of photons/s. More photons → more electrons emitted → more current. But each photon's energy (hν) is fixed by frequency. So KE_max=hν-φ is fixed → stopping potential V₀=KE_max/e is fixed. Intensity doesn't change photon energy."}
+    ],
+    flashcards:[
+      {q:"Einstein's photoelectric equation",a:"KE_max = hν - φ",extra:"φ = work function = hν₀ (threshold energy)"},
+      {q:"de Broglie wavelength",a:"λ = h/mv = h/p",extra:"All moving objects have it; significant only for tiny particles"},
+      {q:"Stopping potential V₀ depends on?",a:"Only frequency of light (not intensity)",extra:"eV₀ = KE_max = hν - φ"},
+      {q:"What did Davisson-Germer experiment prove?",a:"Wave nature of electrons (confirmed de Broglie hypothesis)",extra:"Electrons showed diffraction like X-rays"}
+    ]
+  },
+  {
+    id:12, title:"Atoms", unit:"VIII", marks:4,
+    tags:["4 marks","Bohr model","spectra","energy levels"],
+    hotTopics:["Rutherford's model","Bohr's model","Hydrogen spectrum","Energy levels"],
+    concepts:[
+      {h:"Rutherford's Nuclear Model",p:"Alpha particle scattering experiment: most passed through (atom mostly empty), few deflected (positive nucleus), very few bounced back (nucleus is tiny, dense, positively charged). Distance of closest approach: d = kZe²/KE. Impact parameter b = Zcot(θ/2)/4πε₀mv²."},
+      {h:"Bohr's Model of Hydrogen",p:"Postulates: (1) Electrons in fixed orbits (stationary states). (2) mvr = nh/2π (angular momentum quantized). (3) Energy emitted/absorbed in quanta: hν = E_i - E_f.<br>Radius: r_n = n²a₀ (a₀ = 0.529 Å). Energy: E_n = -13.6/n² eV."},
+      {h:"Hydrogen Spectrum",p:"Series: Lyman (UV, n→1), Balmer (Visible, n→2), Paschen (IR, n→3), Brackett (n→4), Pfund (n→5).<br>Rydberg formula: 1/λ = R(1/n₁²-1/n₂²). R = 1.097×10⁷ m⁻¹."}
+    ],
+    mnemonics:[
+      {m:"E_n = -13.6/n² eV — negative energy means bound state",exp:"Energy of nth orbit = -13.6/n² eV. Ground state (n=1): -13.6 eV. Negative means electron is bound. As n→∞, E→0 (free electron). 'n=1 most negative = most tightly bound.'"},
+      {m:"Balmer series is in Visible light (n→2)",exp:"Remember: Balmer = Blue-ish, Visible light. Lyman: UV (n→1). Balmer: Visible (n→2). Paschen: IR (n→3). 'B for Balmer, B for Bright visible.'"},
+      {m:"r_n = n²a₀ (radius grows as n squared)",exp:"Bohr radius a₀ = 0.529 Å for n=1. For n=2: r=4a₀. For n=3: r=9a₀. Radius grows as n². 'Radii are perfect squares: 1,4,9,16...'"},
+      {m:"Angular momentum: mvr = nh/2π = nℏ (quantized)",exp:"Bohr's key postulate: angular momentum is quantized in units of h/2π = ℏ. 'mvr = n h-bar.' This explains why only certain orbits are allowed."}
+    ],
+    formulas:[
+      {f:"E_n = -13.6/n² eV",label:"Energy of nth Bohr orbit"},
+      {f:"r_n = n²×0.529 Å",label:"Radius of nth orbit (hydrogen)"},
+      {f:"mvr = nh/(2π) = nℏ",label:"Bohr's quantization condition"},
+      {f:"1/λ = R(1/n₁² - 1/n₂²)",label:"Rydberg formula for hydrogen spectrum"},
+      {f:"hν = E_i - E_f",label:"Energy of emitted photon"}
+    ],
+    pyqs:[
+      {y:"2024",m:2,q:"Calculate energy of electron in 3rd Bohr orbit of hydrogen.",ans:"E₃ = -13.6/3² = -13.6/9 = -1.51 eV."},
+      {y:"2023",m:3,q:"Explain the hydrogen spectrum using Bohr's model. Name the series in visible region.",ans:"When electron jumps from higher to lower orbit, it emits photon of energy E=hν=E_i-E_f. Different transitions give different series. Visible region series: Balmer series (transitions to n=2). Wavelengths: 656nm(red), 486nm(cyan), 434nm(violet)."},
+      {y:"2022",m:2,q:"In hydrogen atom, find the wavelength of first line of Lyman series. (R=1.097×10⁷ m⁻¹)",ans:"Lyman: n₁=1, n₂=2. 1/λ=R(1/1-1/4)=R×3/4=1.097×10⁷×0.75=8.228×10⁶. λ=121.6 nm (UV)."}
+    ],
+    flashcards:[
+      {q:"Energy of electron in nth Bohr orbit",a:"E_n = -13.6/n² eV",extra:"Ground state (n=1): -13.6 eV"},
+      {q:"Which series is in visible region?",a:"Balmer series (transitions to n=2)",extra:"Lyman: UV. Paschen: IR"},
+      {q:"Bohr's quantization condition",a:"mvr = nh/(2π) = nℏ",extra:"Angular momentum is quantized"},
+      {q:"Radius of 2nd Bohr orbit of H",a:"r₂ = 4×0.529 = 2.116 Å",extra:"r_n = n²×0.529 Å"}
+    ]
+  },
+  {
+    id:13, title:"Nuclei", unit:"VIII", marks:4,
+    tags:["4 marks","binding energy","radioactivity","nuclear reactions"],
+    hotTopics:["Nuclear binding energy","Radioactivity","Half-life","Fission & Fusion"],
+    concepts:[
+      {h:"Nuclear Composition & Size",p:"Nucleus: protons (Z) + neutrons (N). Mass number A = Z+N. Nuclear radius R = R₀A^(1/3), R₀ = 1.2 fm. Nuclear density is nearly constant (~2.3×10¹⁷ kg/m³) for all nuclei."},
+      {h:"Mass Defect and Binding Energy",p:"Mass defect Δm = Zm_p + Nm_n - M_nucleus. Binding energy BE = Δm×c² (in MeV: BE = Δm×931.5 MeV/u). Binding energy per nucleon (BEN): peak near A=56 (Iron — most stable). Fusion: light nuclei fuse (increases BEN). Fission: heavy nucleus splits (increases BEN)."},
+      {h:"Radioactivity",p:"Alpha (α): ₂He⁴ emitted, A decreases by 4, Z by 2. Beta (β⁻): electron emitted, Z increases by 1. Gamma (γ): EM radiation, no change in A or Z.<br>Decay law: N = N₀e^(-λt). Half-life T₁/₂ = 0.693/λ. Activity A = λN."},
+      {h:"Nuclear Reactions",p:"Fission: heavy nucleus (U-235) splits into two medium nuclei + energy (200 MeV). Chain reaction. Fusion: light nuclei combine (H→He) + huge energy. Powers the sun. Needs very high temperature (thermonuclear)."}
+    ],
+    mnemonics:[
+      {m:"Alpha: loses 4,2. Beta: gains 1 in Z. Gamma: nothing changes",exp:"Alpha emission: A-4, Z-2. Beta-minus emission: A stays same, Z+1 (neutron→proton+electron). Gamma: only energy, no change in A or Z. 'Alpha = 4 and 2 down. Beta = Z up one. Gamma = just glow, no change.'"},
+      {m:"Half-life T₁/₂ = 0.693/λ",exp:"After one half-life: half the nuclei remain. T₁/₂ = ln2/λ = 0.693/λ. After n half-lives: N = N₀/2ⁿ. 'Half life = 0.693 divided by decay constant λ.'"},
+      {m:"Iron (A≈56) has highest BEN — most stable nucleus",exp:"Binding energy per nucleon peaks at Iron (A≈56). Elements on either side less stable. Fusion of light elements and fission of heavy elements both INCREASE BEN → both release energy."},
+      {m:"Fission = Splitting (U-235). Fusion = Joining (H→He, Sun's energy)",exp:"Fission: one heavy nucleus splits into two — used in nuclear reactors and atom bombs. Fusion: two light nuclei join — powers the sun and hydrogen bombs. 'Fission = Fracture. Fusion = Fuse together.'"}
+    ],
+    formulas:[
+      {f:"R = R₀A^(1/3), R₀=1.2 fm",label:"Nuclear radius"},
+      {f:"BE = Δm × 931.5 MeV/u",label:"Binding energy"},
+      {f:"N = N₀e^(-λt)",label:"Radioactive decay law"},
+      {f:"T₁/₂ = 0.693/λ",label:"Half-life"},
+      {f:"Activity A = λN = λN₀e^(-λt)",label:"Activity of radioactive sample"}
+    ],
+    pyqs:[
+      {y:"2024",m:2,q:"Half-life of a radioactive substance is 20 minutes. What fraction remains after 60 minutes?",ans:"60 min = 3 half-lives. N/N₀ = (1/2)³ = 1/8."},
+      {y:"2023",m:3,q:"Define binding energy. Why is iron the most stable nucleus?",ans:"Binding energy = energy needed to completely separate a nucleus into its constituent nucleons (= Δm×c²). Iron (A=56) has the highest binding energy per nucleon (~8.8 MeV). Both fission of heavier nuclei and fusion of lighter nuclei tend towards iron, releasing energy."},
+      {y:"2022",m:2,q:"Write the equation for alpha decay of Uranium-238.",ans:"₉₂U²³⁸ → ₉₀Th²³⁴ + ₂He⁴. Mass number: 238=234+4✓. Atomic number: 92=90+2✓."},
+      {y:"2020",m:3,q:"Distinguish between nuclear fission and fusion with examples.",ans:"Fission: heavy nucleus splits into two medium nuclei + energy. Ex: ₉₂U²³⁵+n → ₅₆Ba¹⁴¹+₃₆Kr⁹²+3n+200MeV. Fusion: two light nuclei fuse to form heavier nucleus + energy. Ex: ₁H²+₁H²→₂He⁴+energy. Fusion releases more energy per unit mass. Occurs in stars."}
+    ],
+    flashcards:[
+      {q:"Alpha decay: what changes?",a:"A decreases by 4, Z decreases by 2",extra:"₂He⁴ is emitted"},
+      {q:"Half-life formula",a:"T₁/₂ = 0.693/λ",extra:"After n half-lives: N = N₀/2ⁿ"},
+      {q:"Most stable nucleus and why",a:"Iron (A≈56) — highest binding energy per nucleon",extra:"~8.8 MeV/nucleon"},
+      {q:"Radioactive decay law",a:"N = N₀e^(-λt)",extra:"λ = decay constant"},
+      {q:"Difference between fission and fusion",a:"Fission: heavy splits (U-235). Fusion: light joins (H→He, in Sun)",extra:"Both release energy by increasing BEN"}
+    ]
+  },
+  {
+    id:14, title:"Semiconductor Electronics", unit:"IX", marks:7,
+    tags:["7 marks","diode","transistor","logic gates","hot🔥"],
+    hotTopics:["p-n junction","Rectifier","Transistor action","Logic gates","Zener diode"],
+    concepts:[
+      {h:"Semiconductors",p:"Energy bands: valence band (filled), conduction band (empty). Band gap: insulators (~6eV), semiconductors (~1eV), conductors (overlap).<br>Intrinsic: pure Si/Ge. Extrinsic: doped. n-type: pentavalent dopant (extra electron, majority = electrons). p-type: trivalent dopant (hole, majority = holes)."},
+      {h:"p-n Junction Diode",p:"Depletion layer formed at junction (no free carriers). Forward bias: reduces barrier, current flows. Reverse bias: increases barrier, no current (except tiny reverse saturation current).<br>Zener diode: operates in reverse breakdown. Used as voltage regulator."},
+      {h:"Rectifiers",p:"Half-wave rectifier: single diode, conducts only half cycle. Output frequency = input frequency.<br>Full-wave rectifier (bridge): 4 diodes, conducts both half cycles. Output frequency = 2×input. Ripple factor: half-wave > full-wave."},
+      {h:"Transistor",p:"n-p-n or p-n-p. Three terminals: Emitter (E), Base (B), Collector (C). Current: I_E = I_B + I_C. Common-emitter: voltage amplifier. β = I_C/I_B (current gain, 50-300). Transistor as switch: cut-off (OFF), saturation (ON), active (amplifier)."},
+      {h:"Logic Gates",p:"AND: Y=A·B (both inputs HIGH). OR: Y=A+B (any input HIGH). NOT: Y=Ā (inverts). NAND: NOT AND (universal gate). NOR: NOT OR (universal gate). XOR: Y=A⊕B (different inputs → HIGH). De Morgan: (AB)'=A'+B'. (A+B)'=A'·B'."}
+    ],
+    mnemonics:[
+      {m:"n-type = N for Negative = extra electrons (pentavalent donor)",exp:"n-type semiconductor: doped with pentavalent atoms (As, P, Sb) → extra electron → majority carriers are electrons (negative). p-type: trivalent (B, Al, Ga) → holes (positive majority carriers)."},
+      {m:"Forward bias: thin depletion layer → current flows (YES). Reverse bias: thick layer → no current (NO)",exp:"Forward bias: reduces depletion width → current flows easily. Reverse bias: increases depletion width → blocks current. 'Forward = Free flow. Reverse = Resists.'"},
+      {m:"β = Ic/Ib (collector current / base current) — beta can be 50-300",exp:"Transistor current gain β = I_C/I_B. Small base current controls large collector current. This is amplification! I_E = I_C + I_B (emitter = collector + base)."},
+      {m:"NAND and NOR are universal gates (can make all other gates)",exp:"From NAND alone OR from NOR alone, you can build ANY logic circuit (AND, OR, NOT, XOR...). 'NAND and NOR are Universal — they can do it all.' XOR is NOT universal."},
+      {m:"De Morgan: (AB)' = A'+B' and (A+B)' = A'·B'",exp:"De Morgan's theorem: NAND = NOT(AND) = OR of NOTs. NOR = NOT(OR) = AND of NOTs. 'Break the bar, change the sign (AND↔OR).' Very frequently tested in CBSE!"}
+    ],
+    formulas:[
+      {f:"I_E = I_B + I_C",label:"Transistor current relation"},
+      {f:"β = I_C/I_B",label:"Current gain (common emitter)"},
+      {f:"(AB)' = A'+B'",label:"De Morgan's first theorem (NAND)"},
+      {f:"(A+B)' = A'·B'",label:"De Morgan's second theorem (NOR)"},
+      {f:"Y = A⊕B = AB'+A'B",label:"XOR gate"}
+    ],
+    pyqs:[
+      {y:"2024",m:3,q:"Draw circuit diagram of full-wave rectifier and explain its working. What is output frequency if input is 50 Hz?",ans:"Full-wave bridge rectifier: 4 diodes in bridge configuration. In +ve half cycle: D1,D3 conduct. In -ve half cycle: D2,D4 conduct. Both half cycles produce positive output. Output frequency = 2×50 = 100 Hz."},
+      {y:"2023",m:3,q:"In CE amplifier, I_B=100μA and β=200. Find I_C and I_E.",ans:"I_C = β×I_B = 200×100×10⁻⁶ = 20 mA. I_E = I_C+I_B = 20+0.1 = 20.1 mA."},
+      {y:"2022",m:2,q:"What are universal gates? Name them.",ans:"Gates from which all other logic gates can be implemented. NAND and NOR are universal gates. A NOT gate can be made from NAND: connect both inputs together. AND: NAND followed by NOT."},
+      {y:"2020",m:3,q:"Distinguish between intrinsic and extrinsic semiconductors. Give examples.",ans:"Intrinsic: pure semiconductor, e⁻ and hole concentration equal, conductivity increases with temp. Ex: pure Si, Ge. Extrinsic: doped with impurity to increase conductivity. n-type (As,P) or p-type (B,Al). Majority carrier type depends on dopant."}
+    ],
+    flashcards:[
+      {q:"β (beta) of transistor",a:"β = I_C/I_B (current gain in CE configuration)",extra:"Typically 50–300; I_E = I_C + I_B"},
+      {q:"Universal gates",a:"NAND and NOR — all other gates can be built from these",extra:"XOR is NOT a universal gate"},
+      {q:"De Morgan's theorem for NAND",a:"(AB)' = A' + B'",extra:"Break the bar, change AND to OR"},
+      {q:"n-type semiconductor — majority carriers?",a:"Electrons (doped with pentavalent: P, As, Sb)",extra:"p-type: holes (trivalent: B, Al, Ga)"},
+      {q:"Full-wave rectifier output frequency",a:"2 × input frequency",extra:"Half-wave: same as input frequency"},
+      {q:"Zener diode operates in?",a:"Reverse breakdown region — used as voltage regulator",extra:"Forward biased Zener = normal diode"}
+    ]
+  }
+];
+
+let currentChapter=null, currentCards=[], fcIndex=0;
+
+function showPage(id,btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.nav-pills button').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  if(id==='pyqAll')renderAllPYQ();
+  if(id==='syllabus')renderSyllabus();
+}
+
+function renderChapterGrid(){
+  document.getElementById('chapterGrid').innerHTML=chapters.map(c=>`
+    <div class="ch-card" onclick="openChapter(${c.id})">
+      <div class="ch-num">Chapter ${c.id} · Unit ${c.unit} · ${c.marks}M</div>
+      <h3>${c.title}</h3>
+      <div class="tags">${c.tags.map(t=>`<span class="tag ${t.includes('🔥')?'hot':''}">${t}</span>`).join('')}</div>
+      <div class="hot-topics">🎯 <span>${c.hotTopics.join(' · ')}</span></div>
+    </div>`).join('');
+}
+
+function openChapter(id){
+  currentChapter=chapters.find(c=>c.id===id);
+  const c=currentChapter;
+  document.getElementById('chHeader').innerHTML=`<h2>Ch${c.id}: ${c.title}</h2>
+    <div class="meta"><span>Unit ${c.unit}</span><span>${c.marks} Marks</span><span>${c.hotTopics.join(' | ')}</span></div>`;
+  const tabs=['concepts','mnemonics','formulas','pyq','flashcards'];
+  const labels=['📖 Concepts','💡 Mnemonics','📐 Formulas','📋 PYQ','🃏 Flashcards'];
+  document.getElementById('tabBar').innerHTML=tabs.map((t,i)=>
+    `<button class="tab-btn ${t==='concepts'?'active':''}" onclick="switchTab('${t}',this)">${labels[i]}</button>`).join('');
+  switchTab('concepts',document.querySelector('.tab-btn'));
+  showPage('chapterDetail',null);
+}
+
+function switchTab(tab,btn){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  const c=currentChapter;
+  let html='';
+  if(tab==='concepts'){
+    html=c.concepts.map(x=>`<div class="concept-block"><h4>${x.h}</h4><p>${x.p}</p></div>`).join('');
+  } else if(tab==='mnemonics'){
+    html=c.mnemonics.map(x=>`<div class="mnemonic-card"><div class="mtext">💡 ${x.m}</div><div class="mexp">${x.exp}</div></div>`).join('');
+  } else if(tab==='formulas'){
+    html=`<div class="formula-grid">${c.formulas.map(x=>`<div class="formula-card"><div class="f">${x.f}</div><div class="fl">${x.label}</div></div>`).join('')}</div>`;
+  } else if(tab==='pyq'){
+    html=`<div id="pyqList">${renderPYQCards(c.pyqs)}</div>`;
+  } else if(tab==='flashcards'){
+    currentCards=[...c.flashcards]; fcIndex=0;
+    html=`<div class="fc-controls">
+      <button onclick="prevCard()">← Prev</button>
+      <button onclick="nextCard()">Next →</button>
+      <button onclick="shuffleCards(this)">🔀 Shuffle</button>
+      <span class="fc-progress" id="fcProg">1 / ${currentCards.length}</span>
+    </div>
+    <div class="fc-wrap"><div class="fc" id="fc" onclick="flipCard()">
+      <div class="fc-face fc-front"><div class="q" id="fcQ"></div><div style="color:var(--muted);font-size:.75rem;margin-top:12px">Click to flip</div></div>
+      <div class="fc-face fc-back"><div class="a" id="fcA"></div><div class="ex" id="fcEx"></div></div>
+    </div></div>`;
+  }
+  document.getElementById('tabContents').innerHTML=`<div class="tab-content active">${html}</div>`;
+  if(tab==='flashcards')setTimeout(updateCard,10);
+}
+
+function renderPYQCards(pyqs){
+  return pyqs.map((p,i)=>`
+    <div class="pyq-card">
+      <div class="pyq-meta"><span class="year">${p.y}</span><span class="marks">${p.m} marks</span></div>
+      <div class="pyq-q">${p.q}</div>
+      <button class="ans-toggle" onclick="toggleAns(this,'a${i}_${p.y}')">Show Answer</button>
+      <div class="ans-box" id="a${i}_${p.y}">${p.ans}</div>
+    </div>`).join('');
+}
+
+function toggleAns(btn,id){
+  const b=document.getElementById(id);
+  b.classList.toggle('show');
+  btn.textContent=b.classList.contains('show')?'Hide Answer':'Show Answer';
+}
+
+function updateCard(){
+  if(!currentCards.length)return;
+  const card=currentCards[fcIndex];
+  const fc=document.getElementById('fc');
+  if(!fc)return;
+  fc.classList.remove('flipped');
+  document.getElementById('fcQ').textContent=card.q;
+  document.getElementById('fcA').textContent=card.a;
+  document.getElementById('fcEx').textContent=card.extra||'';
+  document.getElementById('fcProg').textContent=`${fcIndex+1} / ${currentCards.length}`;
+}
+function flipCard(){document.getElementById('fc').classList.toggle('flipped')}
+function nextCard(){fcIndex=(fcIndex+1)%currentCards.length;updateCard()}
+function prevCard(){fcIndex=(fcIndex-1+currentCards.length)%currentCards.length;updateCard()}
+function shuffleCards(btn){currentCards=[...currentCards].sort(()=>Math.random()-.5);fcIndex=0;updateCard();btn.classList.toggle('on')}
+
+function renderAllPYQ(){
+  const search=document.getElementById('pyqSearch').value.toLowerCase();
+  const year=document.getElementById('pyqYear').value;
+  const marks=document.getElementById('pyqMarks').value;
+  const ch=document.getElementById('pyqChapter').value;
+  let results=[];
+  chapters.forEach(c=>c.pyqs.forEach((p,i)=>{
+    if((year===''||p.y===year)&&(marks===''||p.m==marks)&&(ch===''||c.title===ch)&&(search===''||p.q.toLowerCase().includes(search)))
+      results.push({...p,chTitle:c.title,uid:`${c.id}_${i}`});
+  }));
+  document.getElementById('pyqAllList').innerHTML=results.length?results.map(p=>`
+    <div class="pyq-card">
+      <div class="pyq-meta"><span class="year">${p.y}</span><span class="marks">${p.m}M</span><span style="color:var(--primary)">${p.chTitle}</span></div>
+      <div class="pyq-q">${p.q}</div>
+      <button class="ans-toggle" onclick="toggleAns(this,'all${p.uid}')">Show Answer</button>
+      <div class="ans-box" id="all${p.uid}">${p.ans}</div>
+    </div>`).join(''):'<p style="color:var(--muted)">No questions found.</p>';
+}
+
+function initPYQFilters(){
+  const years=[...new Set(chapters.flatMap(c=>c.pyqs.map(p=>p.y)))].sort().reverse();
+  document.getElementById('pyqYear').innerHTML='<option value="">All Years</option>'+years.map(y=>`<option>${y}</option>`).join('');
+  document.getElementById('pyqChapter').innerHTML='<option value="">All Chapters</option>'+chapters.map(c=>`<option>${c.title}</option>`).join('');
+}
+
+function renderSyllabus(){
+  const units=[
+    {name:"Unit I: Electrostatics",marks:8,chs:[1,2]},
+    {name:"Unit II: Current Electricity",marks:7,chs:[3]},
+    {name:"Unit III: Magnetic Effects of Current & Magnetism",marks:13,chs:[4,5]},
+    {name:"Unit IV: Electromagnetic Induction & AC",marks:16,chs:[6,7]},
+    {name:"Unit V: Electromagnetic Waves",marks:3,chs:[8]},
+    {name:"Unit VI: Optics",marks:15,chs:[9,10]},
+    {name:"Unit VII: Dual Nature of Radiation",marks:4,chs:[11]},
+    {name:"Unit VIII: Atoms & Nuclei",marks:8,chs:[12,13]},
+    {name:"Unit IX: Electronic Devices",marks:7,chs:[14]}
+  ];
+  document.getElementById('syllabusContent').innerHTML=`
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:16px">
+      <p style="color:var(--muted);font-size:.85rem">Theory: 70 marks | Practical: 30 marks | Total: 100 marks</p>
+    </div>`+
+    units.map(u=>`<div class="unit-block">
+      <h3>${u.name} <span>${u.marks} Marks</span></h3>
+      <ul>${u.chs.map(id=>{const c=chapters.find(x=>x.id===id);return`<li>${c.title}<span>${c.marks}M</span></li>`;}).join('')}</ul>
+    </div>`).join('');
+}
+
+renderChapterGrid();
+initPYQFilters();
+</script>
+</body>
+</html>
