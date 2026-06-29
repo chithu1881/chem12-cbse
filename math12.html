@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Math12 CBSE | Quick Revision</title>
+<style>
+:root{--primary:#6c63ff;--secondary:#ff6584;--accent:#43e97b;--bg:#0f0f1a;--card:#1a1a2e;--card2:#16213e;--text:#e0e0e0;--muted:#888;--border:#2a2a4a}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI',sans-serif;min-height:100vh}
+header{background:linear-gradient(135deg,#0f0f1a 0%,#1a1a2e 50%,#16213e 100%);border-bottom:1px solid var(--border);padding:20px;text-align:center;position:sticky;top:0;z-index:100}
+header h1{font-size:1.8rem;background:linear-gradient(135deg,var(--primary),var(--secondary));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+header p{color:var(--muted);font-size:.85rem;margin-top:4px}
+.nav-pills{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+.nav-pills button{background:var(--card);border:1px solid var(--border);color:var(--text);padding:6px 14px;border-radius:20px;cursor:pointer;font-size:.8rem;transition:all .2s}
+.nav-pills button.active,.nav-pills button:hover{background:var(--primary);border-color:var(--primary);color:#fff}
+.container{max-width:1100px;margin:0 auto;padding:20px}
+.page{display:none}.page.active{display:block}
+
+/* HOME */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:24px}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center}
+.stat-card .num{font-size:1.8rem;font-weight:700;color:var(--primary)}
+.stat-card .lbl{font-size:.75rem;color:var(--muted);margin-top:4px}
+.chapter-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.ch-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;cursor:pointer;transition:all .25s;position:relative;overflow:hidden}
+.ch-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--primary),var(--secondary))}
+.ch-card:hover{border-color:var(--primary);transform:translateY(-3px);box-shadow:0 8px 24px rgba(108,99,255,.2)}
+.ch-card .ch-num{font-size:.7rem;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px}
+.ch-card h3{font-size:.95rem;color:#fff;margin-bottom:8px}
+.ch-card .tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{background:rgba(108,99,255,.15);border:1px solid rgba(108,99,255,.3);color:var(--primary);padding:2px 8px;border-radius:10px;font-size:.7rem}
+.tag.hot{background:rgba(255,101,132,.15);border-color:rgba(255,101,132,.3);color:var(--secondary)}
+.hot-topics{margin-top:10px;font-size:.78rem;color:var(--muted)}
+.hot-topics span{color:var(--accent)}
+
+/* CHAPTER DETAIL */
+.back-btn{background:none;border:1px solid var(--border);color:var(--text);padding:8px 16px;border-radius:8px;cursor:pointer;margin-bottom:16px;display:flex;align-items:center;gap:6px;font-size:.85rem}
+.back-btn:hover{border-color:var(--primary);color:var(--primary)}
+.ch-header{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:16px}
+.ch-header h2{font-size:1.3rem;color:#fff;margin-bottom:8px}
+.ch-header .meta{display:flex;gap:12px;flex-wrap:wrap;font-size:.8rem;color:var(--muted)}
+.tab-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.tab-btn{background:var(--card);border:1px solid var(--border);color:var(--muted);padding:7px 16px;border-radius:8px;cursor:pointer;font-size:.82rem;transition:all .2s}
+.tab-btn.active{background:var(--primary);border-color:var(--primary);color:#fff}
+.tab-content{display:none}.tab-content.active{display:block}
+
+/* CONCEPTS */
+.concept-block{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:12px}
+.concept-block h4{color:var(--primary);font-size:.95rem;margin-bottom:8px}
+.concept-block p,.concept-block li{font-size:.88rem;line-height:1.7;color:var(--text)}
+.concept-block ul{padding-left:20px}
+
+/* MNEMONICS */
+.mnemonic-card{background:linear-gradient(135deg,rgba(108,99,255,.1),rgba(255,101,132,.05));border:1px solid rgba(108,99,255,.25);border-radius:12px;padding:16px;margin-bottom:12px}
+.mnemonic-card .mtext{font-size:1rem;font-weight:700;color:var(--accent);letter-spacing:.5px;margin-bottom:8px}
+.mnemonic-card .mexp{font-size:.85rem;color:var(--text);line-height:1.6}
+
+/* FORMULAS */
+.formula-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.formula-card{background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:14px}
+.formula-card .f{font-family:'Courier New',monospace;font-size:.92rem;color:var(--accent);margin-bottom:6px;word-break:break-all}
+.formula-card .fl{font-size:.78rem;color:var(--muted)}
+
+/* PYQ */
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.filters select{background:var(--card);border:1px solid var(--border);color:var(--text);padding:6px 12px;border-radius:8px;font-size:.82rem;cursor:pointer}
+.pyq-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:12px}
+.pyq-meta{display:flex;gap:10px;margin-bottom:8px;font-size:.75rem}
+.pyq-meta .year{color:var(--secondary);font-weight:600}
+.pyq-meta .marks{color:var(--muted)}
+.pyq-q{font-size:.88rem;line-height:1.6;margin-bottom:10px}
+.ans-toggle{background:none;border:1px solid var(--primary);color:var(--primary);padding:5px 12px;border-radius:6px;cursor:pointer;font-size:.78rem}
+.ans-toggle:hover{background:var(--primary);color:#fff}
+.ans-box{background:rgba(67,233,123,.05);border:1px solid rgba(67,233,123,.2);border-radius:8px;padding:12px;margin-top:10px;font-size:.85rem;line-height:1.6;display:none}
+.ans-box.show{display:block}
+
+/* FLASHCARDS */
+.fc-controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+.fc-controls button{background:var(--card);border:1px solid var(--border);color:var(--text);padding:7px 14px;border-radius:8px;cursor:pointer;font-size:.82rem}
+.fc-controls button:hover,.fc-controls button.on{background:var(--primary);border-color:var(--primary);color:#fff}
+.fc-progress{color:var(--muted);font-size:.82rem;margin-left:auto}
+.fc-wrap{perspective:1000px;margin-bottom:14px}
+.fc{width:100%;min-height:200px;position:relative;transform-style:preserve-3d;transition:transform .5s;cursor:pointer}
+.fc.flipped{transform:rotateY(180deg)}
+.fc-face{position:absolute;width:100%;min-height:200px;backface-visibility:hidden;border-radius:14px;padding:28px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.fc-front{background:linear-gradient(135deg,var(--card),var(--card2));border:2px solid var(--primary)}
+.fc-back{background:linear-gradient(135deg,rgba(67,233,123,.1),rgba(108,99,255,.1));border:2px solid var(--accent);transform:rotateY(180deg)}
+.fc-front .q{font-size:1rem;color:#fff;line-height:1.5}
+.fc-back .a{font-size:.95rem;color:var(--accent);font-weight:600;margin-bottom:8px}
+.fc-back .ex{font-size:.8rem;color:var(--muted);margin-top:6px}
+.fc-nav{display:flex;gap:10px;justify-content:center}
+.fc-nav button{background:var(--card);border:1px solid var(--border);color:var(--text);padding:8px 20px;border-radius:8px;cursor:pointer}
+.fc-nav button:hover{background:var(--primary);border-color:var(--primary);color:#fff}
+
+/* PYQ PAGE */
+.pyq-search{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.pyq-search input{background:var(--card);border:1px solid var(--border);color:var(--text);padding:8px 14px;border-radius:8px;font-size:.85rem;flex:1;min-width:160px}
+.pyq-search select{background:var(--card);border:1px solid var(--border);color:var(--text);padding:8px 12px;border-radius:8px;font-size:.82rem}
+
+/* SYLLABUS */
+.unit-block{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:16px}
+.unit-block h3{color:var(--primary);font-size:1rem;margin-bottom:12px;display:flex;justify-content:space-between}
+.unit-block h3 span{color:var(--secondary);font-size:.85rem}
+.unit-block ul{list-style:none;padding:0}
+.unit-block ul li{padding:6px 0;border-bottom:1px solid var(--border);font-size:.85rem;display:flex;justify-content:space-between}
+.unit-block ul li:last-child{border-bottom:none}
+.unit-block ul li span{color:var(--muted);font-size:.78rem}
+
+@media(max-width:600px){header h1{font-size:1.3rem}.ch-card h3{font-size:.85rem}.fc-face{padding:18px}}
+</style>
+</head>
+<body>
+<header>
+  <h1>📐 Math12 CBSE | Quick Revision</h1>
+  <p>Class 12 Mathematics — CBSE 2026 | All Chapters | Concepts · Mnemonics · Formulas · PYQ · Flashcards</p>
+  <nav class="nav-pills">
+    <button class="active" onclick="showPage('home',this)">🏠 Chapters</button>
+    <button onclick="showPage('pyqAll',this)">📋 All PYQ</button>
+    <button onclick="showPage('syllabus',this)">📚 Syllabus</button>
+  </nav>
+</header>
+<div class="container">
+
+<!-- HOME -->
+<div id="home" class="page active">
+  <div class="stats-grid">
+    <div class="stat-card"><div class="num">13</div><div class="lbl">Chapters</div></div>
+    <div class="stat-card"><div class="num">80</div><div class="lbl">Marks (Theory)</div></div>
+    <div class="stat-card"><div class="num">20</div><div class="lbl">Marks (IA)</div></div>
+    <div class="stat-card"><div class="num">100+</div><div class="lbl">PYQ</div></div>
+    <div class="stat-card"><div class="num">100+</div><div class="lbl">Flashcards</div></div>
+  </div>
+  <div class="chapter-grid" id="chapterGrid"></div>
+</div>
+
+<!-- CHAPTER DETAIL -->
+<div id="chapterDetail" class="page">
+  <button class="back-btn" onclick="showPage('home',null)">← Back to Chapters</button>
+  <div class="ch-header" id="chHeader"></div>
+  <div class="tab-bar" id="tabBar"></div>
+  <div id="tabContents"></div>
+</div>
+
+<!-- ALL PYQ -->
+<div id="pyqAll" class="page">
+  <h2 style="margin-bottom:14px;color:var(--primary)">All Previous Year Questions</h2>
+  <div class="pyq-search">
+    <input id="pyqSearch" type="text" placeholder="Search questions..." oninput="renderAllPYQ()">
+    <select id="pyqYear" onchange="renderAllPYQ()"><option value="">All Years</option></select>
+    <select id="pyqMarks" onchange="renderAllPYQ()"><option value="">All Marks</option><option value="1">1M</option><option value="2">2M</option><option value="3">3M</option><option value="4">4M</option><option value="5">5M</option></select>
+    <select id="pyqChapter" onchange="renderAllPYQ()"><option value="">All Chapters</option></select>
+  </div>
+  <div id="pyqAllList"></div>
+</div>
+
+<!-- SYLLABUS -->
+<div id="syllabus" class="page">
+  <h2 style="margin-bottom:14px;color:var(--primary)">CBSE 2026 Mathematics Syllabus</h2>
+  <div id="syllabusContent"></div>
+</div>
+
+</div>
+<script>
+const chapters = [
+  {
+    id:1, title:"Relations and Functions", unit:"I", marks:8,
+    tags:["8 marks","relations","functions","hot🔥"],
+    hotTopics:["Types of relations","Types of functions","Composition","Inverse"],
+    concepts:[
+      {h:"Types of Relations",p:"<ul><li><b>Empty Relation:</b> R = φ (no element related)</li><li><b>Universal Relation:</b> R = A×A (every element related)</li><li><b>Reflexive:</b> (a,a) ∈ R ∀ a ∈ A</li><li><b>Symmetric:</b> (a,b) ∈ R ⟹ (b,a) ∈ R</li><li><b>Transitive:</b> (a,b),(b,c) ∈ R ⟹ (a,c) ∈ R</li><li><b>Equivalence:</b> Reflexive + Symmetric + Transitive</li></ul>"},
+      {h:"Types of Functions",p:"<ul><li><b>One-one (Injective):</b> f(a)=f(b) ⟹ a=b. Different inputs → different outputs</li><li><b>Onto (Surjective):</b> Range = Co-domain. Every y has a pre-image</li><li><b>Bijective:</b> Both one-one and onto. Inverse exists</li><li><b>Many-one:</b> Two elements map to same output</li></ul>"},
+      {h:"Composition of Functions",p:"(gof)(x) = g(f(x)). Apply f first, then g. <br>Properties: gof is not necessarily = fog. If f,g are bijective then gof is bijective. (gof)⁻¹ = f⁻¹og⁻¹"},
+      {h:"Invertible Functions",p:"A function is invertible iff it is bijective. If f:A→B is bijective, then f⁻¹:B→A exists. fof⁻¹ = I_B and f⁻¹of = I_A."},
+      {h:"Binary Operations",p:"A binary operation * on A: a*b ∈ A (closure). Commutative: a*b=b*a. Associative: (a*b)*c=a*(b*c). Identity element e: a*e=e*a=a. Inverse of a: a*b=b*a=e."}
+    ],
+    mnemonics:[
+      {m:"RST = Equivalence",exp:"Reflexive + Symmetric + Transitive = Equivalence Relation. Remember: 'RST' like 'Rust' on metal — all three layers together make it complete."},
+      {m:"OOO = Bijective",exp:"One-One + Onto = bijective (One more O = bijective). If a function is bijective it has an inverse."},
+      {m:"f first, g second in gof",exp:"In gof(x) = g(f(x)) — read right to left: f is applied first, then g. 'Go (gof) — f runs, then g chases.'"},
+      {m:"CAIS for Binary Ops",exp:"Closure, Associative, Identity, Inverse — the 4 properties of a group operation. 'CAIS = Company Always Is Safe.'"}
+    ],
+    formulas:[
+      {f:"(gof)(x) = g(f(x))",label:"Composition of g and f"},
+      {f:"(gof)⁻¹ = f⁻¹og⁻¹",label:"Inverse of composition"},
+      {f:"n(A×A) = n²",label:"Number of relations on A with n elements = 2^(n²)"},
+      {f:"fof⁻¹ = I_B, f⁻¹of = I_A",label:"Inverse function identity"},
+      {f:"a*e = e*a = a",label:"Identity element for binary op"}
+    ],
+    pyqs:[
+      {y:"2024",m:2,q:"Check whether the relation R in ℝ defined by R = {(a,b): a ≤ b³} is reflexive, symmetric or transitive.",ans:"Not reflexive (½ ≤ (½)³ is false), not symmetric, not transitive. None of the three."},
+      {y:"2023",m:2,q:"Show that the relation R in the set {1,2,3} given by R={(1,2),(2,1)} is symmetric but neither reflexive nor transitive.",ans:"Symmetric: (1,2)∈R ⟹ (2,1)∈R ✓. Not reflexive: (1,1)∉R. Not transitive: (1,2),(2,1)∈R but (1,1)∉R."},
+      {y:"2023",m:2,q:"If f(x) = (4x+3)/(6x-4), x ≠ 2/3, show that fof(x) = x.",ans:"Compute fof(x) = f(f(x)) = (4·(4x+3)/(6x-4)+3)/(6·(4x+3)/(6x-4)-4). Simplify numerator and denominator to get x."},
+      {y:"2022",m:1,q:"A function f: ℝ→ℝ defined as f(x)=x⁴ is (A) One-one onto (B) One-one into (C) Many-one onto (D) Many-one into",ans:"(D) Many-one into. f(-1)=f(1)=1 so many-one. Range=[0,∞)≠ℝ so into (not onto)."},
+      {y:"2020",m:4,q:"Let f:N→R be defined by f(n)=(2n-1)/2 and g:Q→R by g(x)=x+2. Find fog.",ans:"fog(x) = f(g(x)) = f(x+2) = (2(x+2)-1)/2 = (2x+3)/2."}
+    ],
+    flashcards:[
+      {q:"What is an equivalence relation?",a:"Reflexive + Symmetric + Transitive",extra:"Ex: equality (=) on integers"},
+      {q:"Difference between one-one and onto",a:"One-one: f(a)=f(b)⟹a=b. Onto: Range=Codomain",extra:"Bijective = both"},
+      {q:"What is gof(x)?",a:"g(f(x)) — apply f first, then g",extra:"Read composition right to left"},
+      {q:"When does inverse of a function exist?",a:"Only when f is bijective (one-one and onto)",extra:"fof⁻¹ = I, f⁻¹of = I"},
+      {q:"Identity element for addition on ℝ",a:"0 (zero), since a+0=a",extra:"For multiplication: 1"},
+      {q:"What does RST stand for in relations?",a:"Reflexive, Symmetric, Transitive — conditions for equivalence",extra:"All three needed"}
+    ]
+  },
+  {
+    id:2, title:"Inverse Trigonometric Functions", unit:"I", marks:8,
+    tags:["8 marks","ITF","principal value","hot🔥"],
+    hotTopics:["Principal value branch","Properties/identities","Simplification"],
+    concepts:[
+      {h:"Principal Value Branches",p:"<ul><li>sin⁻¹: domain [-1,1], range [-π/2, π/2]</li><li>cos⁻¹: domain [-1,1], range [0, π]</li><li>tan⁻¹: domain ℝ, range (-π/2, π/2)</li><li>cosec⁻¹: domain ℝ-(-1,1), range [-π/2,π/2]-{0}</li><li>sec⁻¹: domain ℝ-(-1,1), range [0,π]-{π/2}</li><li>cot⁻¹: domain ℝ, range (0, π)</li></ul>"},
+      {h:"Key Properties",p:"<ul><li>sin⁻¹(sin x) = x if x∈[-π/2,π/2]</li><li>sin(sin⁻¹x) = x if x∈[-1,1]</li><li>sin⁻¹x + cos⁻¹x = π/2</li><li>tan⁻¹x + cot⁻¹x = π/2</li><li>sec⁻¹x + cosec⁻¹x = π/2</li></ul>"},
+      {h:"Important Identities",p:"<ul><li>tan⁻¹x + tan⁻¹y = tan⁻¹[(x+y)/(1-xy)], xy&lt;1</li><li>tan⁻¹x - tan⁻¹y = tan⁻¹[(x-y)/(1+xy)], xy&gt;-1</li><li>2tan⁻¹x = tan⁻¹(2x/(1-x²)) = sin⁻¹(2x/(1+x²)) = cos⁻¹((1-x²)/(1+x²))</li><li>sin⁻¹(-x) = -sin⁻¹x; cos⁻¹(-x) = π - cos⁻¹x</li></ul>"}
+    ],
+    mnemonics:[
+      {m:"SC range: Sine Smallest, Cosine Completes",exp:"sin⁻¹ range is [-π/2,π/2] (smallest symmetric). cos⁻¹ range is [0,π] (completes 0 to π). Sine is Shy (-π/2 to π/2). Cosine is Calm (0 to π)."},
+      {m:"SC + TC + SC = π/2 (complementary pairs)",exp:"sin⁻¹x + cos⁻¹x = π/2. tan⁻¹x + cot⁻¹x = π/2. sec⁻¹x + cosec⁻¹x = π/2. Complementary partners always sum to π/2."},
+      {m:"tan⁻¹ addition: TOP = x+y, BOTTOM = 1-xy",exp:"tan⁻¹x + tan⁻¹y = tan⁻¹[(x+y)/(1-xy)]. 'Top adds, Bottom subtracts product.' Valid when xy < 1."},
+      {m:"Odd/Even: sine odd, cosine even (π-x)",exp:"sin⁻¹(-x) = -sin⁻¹x (odd). cos⁻¹(-x) = π - cos⁻¹x (not simply even — adds π). 'Sine is Odd, Cosine adds a π.'"}
+    ],
+    formulas:[
+      {f:"sin⁻¹x + cos⁻¹x = π/2",label:"Complementary identity"},
+      {f:"tan⁻¹x + tan⁻¹y = tan⁻¹[(x+y)/(1-xy)]",label:"Sum formula (xy<1)"},
+      {f:"2tan⁻¹x = sin⁻¹[2x/(1+x²)]",label:"Double angle ITF"},
+      {f:"tan⁻¹x + cot⁻¹x = π/2",label:"Complementary pair"},
+      {f:"sin⁻¹(-x) = -sin⁻¹x",label:"Odd property"}
+    ],
+    pyqs:[
+      {y:"2024",m:2,q:"Find the principal value of tan⁻¹(-1) + cos⁻¹(-1/√2).",ans:"tan⁻¹(-1) = -π/4. cos⁻¹(-1/√2) = 3π/4. Sum = -π/4 + 3π/4 = 2π/4 = π/2."},
+      {y:"2023",m:2,q:"Write the value of tan⁻¹[2sin(2cos⁻¹(√3/2))].",ans:"cos⁻¹(√3/2)=π/6. 2cos⁻¹(√3/2)=π/3. sin(π/3)=√3/2. 2sin(π/3)=√3. tan⁻¹(√3)=π/3."},
+      {y:"2022",m:3,q:"Prove that tan⁻¹(1/2) + tan⁻¹(1/3) = π/4.",ans:"Use sum formula: tan⁻¹[(1/2+1/3)/(1-1/2·1/3)] = tan⁻¹[(5/6)/(5/6)] = tan⁻¹(1) = π/4. ✓"},
+      {y:"2020",m:2,q:"Simplify: sin⁻¹(sin(2π/3)).",ans:"2π/3 is not in [-π/2,π/2]. sin(2π/3)=sin(π/3). So sin⁻¹(sin(2π/3))=π/3."}
+    ],
+    flashcards:[
+      {q:"Range of cos⁻¹x",a:"[0, π]",extra:"Domain: [-1, 1]"},
+      {q:"Value of sin⁻¹(1)",a:"π/2",extra:"sin(π/2) = 1"},
+      {q:"sin⁻¹x + cos⁻¹x = ?",a:"π/2",extra:"Complementary identity — always!"},
+      {q:"tan⁻¹(1)",a:"π/4",extra:"tan(π/4)=1"},
+      {q:"cos⁻¹(-1/2)",a:"2π/3",extra:"cos(2π/3)=-1/2"},
+      {q:"2tan⁻¹(1/2) simplified",a:"tan⁻¹(4/3)",extra:"Use 2tan⁻¹x = tan⁻¹(2x/(1-x²))"}
+    ]
+  },
+  {
+    id:3, title:"Matrices", unit:"II", marks:10,
+    tags:["10 marks","operations","transpose","hot🔥"],
+    hotTopics:["Matrix operations","Transpose properties","Symmetric & Skew-symmetric"],
+    concepts:[
+      {h:"Types of Matrices",p:"<ul><li><b>Row/Column:</b> 1×n or m×1</li><li><b>Square:</b> m = n</li><li><b>Diagonal:</b> non-diagonal elements = 0</li><li><b>Scalar:</b> Diagonal with equal elements</li><li><b>Identity (I):</b> Diagonal with 1s</li><li><b>Zero Matrix:</b> All elements 0</li><li><b>Symmetric:</b> A = Aᵀ</li><li><b>Skew-symmetric:</b> Aᵀ = -A (diagonal = 0)</li></ul>"},
+      {h:"Matrix Operations",p:"<ul><li>Addition/Subtraction: same order matrices, element-wise</li><li>Scalar multiplication: kA — multiply every element by k</li><li>Matrix multiplication: A(m×n)·B(n×p) = C(m×p)</li><li>AB ≠ BA in general (not commutative)</li><li>A(BC) = (AB)C (associative)</li><li>A(B+C) = AB+AC (distributive)</li></ul>"},
+      {h:"Transpose Properties",p:"<ul><li>(Aᵀ)ᵀ = A</li><li>(A+B)ᵀ = Aᵀ+Bᵀ</li><li>(kA)ᵀ = kAᵀ</li><li>(AB)ᵀ = BᵀAᵀ (reversal law)</li></ul>"},
+      {h:"Symmetric & Skew-symmetric",p:"Every square matrix A = ½(A+Aᵀ) + ½(A-Aᵀ) = Symmetric part + Skew-symmetric part. For skew-symmetric: diagonal elements are always 0."}
+    ],
+    mnemonics:[
+      {m:"(AB)ᵀ = BᵀAᵀ — Reversal Law",exp:"Transpose reverses the order. 'Boots before Socks' — to undo, reverse. (AB)ᵀ flips order: BᵀAᵀ. Same for inverse: (AB)⁻¹ = B⁻¹A⁻¹."},
+      {m:"Symmetric: Same, Skew: Subtract",exp:"Symmetric: A = Aᵀ (A is the Same as its transpose). Skew-symmetric: Aᵀ = -A (Subtracts — diagonal must be zero)."},
+      {m:"A = S + K (Every matrix splits)",exp:"Any square matrix = Symmetric + Skew-symmetric. S = ½(A+Aᵀ), K = ½(A-Aᵀ). Remember: 'Soup + Ketchup' = full meal."},
+      {m:"Matrix mult order: rows of A × columns of B",exp:"For AB: take each row of A, dot product with each column of B. Order matters: (m×n)(n×p)→(m×p). Inner dimensions must match!"}
+    ],
+    formulas:[
+      {f:"(AB)ᵀ = BᵀAᵀ",label:"Reversal law of transpose"},
+      {f:"A = ½(A+Aᵀ) + ½(A-Aᵀ)",label:"Split into symmetric + skew-symmetric"},
+      {f:"(AB)⁻¹ = B⁻¹A⁻¹",label:"Reversal law of inverse"},
+      {f:"AI = IA = A",label:"Identity matrix property"},
+      {f:"A+Aᵀ = symmetric, A-Aᵀ = skew-symmetric",label:"Key identities"}
+    ],
+    pyqs:[
+      {y:"2024",m:2,q:"If A = [2 3; 1 -4] and B = [1 -2; -1 3], verify that (AB)ᵀ = BᵀAᵀ.",ans:"Compute AB first, then take transpose. Separately compute Bᵀ and Aᵀ then multiply. Both should give same result."},
+      {y:"2023",m:3,q:"Express A = [2 3; 1 -1] as sum of symmetric and skew-symmetric matrix.",ans:"S = ½(A+Aᵀ) = ½[4 4; 4 -2] = [2 2; 2 -1]. K = ½(A-Aᵀ) = ½[0 2; -2 0] = [0 1; -1 0]. A = S+K."},
+      {y:"2022",m:1,q:"If A is a square matrix such that A² = A, then (I+A)³ - 7A is equal to?",ans:"Expand (I+A)³ = I+3A+3A²+A³ = I+3A+3A+A = I+7A (since A²=A, A³=A). So (I+A)³-7A = I."},
+      {y:"2020",m:2,q:"Find x and y if 2[x 5; 7 y-3] + [3 -4; 1 2] = [7 6; 15 14].",ans:"2x+3=7→x=2. 10-4=6✓. 14+1=15✓. 2y-6+2=14→2y=18→y=9."}
+    ],
+    flashcards:[
+      {q:"What is a skew-symmetric matrix?",a:"Aᵀ = -A; diagonal elements are always 0",extra:"Ex: [0 3; -3 0]"},
+      {q:"(AB)ᵀ = ?",a:"BᵀAᵀ (reversal law)",extra:"Same reversal for inverse: (AB)⁻¹=B⁻¹A⁻¹"},
+      {q:"Can AB = BA for matrices?",a:"Not in general — matrix multiplication is NOT commutative",extra:"But A·I = I·A = A always"},
+      {q:"Formula for symmetric part of A",a:"½(A + Aᵀ)",extra:"Skew-symmetric part = ½(A - Aᵀ)"},
+      {q:"Order of AB if A is 3×4 and B is 4×2?",a:"3×2 (inner dimensions 4 must match)",extra:"(m×n)(n×p) = (m×p)"}
+    ]
+  },
+  {
+    id:4, title:"Determinants", unit:"II", marks:10,
+    tags:["10 marks","cofactors","adjoint","inverse","hot🔥"],
+    hotTopics:["Properties of determinants","Adjoint & Inverse","Area of triangle","Cramer's rule"],
+    concepts:[
+      {h:"Properties of Determinants",p:"<ul><li>|Aᵀ| = |A|</li><li>If two rows/columns identical → |A| = 0</li><li>Interchanging two rows/columns changes sign of det</li><li>Multiplying a row by k → det multiplies by k</li><li>|kA| = kⁿ|A| for n×n matrix</li><li>|AB| = |A||B|</li><li>Det of triangular matrix = product of diagonal elements</li></ul>"},
+      {h:"Cofactors and Adjoint",p:"Cofactor Aᵢⱼ = (-1)^(i+j) × Mᵢⱼ where Mᵢⱼ is minor (det of submatrix).<br>adj(A) = transpose of cofactor matrix.<br>A·adj(A) = adj(A)·A = |A|·I"},
+      {h:"Inverse of Matrix",p:"A⁻¹ = adj(A)/|A|, provided |A| ≠ 0.<br>Singular matrix: |A| = 0, inverse doesn't exist.<br>Non-singular: |A| ≠ 0, inverse exists.<br>AA⁻¹ = A⁻¹A = I"},
+      {h:"Applications",p:"<ul><li>Area of triangle with vertices (x₁,y₁),(x₂,y₂),(x₃,y₃): ½|det[x₁ y₁ 1; x₂ y₂ 1; x₃ y₃ 1]|</li><li>System AX=B: if |A|≠0, X=A⁻¹B (unique solution)</li><li>|A|=0 and (adj A)B=0: infinitely many solutions</li><li>|A|=0 and (adj A)B≠0: no solution</li></ul>"}
+    ],
+    mnemonics:[
+      {m:"SICK = Singular Is Cannot be inverse'd (det=0)",exp:"Singular matrix has determinant = 0 → no inverse. 'SICK matrices cannot be inverted.'"},
+      {m:"Cofactor sign: (-1)^(i+j) checkerboard",exp:"Signs follow + - + / - + - / + - + pattern. Top-left is +. Remember: checkerboard pattern starting with + at (1,1)."},
+      {m:"adj(A) = Cofactor Matrix Transposed",exp:"Step 1: Find all cofactors. Step 2: Arrange in matrix. Step 3: Transpose it. 'ACT = Adjoint = Cofactor matrix Transposed.'"},
+      {m:"|kA| = kⁿ|A| — k is multiplied n times",exp:"For a 3×3 matrix: |3A| = 3³|A| = 27|A|. Each row gets multiplied by k, so k comes out n times. 'n rows, n k's.'"}
+    ],
+    formulas:[
+      {f:"A⁻¹ = adj(A)/|A|",label:"Inverse of matrix"},
+      {f:"A·adj(A) = |A|·I",label:"Adjoint identity"},
+      {f:"|AB| = |A|·|B|",label:"Multiplicative property"},
+      {f:"|kA| = kⁿ|A|",label:"Scalar multiple (n×n matrix)"},
+      {f:"Area = ½|x₁(y₂-y₃)+x₂(y₃-y₁)+x₃(y₁-y₂)|",label:"Area of triangle"},
+      {f:"X = A⁻¹B (when |A|≠0)",label:"Solution of AX=B"}
+    ],
+    pyqs:[
+      {y:"2024",m:2,q:"If A is a 3×3 matrix and |A| = 5, find |adj A|.",ans:"|adj A| = |A|^(n-1) = 5^(3-1) = 5² = 25."},
+      {y:"2023",m:3,q:"Using properties of determinants, prove: |1+a 1 1; 1 1+b 1; 1 1 1+c| = abc(1/a+1/b+1/c+1).",ans:"Factor out abc from appropriate manipulation after applying row operations R₁→R₁-R₃, R₂→R₂-R₃, then expand."},
+      {y:"2022",m:3,q:"Find the inverse of A = [2 -3; 3 4] using adjoint method.",ans:"|A|=8+9=17. Cofactors: A₁₁=4,A₁₂=-3,A₂₁=3,A₂₂=2. adj(A)=[4 3;-3 2]. A⁻¹=(1/17)[4 3;-3 2]."},
+      {y:"2020",m:4,q:"Solve by matrix method: 2x+3y=5, 4x+y=4.",ans:"A=[2 3;4 1], |A|=2-12=-10. A⁻¹=(1/-10)[1 -3;-4 2]. X=A⁻¹B: x=[(1·5+(-3)·4)/-10]=7/10, y=[(-4·5+2·4)/-10]=12/10=6/5."}
+    ],
+    flashcards:[
+      {q:"Formula for A⁻¹",a:"adj(A)/|A|",extra:"Only exists when |A| ≠ 0"},
+      {q:"What is a singular matrix?",a:"Matrix with |A| = 0 — inverse does not exist",extra:"Non-singular: |A| ≠ 0"},
+      {q:"|adj A| for n×n matrix with det d",a:"|adj A| = d^(n-1)",extra:"For 3×3: |adj A| = d²"},
+      {q:"Area of triangle using determinant",a:"½|det[x₁ y₁ 1; x₂ y₂ 1; x₃ y₃ 1]|",extra:"Area=0 means collinear points"},
+      {q:"Sign of cofactor A₂₃",a:"(-1)^(2+3) = (-1)⁵ = -1",extra:"Checkerboard sign pattern"}
+    ]
+  },
+  {
+    id:5, title:"Continuity and Differentiability", unit:"III", marks:8,
+    tags:["8 marks","derivatives","chain rule","hot🔥"],
+    hotTopics:["Continuity at a point","Differentiability","Chain rule","Logarithmic differentiation","Rolle's & MVT"],
+    concepts:[
+      {h:"Continuity",p:"f is continuous at x=a if: lim(x→a) f(x) = f(a). LHL = RHL = f(a).<br>Continuity on [a,b]: continuous at every point. Every differentiable function is continuous but converse is not true."},
+      {h:"Differentiability",p:"f is differentiable at x=a if: lim(h→0) [f(a+h)-f(a)]/h exists (LHD = RHD).<br>|x| is continuous everywhere but not differentiable at x=0."},
+      {h:"Standard Derivatives",p:"<ul><li>d/dx(xⁿ) = nxⁿ⁻¹</li><li>d/dx(eˣ) = eˣ</li><li>d/dx(aˣ) = aˣ·log a</li><li>d/dx(log x) = 1/x</li><li>d/dx(sin x) = cos x</li><li>d/dx(cos x) = -sin x</li><li>d/dx(tan x) = sec²x</li><li>d/dx(sin⁻¹x) = 1/√(1-x²)</li><li>d/dx(cos⁻¹x) = -1/√(1-x²)</li><li>d/dx(tan⁻¹x) = 1/(1+x²)</li></ul>"},
+      {h:"Chain Rule & Log Differentiation",p:"Chain rule: d/dx[f(g(x))] = f'(g(x))·g'(x)<br>Logarithmic differentiation: take log both sides when function has variable in exponent. y=xˣ → log y=x·log x → (1/y)dy/dx = 1+log x → dy/dx = xˣ(1+log x)"},
+      {h:"Second Order Derivatives & Theorems",p:"d²y/dx² = d/dx(dy/dx)<br><b>Rolle's Theorem:</b> f continuous on [a,b], differentiable on (a,b), f(a)=f(b) → ∃c∈(a,b): f'(c)=0<br><b>LMVT:</b> f continuous on [a,b], differentiable on (a,b) → ∃c: f'(c)=[f(b)-f(a)]/(b-a)"}
+    ],
+    mnemonics:[
+      {m:"CLRM = Continuous, LHL=RHL=f(a)",exp:"To check continuity: C = Compute LHL, L = LHL value, R = RHL value, M = Must equal f(a). All three must match."},
+      {m:"Diff ⟹ Cont, but Cont ⟹/ Diff",exp:"Differentiability IMPLIES continuity, but not vice versa. '|x| is continuous at 0 but NOT differentiable.' Sharp corners break differentiability."},
+      {m:"CAST: Chain = Arrange Simple Terms",exp:"Chain rule: diff outer function × diff inner function. 'CASTing a net' — outer catches, inner runs. d/dx[sin(x²)] = cos(x²)·2x."},
+      {m:"Log diff for xˣ type: LOG both sides",exp:"When base AND exponent have x, take log. y=xˣ → log y = x·log x. Then diff implicitly. 'Take LOG, then differentiate.'"}
+    ],
+    formulas:[
+      {f:"d/dx(sin⁻¹x) = 1/√(1-x²)",label:"Derivative of arcsin"},
+      {f:"d/dx(tan⁻¹x) = 1/(1+x²)",label:"Derivative of arctan"},
+      {f:"d/dx(xˣ) = xˣ(1+log x)",label:"Variable exponent differentiation"},
+      {f:"f'(c) = [f(b)-f(a)]/(b-a)",label:"LMVT formula"},
+      {f:"d/dx[f(g(x))] = f'(g(x))·g'(x)",label:"Chain rule"}
+    ],
+    pyqs:[
+      {y:"2024",m:3,q:"Find dy/dx if y = sin⁻¹(2x√(1-x²)).",ans:"Put x=sinθ, y=sin⁻¹(2sinθcosθ)=sin⁻¹(sin2θ)=2θ=2sin⁻¹x. dy/dx=2/√(1-x²)."},
+      {y:"2023",m:3,q:"Differentiate xˢⁱⁿˣ + (sin x)ˣ with respect to x.",ans:"Let u=xˢⁱⁿˣ, log u=sinx·logx, du/dx=xˢⁱⁿˣ(sinx/x+cosx·logx). Let v=(sinx)ˣ, log v=x·log(sinx), dv/dx=(sinx)ˣ(xcotx+log(sinx))."},
+      {y:"2022",m:2,q:"If y=log(sin x), find d²y/dx².",ans:"dy/dx=cosx/sinx=cotx. d²y/dx²=-cosec²x."},
+      {y:"2020",m:3,q:"Verify Rolle's Theorem for f(x)=x²-4x+3 on [1,3].",ans:"f(1)=0=f(3)✓. f is polynomial→cont. and diff. f'(x)=2x-4=0→x=2∈(1,3)✓. Rolle's theorem verified."}
+    ],
+    flashcards:[
+      {q:"d/dx(tan⁻¹x)",a:"1/(1+x²)",extra:"Very frequent in CBSE!"},
+      {q:"d/dx(xˣ)",a:"xˣ(1+log x)",extra:"Use logarithmic differentiation"},
+      {q:"Is every continuous function differentiable?",a:"No! |x| is continuous at 0 but not differentiable",extra:"Diff → Cont, but not converse"},
+      {q:"What does LMVT say?",a:"∃c ∈ (a,b): f'(c) = [f(b)-f(a)]/(b-a)",extra:"Rolle's = LMVT with f(a)=f(b)"},
+      {q:"Chain rule formula",a:"d/dx[f(g(x))] = f'(g(x))·g'(x)",extra:"Diff outer × diff inner"}
+    ]
+  },
+  {
+    id:6, title:"Application of Derivatives", unit:"III", marks:8,
+    tags:["8 marks","maxima","minima","rate of change","hot🔥"],
+    hotTopics:["Rate of change","Increasing/decreasing","Maxima & Minima","Tangents & Normals"],
+    concepts:[
+      {h:"Rate of Change",p:"dy/dx = rate of change of y w.r.t. x. If x,y are functions of t: dy/dt = rate of change.<br>Common: area A=πr², dA/dt = 2πr·dr/dt. Volume V=(4/3)πr³, dV/dt = 4πr²·dr/dt."},
+      {h:"Increasing and Decreasing Functions",p:"f increasing on (a,b) if f'(x) > 0. f decreasing on (a,b) if f'(x) < 0. f'(x) = 0 → stationary/critical point."},
+      {h:"Tangents and Normals",p:"Slope of tangent at (x₀,y₀) = dy/dx|(x₀,y₀) = m.<br>Tangent: y-y₀ = m(x-x₀)<br>Normal: y-y₀ = (-1/m)(x-x₀)<br>Normal ⊥ tangent; slope of normal = -1/m."},
+      {h:"Maxima and Minima",p:"<b>First Derivative Test:</b> f'(a)=0. If f' changes + to - → local max. If f' changes - to + → local min.<br><b>Second Derivative Test:</b> f'(a)=0. f''(a)<0 → local max. f''(a)>0 → local min. f''(a)=0 → inconclusive.<br>Global max/min: check critical points + endpoints."}
+    ],
+    mnemonics:[
+      {m:"PRIME sign change: +→- = Max, -→+ = Min",exp:"First derivative test: if f' goes Positive to Negative → Maximum (peak). Negative to Positive → Minimum (valley). 'PM = Plus-Minus is Max, MP = Minus-Plus is Min.'"},
+      {m:"Second deriv: Negative = Max (frowning), Positive = Min (smiling)",exp:"f''<0 → concave down → Maximum. f''>0 → concave up → Minimum. Frowning face curves down (max at top), smiling face curves up (min at bottom)."},
+      {m:"Tangent slope = dy/dx, Normal slope = -dx/dy",exp:"Normal is perpendicular to tangent. If tangent slope = m, normal slope = -1/m. 'Tangent Touches, Normal is Negative reciprocal.'"},
+      {m:"dA/dt = dA/dr × dr/dt (Chain rule for rates)",exp:"Rate of change problems always use chain rule. 'Break the rate into pieces: dA/dt = dA/dr × dr/dt.' Connect area to radius, radius to time."}
+    ],
+    formulas:[
+      {f:"dA/dt = 2πr·(dr/dt)",label:"Rate of change of circle area"},
+      {f:"dV/dt = 4πr²·(dr/dt)",label:"Rate of change of sphere volume"},
+      {f:"Tangent: y-y₀ = m(x-x₀)",label:"Equation of tangent"},
+      {f:"Normal: y-y₀ = (-1/m)(x-x₀)",label:"Equation of normal"},
+      {f:"f''(a)<0 → Local max; f''(a)>0 → Local min",label:"Second derivative test"}
+    ],
+    pyqs:[
+      {y:"2024",m:3,q:"The radius of a circle is increasing at the rate of 0.7 cm/s. What is the rate of increase of its circumference?",ans:"C=2πr. dC/dt=2π(dr/dt)=2π(0.7)=1.4π cm/s."},
+      {y:"2023",m:3,q:"Find the local maxima and minima of f(x) = x³ - 6x² + 9x + 15.",ans:"f'(x)=3x²-12x+9=3(x-1)(x-3). Critical pts: x=1,3. f''(x)=6x-12. f''(1)=-6<0→local max. f''(3)=6>0→local min. Max=19, Min=15."},
+      {y:"2022",m:3,q:"Find the equation of tangent to curve y=x²-2x+7 at point where x=2.",ans:"y=4-4+7=7. Point (2,7). dy/dx=2x-2, at x=2: m=2. Tangent: y-7=2(x-2) → y=2x+3."},
+      {y:"2020",m:4,q:"Show that the rectangle of maximum perimeter inscribed in a circle has maximum perimeter when it is a square.",ans:"Let 2x,2y be sides. x²+y²=r². Perimeter P=4(x+y). Maximize x+y subject to x²+y²=r². By AM-GM, x+y max when x=y. So square gives max perimeter."}
+    ],
+    flashcards:[
+      {q:"When is f increasing?",a:"When f'(x) > 0",extra:"Decreasing: f'(x) < 0"},
+      {q:"Slope of normal at (x₀,y₀)",a:"-1/(dy/dx) = -dx/dy",extra:"Normal ⊥ tangent"},
+      {q:"Second derivative test for minimum",a:"f'(a)=0 and f''(a) > 0",extra:"f''(a)<0 → maximum"},
+      {q:"Rate of increase of area of circle",a:"dA/dt = 2πr·(dr/dt)",label:"Chain rule application"},
+      {q:"First derivative test: +→- means?",a:"Local maximum",extra:"-→+ means local minimum"}
+    ]
+  },
+  {
+    id:7, title:"Integrals", unit:"III", marks:8,
+    tags:["8 marks","integration","substitution","by parts","hot🔥"],
+    hotTopics:["Standard integrals","Substitution method","Integration by parts","Partial fractions"],
+    concepts:[
+      {h:"Standard Integrals",p:"<ul><li>∫xⁿ dx = xⁿ⁺¹/(n+1)+C</li><li>∫eˣ dx = eˣ+C</li><li>∫(1/x) dx = log|x|+C</li><li>∫sin x dx = -cos x+C</li><li>∫cos x dx = sin x+C</li><li>∫sec²x dx = tan x+C</li><li>∫1/√(1-x²) dx = sin⁻¹x+C</li><li>∫1/(1+x²) dx = tan⁻¹x+C</li><li>∫1/√(x²-a²) dx = log|x+√(x²-a²)|+C</li></ul>"},
+      {h:"Methods of Integration",p:"<b>Substitution:</b> Put u=g(x), du=g'(x)dx.<br><b>By Parts:</b> ∫u·v dx = u·∫v dx - ∫[u'·∫v dx] dx. ILATE rule for choosing u (I=Inverse trig, L=Log, A=Algebraic, T=Trig, E=Exponential).<br><b>Partial Fractions:</b> For rational functions. Proper fraction → decompose into simpler fractions."},
+      {h:"Special Integrals",p:"<ul><li>∫√(a²-x²) dx = (x/2)√(a²-x²) + (a²/2)sin⁻¹(x/a)+C</li><li>∫eˣ[f(x)+f'(x)] dx = eˣf(x)+C</li><li>∫sin²x dx = x/2 - sin2x/4+C</li><li>∫cos²x dx = x/2 + sin2x/4+C</li></ul>"}
+    ],
+    mnemonics:[
+      {m:"ILATE for By Parts — choose u in order",exp:"Integration By Parts: u = first function from ILATE. I=Inverse trig, L=Logarithm, A=Algebraic, T=Trigonometric, E=Exponential. Choose u as whichever comes first in ILATE."},
+      {m:"∫eˣ[f(x)+f'(x)] = eˣf(x) — Golden formula",exp:"If you see eˣ multiplied by a function and its derivative together, the answer is just eˣf(x)+C. 'e raised keeps the function.'"},
+      {m:"∫sin²x = half x minus quarter sin2x",exp:"∫sin²x dx = x/2 - sin(2x)/4 + C. Use cos2x = 1-2sin²x → sin²x = (1-cos2x)/2. 'Half x, minus quarter double angle.'"},
+      {m:"Substitution: change variable, change limits",exp:"For definite integrals with substitution: always change limits! If x=a→u=g(a). Forgetting to change limits is a top exam mistake."}
+    ],
+    formulas:[
+      {f:"∫u·v dx = u∫v dx - ∫[u'·∫v dx]dx",label:"Integration by parts"},
+      {f:"∫eˣ[f(x)+f'(x)]dx = eˣf(x)+C",label:"Golden exponential formula"},
+      {f:"∫1/(x²+a²) dx = (1/a)tan⁻¹(x/a)+C",label:"Standard form"},
+      {f:"∫1/√(a²-x²) dx = sin⁻¹(x/a)+C",label:"Standard form"},
+      {f:"∫sin²x dx = x/2 - sin2x/4 + C",label:"Power reduction formula"}
+    ],
+    pyqs:[
+      {y:"2024",m:3,q:"Evaluate ∫x·eˣ dx.",ans:"By parts (ILATE: u=x, v=eˣ): x·eˣ - ∫1·eˣ dx = xeˣ - eˣ + C = eˣ(x-1)+C."},
+      {y:"2023",m:3,q:"Evaluate ∫(x+3)/(x²+3x-18) dx.",ans:"Factor denominator: (x+6)(x-3). Partial fractions: (x+3)/[(x+6)(x-3)] = A/(x+6)+B/(x-3). Solve: A=1/3,B=2/3. Integrate: (1/3)log|x+6|+(2/3)log|x-3|+C."},
+      {y:"2022",m:3,q:"Evaluate ∫eˣ(sinx + cosx) dx.",ans:"Use golden formula: ∫eˣ[f(x)+f'(x)]dx = eˣf(x)+C. Here f(x)=sinx, f'(x)=cosx. Answer: eˣsinx+C."},
+      {y:"2020",m:4,q:"Evaluate ∫[x²/(x⁴-x²-12)] dx.",ans:"x⁴-x²-12 = (x²-4)(x²+3). Partial fractions: x²/[(x²-4)(x²+3)] = A/(x²-4)+B/(x²+3). Solving A=4/7, B=3/7. Integrate each term."}
+    ],
+    flashcards:[
+      {q:"ILATE order for integration by parts",a:"Inverse trig, Log, Algebraic, Trig, Exponential",extra:"First in ILATE = u (first function)"},
+      {q:"∫eˣ[f(x)+f'(x)]dx = ?",a:"eˣf(x) + C",extra:"Golden formula — most common CBSE shortcut"},
+      {q:"∫1/(1+x²)dx",a:"tan⁻¹x + C",extra:"Very frequent in boards!"},
+      {q:"∫sin x dx",a:"-cos x + C",extra:"Note the negative sign!"},
+      {q:"∫x·eˣ dx",a:"eˣ(x-1) + C",extra:"By parts: u=x, dv=eˣdx"}
+    ]
+  },
+  {
+    id:8, title:"Application of Integrals", unit:"III", marks:6,
+    tags:["6 marks","area","definite integral"],
+    hotTopics:["Area under curve","Area between two curves","Parabola & circle"],
+    concepts:[
+      {h:"Area Under a Curve",p:"Area between curve y=f(x), x-axis and x=a, x=b:<br>A = ∫ₐᵇ |f(x)| dx<br>If f(x)≥0: A = ∫ₐᵇ f(x) dx<br>If f(x)≤0: A = -∫ₐᵇ f(x) dx (take absolute value)"},
+      {h:"Area Between Two Curves",p:"Area between y=f(x) and y=g(x) from a to b (f≥g):<br>A = ∫ₐᵇ [f(x)-g(x)] dx<br>Find intersection points first by solving f(x)=g(x)."},
+      {h:"Standard Areas",p:"<ul><li>Circle x²+y²=r²: Area = πr² (full). Upper half: πr²/2</li><li>Ellipse x²/a²+y²/b²=1: Area = πab</li><li>Parabola y²=4ax and line x=h: A=(2/3)h√(4ah)</li></ul>"}
+    ],
+    mnemonics:[
+      {m:"Top minus Bottom = Area between curves",exp:"Area between two curves = ∫(top curve - bottom curve)dx. Always subtract lower from upper. Find intersection for limits."},
+      {m:"Area = ∫|f(x)|dx — always positive",exp:"Area is always positive! If curve dips below x-axis, split the integral at x-intercept and take |negative part|. 'Area can never be negative.'"},
+      {m:"Quarter circle: πr²/4 is your friend",exp:"Many problems use symmetry: full circle area = πr², half = πr²/2, quarter = πr²/4. Use symmetry to simplify integration."}
+    ],
+    formulas:[
+      {f:"A = ∫ₐᵇ [f(x)-g(x)] dx",label:"Area between two curves (f≥g)"},
+      {f:"Area of circle = πr²",label:"Standard area"},
+      {f:"Area of ellipse x²/a²+y²/b²=1 is πab",label:"Ellipse area"},
+      {f:"A = ∫ₐᵇ f(x)dx (when f(x)≥0)",label:"Area under positive curve"}
+    ],
+    pyqs:[
+      {y:"2024",m:5,q:"Find the area bounded by y=x² and y=x.",ans:"Intersection: x²=x → x=0,1. Area=∫₀¹(x-x²)dx=[x²/2-x³/3]₀¹=1/2-1/3=1/6 sq units."},
+      {y:"2023",m:5,q:"Find area of region bounded by x²+y²=4 and x+y=2 in first quadrant.",ans:"Circle r=2. Line meets axes at (2,0),(0,2). Area = (area of quarter circle) - (area of triangle) = π·4/4 - ½·2·2 = π-2."},
+      {y:"2022",m:5,q:"Find the area enclosed between the parabola y=x² and the line y=x+2.",ans:"Intersection: x²=x+2→x²-x-2=0→(x-2)(x+1)=0→x=-1,2. Area=∫₋₁²(x+2-x²)dx=[x²/2+2x-x³/3]₋₁²=9/2 sq units."}
+    ],
+    flashcards:[
+      {q:"Area between y=f(x) and y=g(x), f≥g",a:"∫ₐᵇ [f(x) - g(x)] dx",extra:"Find limits from intersection points"},
+      {q:"Area of full circle x²+y²=r²",a:"πr²",extra:"Quarter = πr²/4 (use symmetry)"},
+      {q:"What if area comes negative?",a:"Take the absolute value — area is always positive",extra:"Split integral at x-axis crossing"}
+    ]
+  },
+  {
+    id:9, title:"Differential Equations", unit:"III", marks:8,
+    tags:["8 marks","order","degree","variable separable","hot🔥"],
+    hotTopics:["Order & Degree","Variable separable","Homogeneous equations","Linear DE"],
+    concepts:[
+      {h:"Order and Degree",p:"<b>Order:</b> order of highest derivative in DE.<br><b>Degree:</b> power of the highest order derivative (when written as polynomial in derivatives).<br>y'' + y' = sinx → Order 2, Degree 1.<br>Degree undefined if derivatives under roots/logs."},
+      {h:"Variable Separable Method",p:"Separate variables: f(y)dy = g(x)dx, then integrate both sides.<br>Example: dy/dx = xy → dy/y = x dx → log|y| = x²/2 + C"},
+      {h:"Homogeneous Differential Equations",p:"DE of form dy/dx = F(y/x). Put y=vx → dy/dx = v+x(dv/dx). Substitute, separate variables in v and x, integrate."},
+      {h:"Linear Differential Equations",p:"dy/dx + P(x)y = Q(x).<br>Integrating Factor: IF = e^∫P dx<br>Solution: y·IF = ∫Q·IF dx + C<br>Also for: dx/dy + P(y)x = Q(y)."}
+    ],
+    mnemonics:[
+      {m:"PIQUE = Linear DE formula",exp:"For dy/dx + Py = Q: P is the coefficient of y, Q is RHS. IF = e^∫Pdx. Multiply both sides by IF. 'PIQUE: P times y equals Q, Integrate Factor e.'"},
+      {m:"Homogeneous: y=vx, separate v and x",exp:"If F(y/x) form, substitute y=vx. Then v+x(dv/dx) = F(v). Rearrange to separate v and x. 'vx substitution transforms homogeneous.'"},
+      {m:"Order = highest derivative, Degree = its power",exp:"Look at the highest derivative in the equation. Its order is the order of DE. The power (exponent) of that highest derivative is the degree. Degree exists only if expressed as polynomial."},
+      {m:"IF = e^∫Pdx — Integrating Factor formula",exp:"For Linear DE, always compute IF = e raised to integral of P(x). This makes the left side a perfect derivative. 'IF converts DE into solvable form.'"}
+    ],
+    formulas:[
+      {f:"IF = e^(∫P dx)",label:"Integrating factor for linear DE"},
+      {f:"y·IF = ∫(Q·IF)dx + C",label:"General solution of linear DE"},
+      {f:"y = vx → dy/dx = v + x·dv/dx",label:"Homogeneous substitution"},
+      {f:"Variable sep: f(y)dy = g(x)dx → integrate",label:"Variable separable method"}
+    ],
+    pyqs:[
+      {y:"2024",m:3,q:"Solve: dy/dx = (x²+xy+y²)/x².",ans:"Homogeneous: F(y/x) = 1 + y/x + (y/x)². Put y=vx: v+x·dv/dx = 1+v+v². x·dv/dx=1+v². ∫dv/(1+v²)=∫dx/x → tan⁻¹v=log|x|+C → tan⁻¹(y/x)=log|x|+C."},
+      {y:"2023",m:3,q:"Find the general solution: dy/dx + y·cot x = 2x + x²·cot x.",ans:"Linear DE: P=cotx, Q=2x+x²cotx. IF=e^∫cotxdx=e^(log sinx)=sinx. Solution: y·sinx=∫(2x+x²cotx)sinxdx=x²sinx+C. So y=x²+C·cosecx."},
+      {y:"2022",m:2,q:"Find the order and degree of: (d²y/dx²)² + (dy/dx)³ = x sin(dy/dx).",ans:"Degree not defined (sindy/dx cannot be written as polynomial in dy/dx). Order = 2."},
+      {y:"2020",m:4,q:"Solve: x·dy/dx - y = x²·sin x.",ans:"Rearrange: dy/dx - y/x = x·sinx. Linear DE: P=-1/x, Q=xsinx. IF=e^∫(-1/x)dx=e^(-logx)=1/x. Solution: y/x=∫sinx dx=-cosx+C. y=-xcosx+Cx."}
+    ],
+    flashcards:[
+      {q:"Integrating factor for linear DE",a:"IF = e^(∫P dx)",extra:"Then y·IF = ∫Q·IF dx + C"},
+      {q:"Substitution for homogeneous DE",a:"y = vx, then dy/dx = v + x·dv/dx",extra:"Separates variables v and x"},
+      {q:"Order of d²y/dx² + (dy/dx)³ = 1",a:"Order = 2, Degree = 1",extra:"Highest derivative is d²y/dx², its power is 1"},
+      {q:"Variable separable general method",a:"Separate f(y)dy = g(x)dx, then integrate both sides",extra:"Add constant C on one side only"}
+    ]
+  },
+  {
+    id:10, title:"Vector Algebra", unit:"IV", marks:10,
+    tags:["10 marks","dot product","cross product","hot🔥"],
+    hotTopics:["Types of vectors","Dot product","Cross product","Projection"],
+    concepts:[
+      {h:"Types of Vectors",p:"<ul><li><b>Zero vector:</b> |0⃗|=0, undefined direction</li><li><b>Unit vector:</b> |â|=1, â=a⃗/|a⃗|</li><li><b>Collinear:</b> parallel or antiparallel vectors</li><li><b>Equal:</b> same magnitude and direction</li><li><b>Negative:</b> same magnitude, opposite direction</li><li><b>Position vector:</b> OP⃗ = xi+yj+zk</li></ul>"},
+      {h:"Dot Product (Scalar Product)",p:"a⃗·b⃗ = |a⃗||b⃗|cosθ = a₁b₁+a₂b₂+a₃b₃<br>Properties: commutative a⃗·b⃗=b⃗·a⃗. Perpendicular: a⃗·b⃗=0. i⃗·i⃗=1, i⃗·j⃗=0<br>Projection of a⃗ on b⃗ = (a⃗·b⃗)/|b⃗|"},
+      {h:"Cross Product (Vector Product)",p:"a⃗×b⃗ = |a⃗||b⃗|sinθ·n̂<br>|a⃗×b⃗| = area of parallelogram<br>a⃗×b⃗ = -b⃗×a⃗ (anti-commutative)<br>i⃗×i⃗=0, i⃗×j⃗=k⃗, j⃗×k⃗=i⃗, k⃗×i⃗=j⃗<br>a⃗×b⃗ = det[i j k; a₁ a₂ a₃; b₁ b₂ b₃]"},
+      {h:"Scalar Triple Product",p:"[a⃗ b⃗ c⃗] = a⃗·(b⃗×c⃗) = det[a; b; c]<br>Volume of parallelepiped = |[a⃗ b⃗ c⃗]|<br>Coplanar vectors: [a⃗ b⃗ c⃗] = 0"}
+    ],
+    mnemonics:[
+      {m:"Dot = D for Direction cosθ (scalar), Cross = C for cosθ's complement sinθ",exp:"Dot product uses cosθ → gives scalar. Cross product uses sinθ → gives vector. 'Dot: cosine, Cross: sine.'"},
+      {m:"i×j=k, j×k=i, k×i=j — cyclic IJK",exp:"Cyclic order: i→j→k→i (going forward = positive). Going backward = negative. 'Imagine a clock: i,j,k going clockwise is positive.'"},
+      {m:"Perpendicular ⟺ Dot=0; Parallel ⟺ Cross=0",exp:"a⃗·b⃗=0 means 90° (perpendicular). a⃗×b⃗=0 means 0° or 180° (parallel). 'Dot zero = they meet at right angles. Cross zero = they go same way.'"},
+      {m:"Area of triangle = ½|a⃗×b⃗|",exp:"Two sides of triangle given as vectors a⃗ and b⃗: Area = ½|a⃗×b⃗|. Parallelogram area = |a⃗×b⃗|. 'Half the parallelogram.'"}
+    ],
+    formulas:[
+      {f:"a⃗·b⃗ = |a⃗||b⃗|cosθ = a₁b₁+a₂b₂+a₃b₃",label:"Dot product"},
+      {f:"|a⃗×b⃗| = |a⃗||b⃗|sinθ",label:"Cross product magnitude"},
+      {f:"Area of parallelogram = |a⃗×b⃗|",label:"Area using cross product"},
+      {f:"Area of triangle = ½|a⃗×b⃗|",label:"Triangle area"},
+      {f:"[a⃗ b⃗ c⃗]=0 ⟺ coplanar",label:"Coplanar condition"},
+      {f:"Projection of a⃗ on b⃗ = (a⃗·b⃗)/|b⃗|",label:"Projection formula"}
+    ],
+    pyqs:[
+      {y:"2024",m:2,q:"If a⃗=2i+3j-k and b⃗=i-j+k, find a⃗·b⃗ and angle between them.",ans:"a⃗·b⃗=2(1)+3(-1)+(-1)(1)=2-3-1=-2. |a⃗|=√14, |b⃗|=√3. cosθ=-2/√42. θ=cos⁻¹(-2/√42)."},
+      {y:"2023",m:3,q:"Find the area of triangle with vertices A(1,1,1), B(2,3,0), C(4,1,2).",ans:"AB⃗=i+2j-k, AC⃗=3i+0j+k. AB⃗×AC⃗=det[i j k; 1 2 -1; 3 0 1]=(2-0)i-(-1+3)j+(0-6)k=2i-2j-6k. |AB⃗×AC⃗|=√(4+4+36)=√44=2√11. Area=½·2√11=√11."},
+      {y:"2022",m:2,q:"If a⃗×b⃗=c⃗×d⃗ and a⃗×c⃗=b⃗×d⃗, show that (a⃗-d⃗) is parallel to (b⃗-c⃗).",ans:"From given: a⃗×b⃗-a⃗×c⃗=c⃗×d⃗-b⃗×d⃗ → a⃗×(b⃗-c⃗)=(c⃗-b⃗)×d⃗=(b⃗-c⃗)×(-d⃗). So (a⃗-d⃗)×(b⃗-c⃗)=0 → parallel."},
+      {y:"2020",m:2,q:"Find λ if vectors 2i+λj+3k and 3i+2j-4k are perpendicular.",ans:"Dot product=0: 2(3)+λ(2)+3(-4)=0 → 6+2λ-12=0 → 2λ=6 → λ=3."}
+    ],
+    flashcards:[
+      {q:"Condition for perpendicular vectors",a:"a⃗·b⃗ = 0",extra:"Dot product = 0 ↔ 90°"},
+      {q:"Area of parallelogram with sides a⃗,b⃗",a:"|a⃗ × b⃗|",extra:"Triangle area = ½|a⃗×b⃗|"},
+      {q:"i×j = ?",a:"k (cyclic: i→j→k→i positive)",extra:"j×i = -k (reverse = negative)"},
+      {q:"Coplanar vectors condition",a:"Scalar triple product [a⃗ b⃗ c⃗] = 0",extra:"Volume of parallelepiped = 0"},
+      {q:"Projection of a⃗ on b⃗",a:"(a⃗·b⃗)/|b⃗|",extra:"Scalar projection (a number)"}
+    ]
+  },
+  {
+    id:11, title:"Three Dimensional Geometry", unit:"IV", marks:10,
+    tags:["10 marks","lines","planes","angle","hot🔥"],
+    hotTopics:["Direction cosines","Lines in 3D","Planes","Angle between line & plane","Distance"],
+    concepts:[
+      {h:"Direction Cosines and Ratios",p:"Direction cosines (l,m,n): cosines of angles with x,y,z axes. l²+m²+n²=1.<br>Direction ratios (a,b,c): proportional to l,m,n. l=a/√(a²+b²+c²)."},
+      {h:"Line in 3D",p:"<b>Vector form:</b> r⃗ = a⃗ + λb⃗<br><b>Cartesian form:</b> (x-x₁)/a = (y-y₁)/b = (z-z₁)/c<br>where (x₁,y₁,z₁) is a point on line and (a,b,c) are DRs.<br>Angle between two lines: cosθ = |l₁l₂+m₁m₂+n₁n₂|"},
+      {h:"Plane",p:"<b>Normal form:</b> r⃗·n̂ = d (n̂ = unit normal)<br><b>General:</b> ax+by+cz+d=0, normal = (a,b,c)<br><b>Intercept form:</b> x/a+y/b+z/c=1<br>Angle between planes: cosθ = |a₁a₂+b₁b₂+c₁c₂|/√(a₁²+b₁²+c₁²)·√(a₂²+b₂²+c₂²)"},
+      {h:"Distance Formulas",p:"Distance from point (x₀,y₀,z₀) to plane ax+by+cz+d=0:<br>d = |ax₀+by₀+cz₀+d|/√(a²+b²+c²)<br>Shortest distance between skew lines = |(a⃗₂-a⃗₁)·(b⃗₁×b⃗₂)|/|b⃗₁×b⃗₂|"}
+    ],
+    mnemonics:[
+      {m:"l²+m²+n²=1 — unit direction cosines",exp:"Direction cosines always satisfy l²+m²+n²=1. They're like components of a unit vector. 'l,m,n square and sum to ONE.'"},
+      {m:"Line: point + λ×direction (r = a + λb)",exp:"Line passes through point a⃗ and goes in direction b⃗. λ is the parameter. 'r = a + lambda times b — anchor point plus lambda times direction.'"},
+      {m:"Plane normal = coefficients in ax+by+cz=d",exp:"Normal vector to plane ax+by+cz+d=0 is (a,b,c). 'The coefficients of x,y,z are the normal to the plane.'"},
+      {m:"Distance formula: plug in numerator, √(sum of squares) denominator",exp:"Distance from (x₀,y₀,z₀) to ax+by+cz+d=0: plug point into ax+by+cz+d for numerator, √(a²+b²+c²) for denominator."}
+    ],
+    formulas:[
+      {f:"l²+m²+n²=1",label:"Direction cosines identity"},
+      {f:"r⃗ = a⃗ + λb⃗",label:"Vector equation of line"},
+      {f:"(x-x₁)/a=(y-y₁)/b=(z-z₁)/c",label:"Cartesian equation of line"},
+      {f:"d = |ax₀+by₀+cz₀+d|/√(a²+b²+c²)",label:"Distance from point to plane"},
+      {f:"SD = |(a⃗₂-a⃗₁)·(b⃗₁×b⃗₂)|/|b⃗₁×b⃗₂|",label:"Shortest distance between skew lines"}
+    ],
+    pyqs:[
+      {y:"2024",m:3,q:"Find angle between lines (x-2)/3=(y+1)/(-2)=(z-3)/4 and (x+2)/1=(y-3)/3=(z+5)/2.",ans:"DRs: (3,-2,4) and (1,3,2). cosθ=|3·1+(-2)·3+4·2|/√(9+4+16)·√(1+9+4)=|3-6+8|/√29·√14=5/√406."},
+      {y:"2023",m:3,q:"Find the equation of plane passing through A(1,-1,2), B(2,-2,2), C(1,1,2).",ans:"Two vectors: AB=(1,-1,0), AC=(0,2,0). Normal=AB×AC=det[i j k;1 -1 0;0 2 0]=0i-0j+2k=2k. Plane: 0(x-1)+0(y+1)+2(z-2)=0 → z=2."},
+      {y:"2022",m:2,q:"Find distance from point (2,3,-5) to plane x+2y-2z=9.",ans:"d=|1(2)+2(3)+(-2)(-5)-9|/√(1+4+4)=|2+6+10-9|/3=9/3=3 units."},
+      {y:"2020",m:4,q:"Find shortest distance between lines r⃗=i+j+λ(2i-j+k) and r⃗=2i+j-k+μ(3i-5j+2k).",ans:"a⃗₁=i+j, a⃗₂=2i+j-k, b⃗₁=2i-j+k, b⃗₂=3i-5j+2k. Compute b⃗₁×b⃗₂=3i-j-7k. (a⃗₂-a⃗₁)=i-k. SD=|(i-k)·(3i-j-7k)|/|3i-j-7k|=|3+7|/√59=10/√59."}
+    ],
+    flashcards:[
+      {q:"l²+m²+n²=?",a:"1 (direction cosines always sum to 1 when squared)",extra:"Direction ratios don't have this constraint"},
+      {q:"Normal vector to ax+by+cz+d=0",a:"(a, b, c)",extra:"Coefficients of x,y,z"},
+      {q:"Vector equation of a line",a:"r⃗ = a⃗ + λb⃗",extra:"a⃗ = point on line, b⃗ = direction vector"},
+      {q:"Distance from point to plane formula",a:"|ax₀+by₀+cz₀+d|/√(a²+b²+c²)",extra:"Numerator: plug point in; denominator: √(sum sq)"}
+    ]
+  },
+  {
+    id:12, title:"Linear Programming", unit:"V", marks:5,
+    tags:["5 marks","LPP","corner point","feasible region"],
+    hotTopics:["Feasible region","Corner point method","Optimal solution"],
+    concepts:[
+      {h:"Linear Programming Problem (LPP)",p:"Objective function: Z = ax+by (to maximise or minimise).<br>Subject to constraints (linear inequalities). Non-negativity: x≥0, y≥0."},
+      {h:"Graphical Method",p:"<ol><li>Convert inequalities to equations, draw lines.</li><li>Identify feasible region (satisfies all constraints).</li><li>Find corner points (vertices) of feasible region.</li><li>Evaluate Z at each corner point.</li><li>Maximum/minimum Z is the answer.</li></ol>"},
+      {h:"Types of Solutions",p:"<ul><li><b>Unique optimal:</b> Z has max/min at one corner point</li><li><b>Multiple optimal:</b> Z has max/min along a whole edge</li><li><b>Unbounded:</b> Feasible region extends to infinity, Z may or may not have max/min</li><li><b>Infeasible:</b> No feasible region (contradictory constraints)</li></ul>"}
+    ],
+    mnemonics:[
+      {m:"CFEZ = Corner points Find the Extremes of Z",exp:"For LPP, evaluate Z at every Corner Point of the feasible region. The max or min of Z occurs at a corner point. 'CFEZ = Check all corners, Find Extreme Z.'"},
+      {m:"Feasible region = ALL constraints satisfied simultaneously",exp:"Shade the region that satisfies every constraint at once (AND condition). Test a point (like origin) to decide which side of each line to shade."},
+      {m:"Origin test: substitute (0,0) to check inequality direction",exp:"For constraint ax+by≤c: substitute (0,0). If 0≤c is true, origin is in the feasible region → shade the origin side. 'Test the origin, shade accordingly.'"}
+    ],
+    formulas:[
+      {f:"Z = ax + by (objective function)",label:"LPP objective function"},
+      {f:"Evaluate Z at all corner points",label:"Corner point method"},
+      {f:"Feasible region: intersection of all constraint regions",label:"Definition"}
+    ],
+    pyqs:[
+      {y:"2024",m:5,q:"Maximise Z=4x+y subject to: x+y≤50, 3x+y≤90, x≥0, y≥0.",ans:"Corner points: O(0,0)→Z=0; A(30,0)→Z=120; B(20,30)→Z=110; C(0,50)→Z=50. Max Z=120 at x=30,y=0."},
+      {y:"2023",m:5,q:"Minimise Z=3x+5y subject to x+y≥4, x+3y≥6, x≥0, y≥0.",ans:"Corner points: (6,0)→Z=18; (3,1)→Z=14; (0,4)→Z=20. Min Z=14 at (3,1)."},
+      {y:"2022",m:5,q:"Maximise Z=5x+3y subject to 3x+5y≤15, 5x+2y≤10, x≥0, y≥0.",ans:"Corner points: O(0,0)→0; A(2,0)→10; B(20/19,45/19)→Z≈235/19≈12.4; C(0,3)→9. Max Z=235/19 at (20/19,45/19)."}
+    ],
+    flashcards:[
+      {q:"What is the corner point method?",a:"Evaluate Z at all vertices of feasible region; max/min occurs at a corner",extra:"Fundamental theorem of LPP"},
+      {q:"Infeasible LPP means?",a:"No feasible region — constraints are contradictory",extra:"No solution exists"},
+      {q:"Non-negativity constraints in LPP",a:"x ≥ 0, y ≥ 0 — variables cannot be negative",extra:"Restricts solution to first quadrant"},
+      {q:"How to check which side of a line to shade?",a:"Substitute (0,0). If satisfied, shade origin side.",extra:"If not satisfied, shade other side"}
+    ]
+  },
+  {
+    id:13, title:"Probability", unit:"VI", marks:8,
+    tags:["8 marks","conditional","Bayes","random variable","hot🔥"],
+    hotTopics:["Conditional probability","Bayes theorem","Random variable & distribution","Binomial distribution"],
+    concepts:[
+      {h:"Conditional Probability",p:"P(A|B) = P(A∩B)/P(B), where P(B)>0.<br>Multiplication theorem: P(A∩B) = P(A)·P(B|A) = P(B)·P(A|B).<br>Independent events: P(A∩B) = P(A)·P(B), P(A|B) = P(A)."},
+      {h:"Total Probability & Bayes' Theorem",p:"If B₁,B₂,...,Bₙ partition sample space:<br>P(A) = Σ P(Bᵢ)·P(A|Bᵢ) (Total Probability)<br>P(Bᵢ|A) = P(Bᵢ)·P(A|Bᵢ)/ΣP(Bⱼ)·P(A|Bⱼ) (Bayes' Theorem)"},
+      {h:"Random Variable and Distribution",p:"Random variable X: function from sample space to ℝ.<br>Probability distribution: list of values x with P(X=x).<br>ΣP(xᵢ)=1 always.<br>Mean E(X) = Σxᵢ·P(xᵢ)<br>Variance = Σxᵢ²P(xᵢ) - [E(X)]²"},
+      {h:"Binomial Distribution",p:"X~B(n,p): n independent trials, probability of success p.<br>P(X=r) = ⁿCᵣ·pʳ·qⁿ⁻ʳ where q=1-p.<br>Mean = np, Variance = npq, SD = √(npq)."}
+    ],
+    mnemonics:[
+      {m:"P(A|B) = P(A∩B)/P(B) — 'Given B, intersection over B'",exp:"Conditional probability: P(A given B) = P(both A and B happen) divided by P(B). 'Condition cuts the sample space to B, find A within it.'"},
+      {m:"Bayes: Prior × Likelihood / Total — PAST to PRESENT",exp:"Bayes updates probability using new evidence. Prior P(Bᵢ) updated by P(A|Bᵢ) gives posterior P(Bᵢ|A). 'Bayesian thinking: update beliefs with evidence.'"},
+      {m:"Binomial: ⁿCᵣ pʳ qⁿ⁻ʳ — Choose, powers, remaining",exp:"P(X=r) = ⁿCᵣ (choose r successes) × pʳ (success probability r times) × qⁿ⁻ʳ (failure probability for remaining). Mean=np, Var=npq."},
+      {m:"Independent ⟺ P(A∩B) = P(A)·P(B)",exp:"Events are independent if knowing one doesn't affect the other. Test: P(A∩B)=P(A)·P(B). 'Independent = product rule applies.' Don't confuse with mutually exclusive (P(A∩B)=0)."}
+    ],
+    formulas:[
+      {f:"P(A|B) = P(A∩B)/P(B)",label:"Conditional probability"},
+      {f:"P(A) = ΣP(Bᵢ)·P(A|Bᵢ)",label:"Total probability theorem"},
+      {f:"P(Bᵢ|A) = P(Bᵢ)P(A|Bᵢ)/ΣP(Bⱼ)P(A|Bⱼ)",label:"Bayes' theorem"},
+      {f:"P(X=r) = ⁿCᵣ·pʳ·(1-p)ⁿ⁻ʳ",label:"Binomial distribution"},
+      {f:"Mean = np, Var = npq",label:"Binomial mean and variance"},
+      {f:"E(X) = Σxᵢ·P(xᵢ)",label:"Mean of random variable"}
+    ],
+    pyqs:[
+      {y:"2024",m:4,q:"A bag contains 4 red and 4 black balls. A ball is drawn at random, its colour noted and it is not replaced. Another ball is drawn. Find probability that second ball is red.",ans:"P(2nd red) = P(1st red)P(2nd red|1st red) + P(1st black)P(2nd red|1st black) = (4/8)(3/7)+(4/8)(4/7) = 12/56+16/56 = 28/56 = 1/2."},
+      {y:"2023",m:4,q:"A man is known to speak truth 3 out of 4 times. He throws a die and reports it is six. Find probability that it is actually six.",ans:"P(6)=1/6, P(not 6)=5/6. P(reports 6|6)=3/4. P(reports 6|not 6)=1/4. Bayes: P(6|reports 6)=(1/6·3/4)/[(1/6·3/4)+(5/6·1/4)]=(3/24)/[(3/24)+(5/24)]=3/8."},
+      {y:"2022",m:3,q:"If X is a random variable with P(X=0)=k, P(X=1)=3k, P(X=2)=6k, find k and E(X).",ans:"ΣP=k+3k+6k=10k=1 → k=1/10. E(X)=0·(1/10)+1·(3/10)+2·(6/10)=0+3/10+12/10=15/10=3/2."},
+      {y:"2020",m:4,q:"Suppose X has binomial distribution B(6,1/2). Show that X=3 is the most likely outcome.",ans:"P(X=r)=⁶Cᵣ(1/2)⁶. P(X=3)=⁶C₃/64=20/64=5/16. Compare with P(X=2)=15/64 and P(X=4)=15/64. P(X=3) is maximum. Mode=3."}
+    ],
+    flashcards:[
+      {q:"Formula for P(A|B)",a:"P(A∩B)/P(B)",extra:"Only defined when P(B) > 0"},
+      {q:"Mean of binomial distribution B(n,p)",a:"np",extra:"Variance = npq, where q = 1-p"},
+      {q:"Independent events condition",a:"P(A∩B) = P(A)·P(B)",extra:"Not the same as mutually exclusive!"},
+      {q:"P(X=r) in binomial distribution",a:"ⁿCᵣ·pʳ·(1-p)ⁿ⁻ʳ",extra:"r successes in n independent trials"},
+      {q:"What does Bayes theorem calculate?",a:"Posterior probability P(Bᵢ|A) — probability of hypothesis given evidence",extra:"Updates prior with likelihood"},
+      {q:"ΣP(xᵢ) for any probability distribution",a:"= 1 (sum of all probabilities must be 1)",extra:"Key check in distribution problems"}
+    ]
+  }
+];
+
+let currentChapter=null, currentTab='concepts', currentCards=[], fcIndex=0, allPYQ=[];
+
+function showPage(id, btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.nav-pills button').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  if(id==='pyqAll')renderAllPYQ();
+  if(id==='syllabus')renderSyllabus();
+}
+
+function renderChapterGrid(){
+  const g=document.getElementById('chapterGrid');
+  g.innerHTML=chapters.map(c=>`
+    <div class="ch-card" onclick="openChapter(${c.id})">
+      <div class="ch-num">Chapter ${c.id} · Unit ${c.unit} · ${c.marks}M</div>
+      <h3>${c.title}</h3>
+      <div class="tags">${c.tags.map(t=>`<span class="tag ${t.includes('🔥')?'hot':''}">${t}</span>`).join('')}</div>
+      <div class="hot-topics">🎯 <span>${c.hotTopics.join(' · ')}</span></div>
+    </div>`).join('');
+}
+
+function openChapter(id){
+  currentChapter=chapters.find(c=>c.id===id);
+  const c=currentChapter;
+  document.getElementById('chHeader').innerHTML=`
+    <h2>Ch${c.id}: ${c.title}</h2>
+    <div class="meta">
+      <span>Unit ${c.unit}</span><span>${c.marks} Marks</span>
+      <span>${c.hotTopics.join(' | ')}</span>
+    </div>`;
+  const tabs=['concepts','mnemonics','formulas','pyq','flashcards'];
+  const labels=['📖 Concepts','💡 Mnemonics','📐 Formulas','📋 PYQ','🃏 Flashcards'];
+  document.getElementById('tabBar').innerHTML=tabs.map((t,i)=>
+    `<button class="tab-btn ${t==='concepts'?'active':''}" onclick="switchTab('${t}',this)">${labels[i]}</button>`).join('');
+  switchTab('concepts',document.querySelector('.tab-btn'));
+  showPage('chapterDetail',null);
+}
+
+function switchTab(tab, btn){
+  currentTab=tab;
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  const c=currentChapter;
+  let html='';
+  if(tab==='concepts'){
+    html=c.concepts.map(x=>`<div class="concept-block"><h4>${x.h}</h4><p>${x.p}</p></div>`).join('');
+  } else if(tab==='mnemonics'){
+    html=c.mnemonics.map(x=>`<div class="mnemonic-card"><div class="mtext">💡 ${x.m}</div><div class="mexp">${x.exp}</div></div>`).join('');
+  } else if(tab==='formulas'){
+    html=`<div class="formula-grid">${c.formulas.map(x=>`<div class="formula-card"><div class="f">${x.f}</div><div class="fl">${x.label}</div></div>`).join('')}</div>`;
+  } else if(tab==='pyq'){
+    html=`<div class="filters">
+      <select onchange="filterPYQ(this)"><option value="">All Years</option>${[...new Set(c.pyqs.map(p=>p.y))].map(y=>`<option>${y}</option>`).join('')}</select>
+      <select onchange="filterPYQ(this)"><option value="">All Marks</option>${[...new Set(c.pyqs.map(p=>p.m))].sort().map(m=>`<option value="${m}">${m}M</option>`).join('')}</select>
+    </div><div id="pyqList">${renderPYQCards(c.pyqs)}</div>`;
+  } else if(tab==='flashcards'){
+    currentCards=[...c.flashcards]; fcIndex=0;
+    html=`<div class="fc-controls">
+      <button onclick="prevCard()">← Prev</button>
+      <button onclick="nextCard()">Next →</button>
+      <button onclick="shuffleCards(this)" id="shuffleBtn">🔀 Shuffle</button>
+      <span class="fc-progress" id="fcProg">1 / ${currentCards.length}</span>
+    </div>
+    <div class="fc-wrap"><div class="fc" id="fc" onclick="flipCard()">
+      <div class="fc-face fc-front"><div class="q" id="fcQ"></div><div style="color:var(--muted);font-size:.75rem;margin-top:12px">Click to flip</div></div>
+      <div class="fc-face fc-back"><div class="a" id="fcA"></div><div class="ex" id="fcEx"></div></div>
+    </div></div>`;
+    setTimeout(()=>updateCard(),10);
+  }
+  document.getElementById('tabContents').innerHTML=`<div class="tab-content active">${html}</div>`;
+  if(tab==='flashcards')updateCard();
+}
+
+function renderPYQCards(pyqs){
+  return pyqs.map((p,i)=>`
+    <div class="pyq-card">
+      <div class="pyq-meta"><span class="year">${p.y}</span><span class="marks">${p.m} marks</span></div>
+      <div class="pyq-q">${p.q}</div>
+      <button class="ans-toggle" onclick="toggleAns(this,'ans${i}')">Show Answer</button>
+      <div class="ans-box" id="ans${i}">${p.ans}</div>
+    </div>`).join('');
+}
+
+function filterPYQ(){}
+function toggleAns(btn,id){
+  const box=document.getElementById(id);
+  box.classList.toggle('show');
+  btn.textContent=box.classList.contains('show')?'Hide Answer':'Show Answer';
+}
+
+function updateCard(){
+  if(!currentCards.length)return;
+  const card=currentCards[fcIndex];
+  const fc=document.getElementById('fc');
+  if(!fc)return;
+  if(fc.classList.contains('flipped'))fc.classList.remove('flipped');
+  document.getElementById('fcQ').textContent=card.q;
+  document.getElementById('fcA').textContent=card.a;
+  document.getElementById('fcEx').textContent=card.extra||'';
+  document.getElementById('fcProg').textContent=`${fcIndex+1} / ${currentCards.length}`;
+}
+function flipCard(){document.getElementById('fc').classList.toggle('flipped')}
+function nextCard(){fcIndex=(fcIndex+1)%currentCards.length;updateCard()}
+function prevCard(){fcIndex=(fcIndex-1+currentCards.length)%currentCards.length;updateCard()}
+function shuffleCards(btn){
+  currentCards=[...currentCards].sort(()=>Math.random()-.5);
+  fcIndex=0; updateCard();
+  btn.classList.toggle('on');
+}
+
+function renderAllPYQ(){
+  const search=document.getElementById('pyqSearch').value.toLowerCase();
+  const year=document.getElementById('pyqYear').value;
+  const marks=document.getElementById('pyqMarks').value;
+  const ch=document.getElementById('pyqChapter').value;
+  let results=[];
+  chapters.forEach(c=>{
+    c.pyqs.forEach((p,i)=>{
+      if((year===''||p.y===year)&&(marks===''||p.m==marks)&&(ch===''||c.title===ch)&&(search===''||p.q.toLowerCase().includes(search))){
+        results.push({...p,chTitle:c.title,idx:i+c.id*100});
+      }
+    });
+  });
+  document.getElementById('pyqAllList').innerHTML=results.length?results.map(p=>`
+    <div class="pyq-card">
+      <div class="pyq-meta"><span class="year">${p.y}</span><span class="marks">${p.m}M</span><span style="color:var(--primary)">${p.chTitle}</span></div>
+      <div class="pyq-q">${p.q}</div>
+      <button class="ans-toggle" onclick="toggleAns(this,'allAns${p.idx}')">Show Answer</button>
+      <div class="ans-box" id="allAns${p.idx}">${p.ans}</div>
+    </div>`).join(''):'<p style="color:var(--muted)">No questions found.</p>';
+}
+
+function initPYQFilters(){
+  const years=[...new Set(chapters.flatMap(c=>c.pyqs.map(p=>p.y)))].sort().reverse();
+  document.getElementById('pyqYear').innerHTML='<option value="">All Years</option>'+years.map(y=>`<option>${y}</option>`).join('');
+  document.getElementById('pyqChapter').innerHTML='<option value="">All Chapters</option>'+chapters.map(c=>`<option>${c.title}</option>`).join('');
+}
+
+function renderSyllabus(){
+  const units=[
+    {name:"Unit I: Relations and Functions",marks:8,chs:[1,2]},
+    {name:"Unit II: Algebra",marks:10,chs:[3,4]},
+    {name:"Unit III: Calculus",marks:35,chs:[5,6,7,8,9]},
+    {name:"Unit IV: Vectors & 3D Geometry",marks:14,chs:[10,11]},
+    {name:"Unit V: Linear Programming",marks:5,chs:[12]},
+    {name:"Unit VI: Probability",marks:8,chs:[13]}
+  ];
+  document.getElementById('syllabusContent').innerHTML=units.map(u=>`
+    <div class="unit-block">
+      <h3>${u.name} <span>${u.marks} Marks</span></h3>
+      <ul>${u.chs.map(id=>{const c=chapters.find(x=>x.id===id);return `<li>${c.title}<span>${c.marks}M</span></li>`;}).join('')}</ul>
+    </div>`).join('');
+}
+
+renderChapterGrid();
+initPYQFilters();
+</script>
+</body>
+</html>
