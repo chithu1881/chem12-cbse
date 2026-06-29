@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CS12 CBSE 2026 | Quick Revision</title>
+<style>
+:root{--primary:#00b4d8;--secondary:#f72585;--accent:#06d6a0;--bg:#0a0a1a;--card:#111128;--card2:#0d0d22;--text:#e0f0ff;--muted:#7788aa;--yellow:#ffd166;--orange:#fb8500;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+nav{background:var(--card);padding:10px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 20px #0007;flex-wrap:wrap;gap:8px;}
+.logo{font-size:1.3rem;font-weight:800;background:linear-gradient(90deg,var(--primary),var(--secondary));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.nav-tabs{display:flex;gap:6px;flex-wrap:wrap;}
+.nav-tab{padding:5px 12px;border-radius:20px;border:none;cursor:pointer;font-size:0.82rem;font-weight:600;transition:all 0.2s;background:#ffffff12;color:var(--text);}
+.nav-tab.active,.nav-tab:hover{background:var(--primary);color:#fff;}
+.page{display:none;padding:16px;max-width:1100px;margin:0 auto;}
+.page.active{display:block;}
+.hero{text-align:center;padding:30px 16px 20px;}
+.hero h1{font-size:2rem;font-weight:900;background:linear-gradient(135deg,var(--primary),var(--secondary),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.hero p{color:var(--muted);margin:8px 0 20px;}
+.search-bar{width:100%;max-width:500px;padding:10px 16px;border-radius:12px;border:2px solid var(--primary);background:var(--card);color:var(--text);font-size:0.95rem;outline:none;}
+.stats-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:16px;}
+.stat-chip{background:var(--card);border-radius:10px;padding:8px 16px;font-size:0.82rem;border:1px solid #ffffff15;color:var(--muted);}
+.stat-chip span{color:var(--accent);font-weight:700;}
+.chapter-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;}
+.ch-card{background:var(--card);border-radius:14px;padding:18px;cursor:pointer;border:2px solid transparent;transition:all 0.25s;position:relative;overflow:hidden;}
+.ch-card:hover{border-color:var(--primary);transform:translateY(-3px);box-shadow:0 6px 24px #00b4d833;}
+.ch-num{font-size:1.8rem;font-weight:900;color:var(--primary);opacity:0.2;position:absolute;top:8px;right:12px;}
+.ch-title{font-size:0.95rem;font-weight:700;margin-bottom:6px;line-height:1.3;}
+.ch-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px;}
+.tag{font-size:0.68rem;padding:2px 7px;border-radius:8px;background:#ffffff10;color:var(--muted);}
+.tag.hot{background:#f7258520;color:var(--secondary);}
+.tag.blue{background:#00b4d820;color:var(--primary);}
+.back-btn{background:none;border:none;color:var(--primary);cursor:pointer;font-size:0.95rem;margin-bottom:14px;display:flex;align-items:center;gap:6px;}
+.ch-header{margin-bottom:16px;}
+.ch-header h2{font-size:1.5rem;font-weight:900;}
+.unit-badge{display:inline-block;background:#00b4d820;color:var(--primary);font-size:0.72rem;padding:3px 10px;border-radius:6px;margin-bottom:6px;font-weight:700;letter-spacing:0.5px;}
+.ctabs{display:flex;gap:6px;margin:14px 0;flex-wrap:wrap;}
+.ctab{padding:6px 14px;border-radius:20px;border:none;cursor:pointer;font-size:0.8rem;font-weight:600;background:#ffffff10;color:var(--muted);transition:all 0.2s;}
+.ctab.active{background:var(--primary);color:#fff;}
+.ctab-content{display:none;}
+.ctab-content.active{display:block;}
+.concept-box{background:var(--card);border-left:4px solid var(--primary);border-radius:0 10px 10px 0;padding:14px;margin-bottom:10px;}
+.concept-box h4{color:var(--accent);margin-bottom:8px;font-size:0.95rem;}
+.concept-box p,.concept-box li{font-size:0.88rem;line-height:1.75;}
+.concept-box ul{padding-left:16px;}
+.code-block{background:#0d0d22;border:1px solid #00b4d830;border-radius:8px;padding:12px;font-family:'Courier New',monospace;font-size:0.83rem;color:#a8e6cf;margin:8px 0;overflow-x:auto;white-space:pre;}
+.mnemonic-box{background:linear-gradient(135deg,#00b4d818,#f7258518);border:2px dashed var(--primary);border-radius:10px;padding:14px;margin-bottom:10px;}
+.mnemonic-box .label{font-size:0.72rem;font-weight:700;color:var(--primary);letter-spacing:1px;margin-bottom:4px;}
+.mnemonic-box p{color:var(--yellow);font-size:0.95rem;font-weight:700;}
+.mnemonic-box small{color:var(--muted);font-size:0.8rem;display:block;margin-top:4px;}
+.formula-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;margin-bottom:10px;}
+.formula-card{background:var(--card2);border-radius:8px;padding:10px;text-align:center;border:1px solid #00b4d820;}
+.formula-card .f{font-size:0.9rem;color:var(--accent);font-weight:700;font-family:'Courier New',monospace;word-break:break-all;}
+.formula-card small{color:var(--muted);font-size:0.73rem;display:block;margin-top:4px;}
+.pyq-item{background:var(--card);border-radius:10px;padding:12px;margin-bottom:8px;border-left:4px solid var(--secondary);}
+.pyq-item .meta{font-size:0.72rem;color:var(--secondary);font-weight:700;margin-bottom:4px;display:flex;gap:8px;flex-wrap:wrap;}
+.pyq-item .marks{background:#f7258520;color:var(--secondary);padding:1px 8px;border-radius:6px;}
+.pyq-item p{font-size:0.88rem;line-height:1.6;}
+.ans-toggle{background:none;border:1px solid var(--primary);color:var(--primary);border-radius:6px;padding:3px 10px;font-size:0.78rem;cursor:pointer;margin-top:8px;}
+.ans-box{display:none;background:#00b4d810;border-radius:8px;padding:10px;margin-top:8px;font-size:0.85rem;line-height:1.7;}
+.ans-box .code-block{font-size:0.8rem;}
+.fc-scene{perspective:1000px;width:100%;max-width:580px;margin:0 auto;height:300px;cursor:pointer;}
+.fc-card{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform 0.5s;}
+.fc-card.flipped{transform:rotateY(180deg);}
+.fc-front,.fc-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px;text-align:center;}
+.fc-front{background:linear-gradient(135deg,#0077b6,#023e8a);}
+.fc-back{background:linear-gradient(135deg,#1b4332,#2d6a4f);transform:rotateY(180deg);}
+.fc-front h3,.fc-back h3{font-size:1.1rem;margin-bottom:8px;}
+.fc-front p,.fc-back p{font-size:0.85rem;opacity:0.85;}
+.fc-back .ans-code{font-family:'Courier New',monospace;background:#00000030;border-radius:6px;padding:6px 10px;margin-top:6px;font-size:0.82rem;color:#a8e6cf;}
+.fc-nav{display:flex;gap:10px;justify-content:center;margin-top:16px;}
+.btn{padding:8px 20px;border-radius:10px;border:none;cursor:pointer;font-weight:700;font-size:0.88rem;transition:all 0.2s;}
+.btn-primary{background:var(--primary);color:#fff;}
+.btn-secondary{background:var(--card);color:var(--text);border:1px solid var(--primary);}
+.btn:hover{opacity:0.85;}
+.fc-counter{text-align:center;color:var(--muted);margin-top:8px;font-size:0.88rem;}
+.fc-hint{text-align:center;color:var(--muted);font-size:0.78rem;margin-top:4px;}
+.fc-controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:16px;}
+.fc-controls select{background:var(--card);color:var(--text);border:1px solid var(--primary);border-radius:8px;padding:6px 10px;font-size:0.85rem;}
+.fc-all{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin-top:16px;}
+.fc-mini{background:var(--card);border-radius:10px;padding:14px;border-left:4px solid var(--accent);}
+.fc-mini .q{font-weight:700;margin-bottom:5px;font-size:0.88rem;}
+.fc-mini .a{color:var(--accent);font-size:0.85rem;font-family:'Courier New',monospace;}
+.trick-card{background:var(--card);border-radius:12px;padding:16px;margin-bottom:12px;}
+.trick-card h4{color:var(--orange);margin-bottom:10px;font-size:0.95rem;}
+.section-title{font-size:1.3rem;font-weight:800;margin:20px 0 12px;color:var(--yellow);}
+.syllabus-unit{background:var(--card);border-radius:14px;padding:18px;margin-bottom:14px;border-left:4px solid var(--primary);}
+.syllabus-unit h3{color:var(--primary);margin-bottom:10px;}
+.ch-pill{display:inline-block;background:var(--card2);border:1px solid var(--primary)30;border-radius:8px;padding:5px 12px;font-size:0.82rem;margin:4px;cursor:pointer;transition:all 0.2s;}
+.ch-pill:hover{border-color:var(--primary);color:var(--primary);}
+@media(max-width:600px){.hero h1{font-size:1.4rem;}.fc-scene{height:250px;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="logo">💻 CS12 CBSE 2026</div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showPage('home')">Chapters</button>
+    <button class="nav-tab" onclick="showPage('flashcards')">Flashcards</button>
+    <button class="nav-tab" onclick="showPage('mnemonics')">Mnemonics</button>
+    <button class="nav-tab" onclick="showPage('pyq')">PYQ Bank</button>
+    <button class="nav-tab" onclick="showPage('syllabus')">Syllabus</button>
+  </div>
+</nav>
+
+<!-- HOME -->
+<div id="home" class="page active">
+  <div class="hero">
+    <h1>CBSE Class 12 Computer Science 2026</h1>
+    <p>Python · OOP · File Handling · Stacks · Queues · Networks · SQL · All chapters covered</p>
+    <input class="search-bar" placeholder="🔍  Search topics, concepts, code..." oninput="searchChapters(this.value)">
+  </div>
+  <div class="stats-row">
+    <div class="stat-chip">Theory <span>70 marks</span></div>
+    <div class="stat-chip">Practical <span>30 marks</span></div>
+    <div class="stat-chip">Units <span>3</span></div>
+    <div class="stat-chip">Chapters <span>9</span></div>
+  </div>
+  <div class="chapter-grid" id="chapterGrid"></div>
+</div>
+
+<!-- CHAPTER VIEW -->
+<div id="chapterView" class="page">
+  <button class="back-btn" onclick="showPage('home')">← Back to Chapters</button>
+  <div id="chapterContent"></div>
+</div>
+
+<!-- FLASHCARDS -->
+<div id="flashcards" class="page">
+  <div class="section-title">🃏 Flashcards</div>
+  <div class="fc-controls">
+    <select id="fcChapter" onchange="loadFlashcards()"><option value="all">All Chapters</option></select>
+    <button class="btn btn-primary" onclick="shuffleCards()">🔀 Shuffle</button>
+    <button class="btn btn-secondary" onclick="toggleAllCards()">📋 View All</button>
+  </div>
+  <div class="fc-scene" onclick="flipCard()">
+    <div class="fc-card" id="fcCard">
+      <div class="fc-front"><h3 id="fcQ">Select a chapter to start</h3><p id="fcHint"></p></div>
+      <div class="fc-back"><h3 id="fcA">Answer</h3><div class="ans-code" id="fcExtra"></div></div>
+    </div>
+  </div>
+  <div class="fc-hint">👆 Tap card to flip</div>
+  <div class="fc-nav">
+    <button class="btn btn-secondary" onclick="prevCard()">← Prev</button>
+    <button class="btn btn-primary" onclick="nextCard()">Next →</button>
+  </div>
+  <div class="fc-counter" id="fcCounter"></div>
+  <div id="allCardsContainer"></div>
+</div>
+
+<!-- MNEMONICS -->
+<div id="mnemonics" class="page">
+  <div class="section-title">🧠 All Mnemonics & Tricks</div>
+  <div id="mnemonicsList"></div>
+</div>
+
+<!-- PYQ BANK -->
+<div id="pyq" class="page">
+  <div class="section-title">📋 PYQ Bank (2019–2024)</div>
+  <div class="fc-controls">
+    <select id="pyqChapter" onchange="filterPYQ()"><option value="all">All Chapters</option></select>
+    <select id="pyqYear" onchange="filterPYQ()">
+      <option value="all">All Years</option>
+      <option>2024</option><option>2023</option><option>2022</option><option>2021</option><option>2020</option><option>2019</option>
+    </select>
+    <select id="pyqMarks" onchange="filterPYQ()">
+      <option value="all">All Marks</option><option value="1">1M</option><option value="2">2M</option><option value="3">3M</option><option value="5">5M</option>
+    </select>
+  </div>
+  <div id="pyqList"></div>
+</div>
+
+<!-- SYLLABUS -->
+<div id="syllabus" class="page">
+  <div class="section-title">📚 CBSE 2026 CS Syllabus</div>
+  <div id="syllabusList"></div>
+</div>
+
+<script>
+const chapters = [
+{
+  id:1,title:"Python Revision & OOP Concepts",unit:"Unit I",marks:10,
+  tags:["hot🔥","OOP","5 marks"],
+  hotTopics:["Classes & Objects","Inheritance","Polymorphism","Encapsulation","Constructor"],
+  concepts:[
+    {h:"OOP Fundamentals",p:"Object-Oriented Programming: program organised around <b>objects</b> (data + methods) not functions.<br><b>Class:</b> blueprint/template (e.g. class Car). <b>Object/Instance:</b> actual entity created from class (e.g. myCar = Car()). <b>Instantiation:</b> creating an object from a class."},
+    {h:"Class Definition & Constructor",p:`<code>class Student:<br>    def __init__(self, name, age):  # constructor<br>        self.name = name  # instance attribute<br>        self.age = age<br>    def display(self):<br>        print(self.name, self.age)</code><br><b>__init__:</b> special method called automatically when object is created. <b>self:</b> refers to the current object (like 'this' in other languages). Must be first parameter of every method.`},
+    {h:"Four Pillars of OOP",p:"<b>1. Encapsulation:</b> bundling data + methods. Hiding data using private members (name mangling: __attr). Access through getters/setters.<br><b>2. Inheritance:</b> child class gets properties of parent class. Promotes reusability. Types: single, multilevel, multiple, hierarchical.<br><b>3. Polymorphism:</b> same function name, different behaviour. Method overriding (child redefines parent method). Duck typing in Python.<br><b>4. Abstraction:</b> showing only essential details, hiding implementation."},
+    {h:"Inheritance Types",p:`<b>Single:</b> class B(A) — one parent.<br><b>Multilevel:</b> class C(B), class B(A) — chain.<br><b>Multiple:</b> class C(A,B) — two parents.<br><b>Hierarchical:</b> class B(A), class C(A) — one parent, many children.<br><code>class Animal:<br>    def sound(self): print("...")<br>class Dog(Animal):<br>    def sound(self): print("Woof")  # overriding</code><br><b>super():</b> calls parent class method. MRO (Method Resolution Order): C→B→A→object (DFS left to right).`},
+    {h:"Special Methods & Operator Overloading",p:"<b>__str__:</b> string representation (print object). <b>__len__:</b> len(obj). <b>__add__:</b> obj1+obj2. <b>__eq__:</b> obj1==obj2.<br>Operator overloading: redefine what operators do for your class objects.<br><b>Class vs Instance attributes:</b> Class attribute shared by all objects. Instance attribute unique to each object.<br><b>Static method:</b> @staticmethod — no self, no cls. <b>Class method:</b> @classmethod — takes cls as first arg."},
+    {h:"Modules & Packages",p:"<b>Module:</b> .py file containing functions/classes. import math, from math import sqrt.<br><b>Package:</b> folder with __init__.py file containing modules.<br><b>Common modules:</b> math (sqrt, ceil, floor, pow), random (randint, random, choice, shuffle), statistics (mean, median, mode), csv, pickle.<br>__name__ == '__main__': code runs only when file is run directly (not when imported)."},
+  ],
+  mnemonics:[
+    {m:"'APIE = Abstraction, Polymorphism, Inheritance, Encapsulation'",exp:"4 pillars of OOP. Remember: A PIE makes OOP sweet!"},
+    {m:"'self is SELFISH — always refers to the current object'",exp:"self is first parameter in every instance method. Refers to the calling object."},
+    {m:"'__init__ = INITiator — runs automatically at object creation'",exp:"Constructor called when you do obj = ClassName(). You don't call __init__ manually."},
+    {m:"'Inheritance: IS-A relationship. Composition: HAS-A relationship'",exp:"Dog IS-A Animal (inheritance). Car HAS-A Engine (composition)."},
+  ],
+  formulas:[
+    {f:"class Child(Parent):",label:"Single inheritance"},
+    {f:"def __init__(self, args):",label:"Constructor"},
+    {f:"super().__init__(args)",label:"Call parent constructor"},
+    {f:"@staticmethod / @classmethod",label:"Decorators"},
+    {f:"isinstance(obj, Class)",label:"Type check"},
+  ],
+  pyqs:[
+    {y:"2024",m:3,q:"Write a class 'Employee' with attributes empid, name, salary. Include a method to give 10% raise and display details.",ans:`class Employee:<br>    def __init__(self, empid, name, salary):<br>        self.empid = empid<br>        self.name = name<br>        self.salary = salary<br>    def give_raise(self):<br>        self.salary *= 1.10<br>    def display(self):<br>        print(self.empid, self.name, self.salary)<br>e = Employee(101, "Ravi", 50000)<br>e.give_raise()<br>e.display()`},
+    {y:"2023",m:3,q:"Define a class 'Shape' with method area(). Derive classes 'Circle' and 'Rectangle'. Demonstrate polymorphism.",ans:`class Shape:<br>    def area(self): pass<br>class Circle(Shape):<br>    def __init__(self,r): self.r=r<br>    def area(self): return 3.14*self.r**2<br>class Rectangle(Shape):<br>    def __init__(self,l,b): self.l=l; self.b=b<br>    def area(self): return self.l*self.b<br># Polymorphism: same method name, different behaviour`},
+    {y:"2022",m:2,q:"What is the difference between class attribute and instance attribute?",ans:"Class attribute: defined inside class but outside methods — shared by all objects. Instance attribute: defined inside __init__ with self — unique to each object. Example: class Dog: count=0 (class). self.name=name (instance)."},
+    {y:"2021",m:3,q:"Explain multilevel inheritance with an example.",ans:`class Vehicle:<br>    def __init__(self): self.type="Vehicle"<br>class Car(Vehicle):<br>    def __init__(self): super().__init__(); self.brand="Car"<br>class ElectricCar(Car):<br>    def __init__(self): super().__init__(); self.battery="100kWh"<br># ElectricCar inherits from Car which inherits from Vehicle`},
+    {y:"2020",m:2,q:"What is __init__ method? Why is self used?",ans:"__init__ is a constructor method automatically called when an object is created. It initialises the object's attributes. 'self' is a reference to the current object instance. It allows accessing attributes and methods of the class. Must be first parameter of every instance method."},
+  ],
+  flashcards:[
+    {q:"What is the constructor in Python?",a:"__init__(self) — called automatically when object is created",extra:"class MyClass:\n  def __init__(self):\n    self.x = 0"},
+    {q:"4 pillars of OOP?",a:"Encapsulation, Inheritance, Polymorphism, Abstraction (AIPE/EIPA)",extra:"Remember: A PIE — Abstraction, Polymorphism, Inheritance, Encapsulation"},
+    {q:"Difference: class attribute vs instance attribute?",a:"Class: shared by all objects. Instance: unique to each object (defined with self)",extra:"class Dog:\n  count = 0  # class attr\n  def __init__(self): self.name = ''  # instance"},
+    {q:"What does super() do?",a:"Calls method from parent class",extra:"class Child(Parent):\n  def __init__(self):\n    super().__init__()  # calls Parent.__init__"},
+    {q:"What is method overriding?",a:"Child class redefines a method already defined in parent class",extra:"Same method name, different implementation in child class"},
+    {q:"What is MRO?",a:"Method Resolution Order — order Python searches for methods (C→B→A→object)",extra:"Use ClassName.__mro__ or ClassName.mro() to see it"},
+    {q:"What is encapsulation?",a:"Bundling data and methods together; restricting direct access to data",extra:"Private attr: self.__name (name mangling → _ClassName__name)"},
+    {q:"@staticmethod vs @classmethod?",a:"staticmethod: no self/cls. classmethod: takes cls (class itself) as first arg",extra:"Static: utility functions. Class: alternative constructors"},
+  ]
+},
+{
+  id:2,title:"Exception Handling",unit:"Unit I",marks:5,
+  tags:["hot🔥","3–5 marks"],
+  hotTopics:["try-except-else-finally","raise","Custom exceptions","Built-in exceptions"],
+  concepts:[
+    {h:"What is an Exception?",p:"An exception is a runtime error that disrupts normal program flow. Syntax errors (before run) ≠ exceptions (during run).<br><b>Common built-in exceptions:</b><br>• ZeroDivisionError: division by zero<br>• ValueError: wrong type of value (int('abc'))<br>• TypeError: wrong type operation (1 + 'a')<br>• IndexError: list index out of range<br>• KeyError: dict key not found<br>• NameError: variable not defined<br>• FileNotFoundError: file doesn't exist<br>• IOError: input/output operation fails<br>• ImportError: module not found<br>• OverflowError: result too large<br>• AttributeError: object has no such attribute<br>• StopIteration: iterator exhausted"},
+    {h:"try-except-else-finally",p:`<b>Syntax:</b><br><code>try:<br>    # risky code<br>except ExceptionType as e:<br>    # handle error<br>except (TypeError, ValueError):<br>    # handle multiple<br>except Exception as e:<br>    # catch all exceptions<br>else:<br>    # runs if NO exception in try<br>finally:<br>    # ALWAYS runs (cleanup)</code><br><b>Rules:</b> try must have at least one except or finally. else runs only if try succeeded. finally always runs (even after return).`},
+    {h:"raise Statement",p:`<b>raise:</b> manually trigger an exception.<br><code>def check_age(age):<br>    if age < 0:<br>        raise ValueError("Age cannot be negative")<br>    return age</code><br><b>re-raise:</b> use bare <code>raise</code> inside except to re-raise the caught exception.<br><b>raise from:</b> raise ExceptionB from ExceptionA (chaining).`},
+    {h:"Custom Exceptions",p:`User-defined exception classes. Must inherit from Exception or its subclass.<br><code>class InsufficientFundsError(Exception):<br>    def __init__(self, amount):<br>        self.amount = amount<br>        super().__init__(f"Insufficient funds: {amount}")<br><br>def withdraw(balance, amount):<br>    if amount > balance:<br>        raise InsufficientFundsError(amount)</code>`},
+    {h:"Exception Hierarchy",p:"BaseException → Exception → ArithmeticError → ZeroDivisionError.<br>BaseException → Exception → LookupError → IndexError / KeyError.<br>BaseException → Exception → OSError → FileNotFoundError.<br><b>Important:</b> catch specific exceptions before general ones. Catching Exception catches all except SystemExit, KeyboardInterrupt, GeneratorExit (which inherit BaseException directly)."},
+  ],
+  mnemonics:[
+    {m:"'TEEF: Try → Except → Else → Finally'",exp:"Order of exception handling blocks. Else=no error. Finally=always."},
+    {m:"'ZIVKNFIAO — common exceptions: Zero, Index, Value, Key, Name, File, Import, Attribute, OverflowError'",exp:"ZeroDivisionError, IndexError, ValueError, KeyError, NameError, FileNotFoundError, ImportError, AttributeError"},
+    {m:"'else = SUCCESS bonus, finally = ALWAYS cleanup'",exp:"else block: only if try had no exception. finally: runs no matter what (even if return/raise)"},
+    {m:"'raise = MANUALLY throw an exception like throwing a ball'",exp:"raise ValueError('msg') — you can throw any exception manually"},
+  ],
+  formulas:[
+    {f:"try: ... except E: ...",label:"Basic exception handling"},
+    {f:"except (E1,E2) as e:",label:"Multiple exceptions"},
+    {f:"raise ExceptionType('msg')",label:"Raise exception"},
+    {f:"class MyErr(Exception): pass",label:"Custom exception"},
+    {f:"finally: (always executes)",label:"Cleanup block"},
+  ],
+  pyqs:[
+    {y:"2024",m:3,q:"Write a program to handle ZeroDivisionError and ValueError using try-except-else-finally.",ans:`try:<br>    a = int(input("Enter number: "))<br>    b = int(input("Enter divisor: "))<br>    result = a / b<br>except ZeroDivisionError:<br>    print("Cannot divide by zero")<br>except ValueError:<br>    print("Invalid input - enter integers only")<br>else:<br>    print("Result:", result)<br>finally:<br>    print("Program complete")`},
+    {y:"2023",m:3,q:"Create a custom exception 'NegativeNumberError'. Use it in a function that calculates square root.",ans:`import math<br>class NegativeNumberError(Exception):<br>    def __init__(self, n):<br>        super().__init__(f"Cannot find sqrt of negative: {n}")<br>def find_sqrt(n):<br>    if n < 0:<br>        raise NegativeNumberError(n)<br>    return math.sqrt(n)<br>try:<br>    print(find_sqrt(-4))<br>except NegativeNumberError as e:<br>    print(e)`},
+    {y:"2022",m:2,q:"What is the difference between syntax error and exception?",ans:"Syntax error: detected before execution (wrong grammar, e.g. missing colon). Program won't run at all. Exception: occurs during execution (runtime error, e.g. ZeroDivisionError, ValueError). Program runs but stops at the error point unless handled."},
+    {y:"2021",m:2,q:"What does the else clause do in try-except? When does finally execute?",ans:"else: executes only if the try block completes without raising any exception. finally: always executes regardless of whether exception occurred or not. Used for cleanup (closing files, releasing resources). Runs even after a return statement."},
+    {y:"2020",m:2,q:"Write code to handle FileNotFoundError when opening a file.",ans:`try:<br>    f = open("data.txt", "r")<br>    content = f.read()<br>    print(content)<br>except FileNotFoundError:<br>    print("File not found!")<br>finally:<br>    print("Attempted file operation")`},
+  ],
+  flashcards:[
+    {q:"When does else block execute in try-except?",a:"Only when try block completes with NO exception",extra:"try→no error→else runs. try→error→except runs (not else)"},
+    {q:"Does finally always execute?",a:"YES — even after return, break, or raise inside try",extra:"Used for cleanup: closing files, releasing connections"},
+    {q:"How to create a custom exception?",a:"class MyError(Exception): pass",extra:"Inherit from Exception. Use raise MyError('message')"},
+    {q:"Difference: ZeroDivisionError vs ValueError?",a:"ZeroDivision: divide by zero. ValueError: wrong value type (int('abc'))",extra:"Both inherit from Exception via ArithmeticError and ValueError respectively"},
+    {q:"What does 'except Exception as e' catch?",a:"All exceptions EXCEPT SystemExit, KeyboardInterrupt, GeneratorExit",extra:"Those three inherit directly from BaseException, not Exception"},
+    {q:"How to re-raise an exception inside except?",a:"Use bare 'raise' (no arguments)",extra:"except ValueError:\n    raise  # re-raises same ValueError"},
+  ]
+},
+{
+  id:3,title:"File Handling",unit:"Unit I",marks:8,
+  tags:["hot🔥","5 marks","most important"],
+  hotTopics:["Text files","Binary files","CSV files","Pickle module","File methods"],
+  concepts:[
+    {h:"Opening and Closing Files",p:`<code>f = open("filename", mode, encoding='utf-8')</code><br><b>Modes:</b><br>• <b>r</b> — read (default), error if file not found<br>• <b>w</b> — write (creates/overwrites)<br>• <b>a</b> — append (creates if not exists)<br>• <b>x</b> — exclusive create (error if file exists)<br>• <b>r+</b> — read+write (must exist)<br>• <b>w+</b> — read+write (create/overwrite)<br>• <b>a+</b> — read+append<br>• Add <b>b</b> for binary: rb, wb, ab<br><b>with statement (preferred):</b><br><code>with open("file.txt","r") as f:<br>    data = f.read()<br># file auto-closed after block</code>`},
+    {h:"Text File Methods",p:`<b>read():</b> reads entire file as string.<br><b>read(n):</b> reads n characters.<br><b>readline():</b> reads one line (including \\n).<br><b>readlines():</b> reads all lines into a list.<br><b>write(str):</b> writes string to file.<br><b>writelines(list):</b> writes list of strings (no auto newline).<br><b>seek(n):</b> moves file pointer to position n (0=start).<br><b>tell():</b> returns current position of file pointer.<br><b>flush():</b> forces write buffer to disk.<br><b>Iterating:</b><br><code>with open("data.txt") as f:<br>    for line in f:<br>        print(line.strip())</code>`},
+    {h:"Binary Files & Pickle",p:`Binary files: store data in binary format (.dat, .bin). Not human-readable.<br><b>Pickle module:</b> serialise (dump) and deserialise (load) Python objects.<br><code>import pickle<br><br># Writing (serialising)<br>with open("data.dat","wb") as f:<br>    pickle.dump(obj, f)  # obj = list/dict/class<br><br># Reading (deserialising)<br>with open("data.dat","rb") as f:<br>    obj = pickle.load(f)</code><br><b>dump:</b> write one object. <b>dumps:</b> return bytes. <b>load:</b> read one object. <b>loads:</b> from bytes.<br>To write multiple objects: call dump() multiple times. Read with load() in loop (catch EOFError).`},
+    {h:"CSV Files",p:`CSV (Comma-Separated Values): text file where each line = one record.<br><code>import csv<br><br># Writing CSV<br>with open("data.csv","w",newline='') as f:<br>    writer = csv.writer(f)<br>    writer.writerow(["Name","Age","City"])<br>    writer.writerows([["Alice",20,"Delhi"],<br>                      ["Bob",22,"Mumbai"]])<br><br># Reading CSV<br>with open("data.csv","r") as f:<br>    reader = csv.reader(f)<br>    for row in reader:<br>        print(row)  # each row is a list</code><br><b>DictWriter/DictReader:</b> work with dictionaries (fieldnames). newline='' prevents extra blank lines on Windows.`},
+    {h:"File Pointer & Standard Functions",p:`<b>File pointer:</b> tracks current read/write position.<br><b>seek(0)</b> = go to start. <b>seek(0,2)</b> = go to end.<br><b>tell()</b> = current position in bytes.<br><b>os module for file operations:</b><br><code>import os<br>os.rename("old.txt","new.txt")<br>os.remove("file.txt")<br>os.path.exists("file.txt")<br>os.path.getsize("file.txt")<br>os.getcwd()  # current directory<br>os.listdir() # list files</code>`},
+  ],
+  mnemonics:[
+    {m:"'RWAAX — Read, Write, Append, x(exclusive), r+/w+/a+ for rw modes'",exp:"File opening modes. Add 'b' for binary. w=overwrite, a=append, x=new only"},
+    {m:"'pickle DUMPS objects INTO file, LOADS them OUT'",exp:"pickle.dump(obj,f) writes. pickle.load(f) reads. Like pickling vegetables to preserve them."},
+    {m:"'with open() as f: = AUTO CLOSE (no need to f.close())'",exp:"Context manager automatically closes file even if exception occurs"},
+    {m:"'readline()=ONE line, readlines()=ALL lines as LIST, read()=WHOLE file as string'",exp:"3 read methods — don't confuse them"},
+    {m:"'CSV writer.writerow()=ONE row, writer.writerows()=MANY rows'",exp:"writerows takes list of lists. writerow takes one list."},
+  ],
+  formulas:[
+    {f:"open('file','r/w/a/rb/wb')",label:"Open file"},
+    {f:"f.read() / f.readline() / f.readlines()",label:"Read methods"},
+    {f:"f.write(str) / f.writelines(list)",label:"Write methods"},
+    {f:"pickle.dump(obj,f) / pickle.load(f)",label:"Binary pickle"},
+    {f:"csv.writer(f) / csv.reader(f)",label:"CSV module"},
+    {f:"f.seek(0) / f.tell()",label:"File pointer"},
+  ],
+  pyqs:[
+    {y:"2024",m:5,q:"Write a Python program to: (i) Create a text file 'students.txt' and write 5 student names. (ii) Read and display only names starting with 'A'.",ans:`# Writing<br>with open("students.txt","w") as f:<br>    names = ["Alice","Bob","Aryan","Charlie","Ananya"]<br>    for name in names:<br>        f.write(name+"\\n")<br># Reading<br>with open("students.txt","r") as f:<br>    for line in f:<br>        name = line.strip()<br>        if name.startswith('A'):<br>            print(name)`},
+    {y:"2024",m:3,q:"Write a program to count the number of lines, words and characters in a text file 'story.txt'.",ans:`with open("story.txt","r") as f:<br>    lines = f.readlines()<br>nlines = len(lines)<br>nwords = sum(len(l.split()) for l in lines)<br>nchars = sum(len(l) for l in lines)<br>print("Lines:",nlines)<br>print("Words:",nwords)<br>print("Chars:",nchars)`},
+    {y:"2023",m:5,q:"Write functions to: (a) add a student record (rollno, name, marks) to a binary file. (b) display all records.",ans:`import pickle<br>def add_record():<br>    rec = {"roll":int(input("Roll:")),<br>           "name":input("Name:"),<br>           "marks":float(input("Marks:"))}<br>    with open("students.dat","ab") as f:<br>        pickle.dump(rec, f)<br><br>def display_all():<br>    with open("students.dat","rb") as f:<br>        while True:<br>            try:<br>                rec = pickle.load(f)<br>                print(rec)<br>            except EOFError:<br>                break`},
+    {y:"2022",m:3,q:"Write a program to search for a student by roll number in a binary file.",ans:`import pickle<br>def search(rollno):<br>    found = False<br>    with open("students.dat","rb") as f:<br>        while True:<br>            try:<br>                rec = pickle.load(f)<br>                if rec["roll"] == rollno:<br>                    print(rec); found=True; break<br>            except EOFError: break<br>    if not found: print("Record not found")`},
+    {y:"2021",m:3,q:"Write Python code to create a CSV file 'marks.csv' with fields: StudentName, Subject, Marks. Write at least 3 records.",ans:`import csv<br>with open("marks.csv","w",newline='') as f:<br>    writer = csv.writer(f)<br>    writer.writerow(["StudentName","Subject","Marks"])<br>    writer.writerows([["Alice","Math",95],<br>                      ["Bob","Science",88],<br>                      ["Carol","English",91]])`},
+    {y:"2020",m:3,q:"Explain seek() and tell() with examples.",ans:"seek(n): moves file pointer to byte position n from start. seek(0) goes to beginning, seek(0,2) goes to end. tell(): returns current byte position of file pointer.<br>f=open('t.txt','r'); f.seek(5); print(f.tell())  # prints 5"},
+  ],
+  flashcards:[
+    {q:"File mode for appending to existing file?",a:"'a' — appends to end, creates if not exists",extra:"'w' overwrites. 'a' adds to end. 'r' read only."},
+    {q:"How to write multiple Python objects to binary file?",a:"Call pickle.dump(obj, f) multiple times",extra:"Read back with pickle.load(f) in a loop, catch EOFError to stop"},
+    {q:"Difference: read() vs readline() vs readlines()?",a:"read()=whole file string. readline()=one line. readlines()=list of all lines",extra:"readline() includes \\n. Use .strip() to remove it."},
+    {q:"Why use 'with open()' instead of open()?",a:"Context manager auto-closes file even if exception occurs",extra:"Without 'with': must call f.close() manually — easy to forget"},
+    {q:"What is pickle.dump() vs pickle.load()?",a:"dump: serialise Python object to binary file. load: deserialise back",extra:"Like freezing (dump) and thawing (load) Python objects"},
+    {q:"newline='' parameter in csv.writer?",a:"Prevents extra blank lines between rows on Windows",extra:"Always use newline='' when opening file for csv.writer"},
+    {q:"What does f.seek(0) do?",a:"Moves file pointer back to the beginning of the file",extra:"f.tell() returns current position. f.seek(0,2) goes to end"},
+    {q:"Mode to read and write without deleting?",a:"'r+' — read+write, file must exist",extra:"'w+' creates/overwrites. 'a+' read+append. 'r+' preserves content"},
+  ]
+},
+{
+  id:4,title:"Stack",unit:"Unit I",marks:8,
+  tags:["hot🔥","5 marks","DSA"],
+  hotTopics:["Push/Pop","Stack using list","Stack using linked list","Applications","Overflow/Underflow"],
+  concepts:[
+    {h:"Stack — Definition & Properties",p:"Stack: linear data structure following <b>LIFO</b> (Last In First Out) principle. Think of a stack of plates — add/remove only from top.<br><b>Operations:</b><br>• <b>Push:</b> add element to top<br>• <b>Pop:</b> remove element from top<br>• <b>Peek/Top:</b> view top element without removing<br>• <b>isEmpty:</b> check if stack is empty<br>• <b>isFull:</b> check if stack is full (fixed size)<br><b>Stack overflow:</b> push on full stack. <b>Stack underflow:</b> pop from empty stack."},
+    {h:"Stack Using Python List",p:`Python list naturally implements a stack.<br><code>stack = []<br><br># Push<br>stack.append(10)<br>stack.append(20)<br>stack.append(30)<br><br># Pop<br>if stack:  # check not empty<br>    item = stack.pop()<br>    print("Popped:", item)  # 30<br><br># Peek<br>if stack:<br>    print("Top:", stack[-1])  # 20<br><br># isEmpty<br>print(len(stack) == 0)  # False</code><br><b>append()</b> = push. <b>pop()</b> = pop from end (top). Time complexity: O(1) for both.`},
+    {h:"Stack Class Implementation",p:`<code>class Stack:<br>    def __init__(self):<br>        self.__stack = []  # private<br>    def push(self, item):<br>        self.__stack.append(item)<br>    def pop(self):<br>        if not self.isEmpty():<br>            return self.__stack.pop()<br>        return "Underflow"<br>    def peek(self):<br>        if not self.isEmpty():<br>            return self.__stack[-1]<br>        return "Empty"<br>    def isEmpty(self):<br>        return len(self.__stack) == 0<br>    def size(self):<br>        return len(self.__stack)<br>    def display(self):<br>        print(self.__stack)</code>`},
+    {h:"Applications of Stack",p:"1. <b>Function call stack:</b> Python maintains call stack — each function call pushed, return pops it. Recursion uses stack.<br>2. <b>Expression evaluation:</b> infix to postfix/prefix conversion. Evaluating postfix expressions.<br>3. <b>Undo/Redo:</b> text editors store actions in stack.<br>4. <b>Browser back button:</b> visited pages stored in stack.<br>5. <b>Balanced parentheses:</b> check if brackets are balanced.<br>6. <b>Reverse a string/list:</b> push all chars, pop to reverse."},
+    {h:"Infix to Postfix Conversion",p:`Rules: <b>Precedence:</b> ^ > *,/ > +,- . Same precedence: left to right (left associative).<br><b>Algorithm:</b> scan left to right. Operand→output. '('→stack. ')'→pop until '('. Operator→pop higher/equal precedence operators to output, then push.<br><b>Example:</b> A+B*C-D<br>Postfix: ABC*+D-<br><code># Evaluate postfix: 2 3 * 4 +<br>stack = []<br>for token in "2 3 * 4 +".split():<br>    if token.isdigit():<br>        stack.append(int(token))<br>    else:<br>        b,a = stack.pop(),stack.pop()<br>        stack.append(a+b if token=='+' else<br>                     a-b if token=='-' else<br>                     a*b if token=='*' else a//b)<br>print(stack[0])  # 10</code>`},
+  ],
+  mnemonics:[
+    {m:"'LIFO = Last In First Out = Stack of plates'",exp:"The last plate placed on top is the first to be removed"},
+    {m:"'Push = append(), Pop = pop() — Python list is a ready-made stack'",exp:"No need to import anything. list.append() = push. list.pop() = pop from top"},
+    {m:"'Overflow = FULL+PUSH. Underflow = EMPTY+POP'",exp:"Stack overflow: pushing when full. Stack underflow: popping when empty"},
+    {m:"'Postfix precedence: Brackets, Exponent, MD, AS — BEDMAS'",exp:"When converting infix to postfix: ^ highest, then */,  then +-"},
+  ],
+  formulas:[
+    {f:"stack.append(x)  # push",label:"Push operation"},
+    {f:"stack.pop()      # pop",label:"Pop operation"},
+    {f:"stack[-1]        # peek",label:"Top element"},
+    {f:"len(stack)==0    # isEmpty",label:"Empty check"},
+    {f:"LIFO principle",label:"Last In First Out"},
+  ],
+  pyqs:[
+    {y:"2024",m:5,q:"Write a complete Python program to implement a stack using a list with functions: push, pop, peek, isEmpty, display.",ans:`stack = []<br>def push(item):<br>    stack.append(item)<br>def pop():<br>    if isEmpty(): return "Underflow"<br>    return stack.pop()<br>def peek():<br>    if isEmpty(): return "Empty"<br>    return stack[-1]<br>def isEmpty():<br>    return len(stack)==0<br>def display():<br>    print("Stack (top→bottom):", stack[::-1])<br>push(10); push(20); push(30)<br>display()<br>print("Pop:", pop())<br>print("Peek:", peek())`},
+    {y:"2023",m:3,q:"Convert infix expression A*(B+C)-D/E to postfix.",ans:"Scan: A→out, *→stack, (→stack, B→out, +→stack, C→out, )→pop+ to out, →pop* to out, -→stack, D→out, /→stack, E→out, end→pop/ then - to out.<br>Postfix: ABC+*DE/-"},
+    {y:"2022",m:3,q:"Write Python code to check if a string has balanced parentheses using a stack.",ans:`def is_balanced(s):<br>    stack = []<br>    pairs = {')':'(',']':'[','}':'{'}<br>    for ch in s:<br>        if ch in '([{':<br>            stack.append(ch)<br>        elif ch in ')]}':<br>            if not stack or stack[-1]!=pairs[ch]:<br>                return False<br>            stack.pop()<br>    return len(stack)==0<br>print(is_balanced("(A+B)*[C-{D}]"))  # True`},
+    {y:"2021",m:3,q:"Evaluate postfix expression: 4 2 3 * + 5 -",ans:"Scan: 4→stack, 2→stack, 3→stack, *→pop 3,2 → push 6, +→pop 6,4 → push 10, 5→stack, -→pop 5,10 → push 5. Result: 5"},
+    {y:"2020",m:2,q:"What is stack overflow and underflow? How to avoid them in Python?",ans:"Stack overflow: trying to push to a full stack (fixed-size array implementation). Stack underflow: trying to pop from empty stack. In Python using list: no fixed size so no overflow. Avoid underflow by checking isEmpty() before pop(). Always check: if stack: item=stack.pop()"},
+  ],
+  flashcards:[
+    {q:"Stack principle?",a:"LIFO — Last In First Out",extra:"Like a stack of books. Last book placed = first to take out."},
+    {q:"Python list method for push and pop?",a:"append() for push, pop() for pop (removes from end=top)",extra:"stack.append(x) — O(1). stack.pop() — O(1). Very efficient."},
+    {q:"Stack underflow means?",a:"Popping from an empty stack",extra:"Always check isEmpty() before calling pop()"},
+    {q:"Peek operation on stack?",a:"View top element without removing: stack[-1]",extra:"Does not modify the stack. Just returns top value."},
+    {q:"Infix A+B*C postfix?",a:"ABC*+",extra:"* has higher precedence than +. B*C done first, then +A"},
+    {q:"What is call stack?",a:"Python's internal stack tracking function calls (for recursion/returns)",extra:"Each function call pushes frame. Return pops it. RecursionError = overflow"},
+    {q:"Time complexity of push and pop?",a:"O(1) — constant time for both",extra:"No shifting needed since operations are at end of list"},
+    {q:"Evaluate postfix 5 3 + 2 *?",a:"16",extra:"5+3=8, 8*2=16. Push 5,3 → pop and add → push 8 → push 2 → pop and multiply"},
+  ]
+},
+{
+  id:5,title:"Queue",unit:"Unit I",marks:8,
+  tags:["hot🔥","5 marks","DSA"],
+  hotTopics:["Enqueue/Dequeue","Linear queue","Circular queue","Priority queue","Deque"],
+  concepts:[
+    {h:"Queue — Definition & Properties",p:"Queue: linear data structure following <b>FIFO</b> (First In First Out). Think of a line at a bank — first person in line is first served.<br><b>Front:</b> deletion end. <b>Rear:</b> insertion end.<br><b>Operations:</b><br>• <b>Enqueue:</b> insert at rear<br>• <b>Dequeue:</b> delete from front<br>• <b>Peek/Front:</b> view front element<br>• <b>isEmpty:</b> check if empty<br>• <b>isFull:</b> check if full (fixed size)"},
+    {h:"Queue Using Python List",p:`<code>queue = []<br><br># Enqueue (insert at rear)<br>queue.append(10)<br>queue.append(20)<br>queue.append(30)<br><br># Dequeue (remove from front)<br>if queue:  # not empty<br>    item = queue.pop(0)  # O(n) - inefficient<br>    print("Dequeued:", item)  # 10<br><br># Front element<br>print("Front:", queue[0])<br><br># Better: use collections.deque<br>from collections import deque<br>q = deque()<br>q.append(10)    # enqueue<br>q.popleft()     # dequeue O(1)</code>`},
+    {h:"Queue Class Implementation",p:`<code>class Queue:<br>    def __init__(self):<br>        self.__queue = []<br>    def enqueue(self, item):<br>        self.__queue.append(item)<br>    def dequeue(self):<br>        if not self.isEmpty():<br>            return self.__queue.pop(0)<br>        return "Underflow"<br>    def front(self):<br>        if not self.isEmpty():<br>            return self.__queue[0]<br>        return "Empty"<br>    def isEmpty(self):<br>        return len(self.__queue) == 0<br>    def size(self):<br>        return len(self.__queue)<br>    def display(self):<br>        print("Front→", self.__queue, "←Rear")</code>`},
+    {h:"Types of Queue",p:"<b>Linear Queue:</b> simple FIFO. Problem: wasted space after dequeue in array implementation.<br><b>Circular Queue:</b> rear wraps to front when it reaches end. Efficient use of space. Front=(front+1)%size, Rear=(rear+1)%size.<br><b>Deque (Double-Ended Queue):</b> insert/delete from BOTH ends. Input restricted or output restricted. Python: collections.deque.<br><b>Priority Queue:</b> element with highest priority dequeued first. Implemented using heap. Python: heapq module."},
+    {h:"Applications of Queue",p:"1. <b>CPU scheduling:</b> Round Robin, FCFS use queues.<br>2. <b>Print spooling:</b> print jobs in queue, served in order.<br>3. <b>BFS (Breadth First Search):</b> graph traversal.<br>4. <b>Keyboard buffer:</b> keystrokes stored in queue.<br>5. <b>Network packets:</b> data packets queued for transmission.<br>6. <b>Call centres:</b> calls queued, served in order."},
+  ],
+  mnemonics:[
+    {m:"'FIFO = First In First Out = Bank queue/Theatre line'",exp:"First person to join the queue is first to be served"},
+    {m:"'Queue: FRONT=exit, REAR=entry — like a movie theatre queue'",exp:"People enter at rear, exit at front. Enqueue at rear, dequeue at front."},
+    {m:"'deque popleft() = O(1). list pop(0) = O(n) — use deque!'",exp:"collections.deque is efficient for queue. list.pop(0) is slow (shifts all elements)"},
+    {m:"'Circular queue: wrap around (rear+1)%size to avoid wasted space'",exp:"After dequeue, front advances. Circular avoids empty space problem of linear queue."},
+  ],
+  formulas:[
+    {f:"queue.append(x)  # enqueue",label:"Enqueue at rear"},
+    {f:"queue.pop(0)     # dequeue",label:"Dequeue from front"},
+    {f:"from collections import deque",label:"Efficient queue"},
+    {f:"rear = (rear+1) % size",label:"Circular queue"},
+    {f:"FIFO principle",label:"First In First Out"},
+  ],
+  pyqs:[
+    {y:"2024",m:5,q:"Write a complete Python program to implement a Queue using a list with functions: enqueue, dequeue, front, isEmpty, display.",ans:`queue = []<br>def enqueue(item):<br>    queue.append(item)<br>def dequeue():<br>    if isEmpty(): return "Underflow"<br>    return queue.pop(0)<br>def front():<br>    if isEmpty(): return "Empty"<br>    return queue[0]<br>def isEmpty():<br>    return len(queue)==0<br>def display():<br>    if isEmpty(): print("Queue is empty")<br>    else: print("Front→",queue,"←Rear")<br>enqueue(10); enqueue(20); enqueue(30)<br>display()<br>print("Dequeue:", dequeue())<br>print("Front:", front())`},
+    {y:"2023",m:3,q:"What is the difference between stack and queue? Give two real-life examples of each.",ans:"Stack (LIFO): removal from same end as insertion. Examples: undo in editor, browser back button. Queue (FIFO): removal from opposite end to insertion. Examples: print spooler, call centre waiting. Stack: append()/pop(). Queue: append()/pop(0)."},
+    {y:"2022",m:3,q:"Write a Python program to implement a queue and perform 3 enqueues and 2 dequeues. Display after each operation.",ans:`q=[]<br>def enq(x): q.append(x); print("After enqueue",x,":",q)<br>def deq():<br>    if q: print("Dequeued:",q.pop(0)); print("Queue:",q)<br>    else: print("Empty")<br>enq(5); enq(10); enq(15)<br>deq(); deq()`},
+    {y:"2021",m:2,q:"What is a circular queue? What problem does it solve?",ans:"Circular queue: rear pointer wraps to front when it reaches end of array. Solves: wasted memory in linear queue — when elements dequeued from front, those positions are wasted in linear queue. Circular queue reuses those positions. Uses: (rear+1)%size for next rear position."},
+    {y:"2020",m:2,q:"How is collections.deque better than list for queue implementation?",ans:"deque.popleft() is O(1) — no shifting. list.pop(0) is O(n) — shifts all elements left after removal. For large queues, deque is much faster. Also, deque allows efficient insert/delete from both ends (appendleft, popleft, append, pop)."},
+  ],
+  flashcards:[
+    {q:"Queue principle?",a:"FIFO — First In First Out",extra:"Like a line at a bank. First person in = first person served."},
+    {q:"Enqueue and dequeue using Python list?",a:"enqueue: queue.append(x). dequeue: queue.pop(0)",extra:"pop(0) is O(n). Use collections.deque for O(1) dequeue"},
+    {q:"Front of queue in Python list?",a:"queue[0] — first element (earliest inserted)",extra:"Rear of queue: queue[-1] — last inserted element"},
+    {q:"Stack vs Queue — key difference?",a:"Stack: LIFO (pop from same end). Queue: FIFO (remove from opposite end)",extra:"Stack: append+pop. Queue: append+pop(0) or deque appendleft+popleft"},
+    {q:"collections.deque advantage for queue?",a:"popleft() is O(1) vs list pop(0) which is O(n)",extra:"from collections import deque; q=deque(); q.append(x); q.popleft()"},
+    {q:"Circular queue advantage?",a:"Reuses empty spaces at front — no wasted memory",extra:"Linear queue: spaces before front pointer are wasted after dequeue"},
+    {q:"Queue application in OS?",a:"CPU scheduling (FCFS), Print spooling, Process scheduling",extra:"Each process/job enters queue, served in order of arrival"},
+    {q:"Priority queue — how elements are ordered?",a:"By priority, not by arrival order. Highest priority first",extra:"Python: heapq module (min-heap). heapq.heappush/heapq.heappop"},
+  ]
+},
+{
+  id:6,title:"Computer Networks",unit:"Unit II",marks:15,
+  tags:["hot🔥","5 marks","theory","most important"],
+  hotTopics:["OSI model","TCP/IP","Network devices","Topologies","Protocols","Security"],
+  concepts:[
+    {h:"Network Fundamentals",p:"<b>Computer Network:</b> interconnected computers sharing resources and data.<br><b>Types by size:</b> PAN (Personal, Bluetooth, <10m), LAN (Local, building, <1km), MAN (Metropolitan, city, 10–100km), WAN (Wide, country/world, >100km).<br><b>Types by connection:</b> Wired (Ethernet, fibre optic, coaxial), Wireless (Wi-Fi, Bluetooth, infrared).<br><b>Switching:</b> Circuit switching (dedicated path, telephony), Packet switching (data in packets, internet), Message switching (store-and-forward)."},
+    {h:"Network Devices",p:"<b>Modem:</b> MOdulator-DEModulator. Converts digital↔analog. For internet over phone line.<br><b>Hub:</b> broadcasts to all ports. Dumb device. No filtering. Layer 1 (physical).<br><b>Switch:</b> sends to specific port using MAC address. Smart hub. Layer 2 (data link). Uses MAC address table.<br><b>Router:</b> routes packets between networks using IP address. Layer 3 (network). Connects LAN to WAN/internet.<br><b>Gateway:</b> connects different network protocols/architectures. Full protocol conversion.<br><b>Repeater:</b> amplifies/regenerates signal over long distances. Layer 1.<br><b>Bridge:</b> connects two similar LANs. Uses MAC address. Layer 2.<br><b>NIC (Network Interface Card):</b> hardware connecting computer to network. Has unique MAC address."},
+    {h:"Network Topologies",p:"<b>Bus:</b> all nodes on single cable (backbone). Cheap, simple. Failure of bus = entire network fails. Used in LAN.<br><b>Star:</b> all nodes connect to central hub/switch. Most popular. Failure of one node ≠ network fails. Failure of hub = all fail.<br><b>Ring:</b> each node connected to two neighbours forming ring. Token passing. Failure of one node can disrupt ring.<br><b>Mesh:</b> every node connected to every other. Most reliable, most expensive. Dedicated paths.<br><b>Tree/Hybrid:</b> combination of bus and star. Hierarchical.<br><b>Point-to-point:</b> direct link between two nodes."},
+    {h:"OSI Model (7 Layers)",p:"<b>Please Do Not Throw Sausage Pizza Away</b> (Physical, Data Link, Network, Transport, Session, Presentation, Application)<br>7. <b>Application:</b> user interface, HTTP, FTP, SMTP, DNS, DHCP<br>6. <b>Presentation:</b> format, encryption, compression (SSL/TLS, JPEG, MPEG)<br>5. <b>Session:</b> establish/manage/terminate sessions (NetBIOS, RPC)<br>4. <b>Transport:</b> end-to-end delivery, TCP/UDP, port numbers, segmentation<br>3. <b>Network:</b> logical addressing, routing, IP, ICMP, ARP<br>2. <b>Data Link:</b> physical addressing (MAC), framing, error detection (CRC)<br>1. <b>Physical:</b> bits, cables, signals, NIC, hub, repeater"},
+    {h:"TCP/IP Model & Protocols",p:"4-layer model (simplified OSI):<br>4. Application (HTTP, FTP, SMTP, DNS, POP3, IMAP, Telnet)<br>3. Transport (TCP, UDP)<br>2. Internet/Network (IP, ICMP, ARP, RARP)<br>1. Network Access/Link (Ethernet, Wi-Fi)<br><b>TCP:</b> connection-oriented, reliable, ordered, error-checking. For file transfer, web browsing.<br><b>UDP:</b> connectionless, fast, no guarantee. For video streaming, gaming, DNS.<br><b>IP address:</b> logical address (IPv4: 32-bit dotted decimal, e.g. 192.168.1.1. IPv6: 128-bit hex).<br><b>MAC address:</b> physical hardware address (48-bit, e.g. 00:1A:2B:3C:4D:5E)."},
+    {h:"Key Protocols & Services",p:"<b>HTTP/HTTPS:</b> web browsing (port 80/443). HTTPS = HTTP + TLS encryption.<br><b>FTP:</b> file transfer (port 21). SFTP = secure.<br><b>SMTP:</b> sending email (port 25). POP3: receive email (port 110). IMAP: access email on server (port 143).<br><b>DNS:</b> Domain Name System. Translates domain names to IP (e.g. google.com → 142.250.x.x). Port 53.<br><b>DHCP:</b> Dynamic Host Configuration Protocol. Auto-assigns IP addresses.<br><b>Telnet:</b> remote login (port 23, unencrypted). SSH: secure remote login (port 22).<br><b>VoIP:</b> Voice over IP (Skype, WhatsApp calls).<br><b>HTTPS uses SSL/TLS</b> for encryption. Digital certificates verify identity."},
+    {h:"Network Security",p:"<b>Threats:</b> Virus (self-replicating malware), Worm (spreads through network), Trojan horse (disguised malware), Phishing (fake sites for credentials), Spyware, Adware, Ransomware (encrypts files for ransom), DoS/DDoS (overwhelm server).<br><b>Protection:</b> Firewall (filters traffic, packet filtering), Antivirus, Encryption (scramble data), VPN (Virtual Private Network, encrypted tunnel), Two-factor authentication, Regular updates/patches, Strong passwords.<br><b>Firewall:</b> software/hardware that monitors and controls incoming/outgoing network traffic based on rules. Packet filtering, stateful inspection, proxy firewall.<br><b>Encryption:</b> Symmetric (same key: AES), Asymmetric (public+private key: RSA). SSL/TLS uses both."},
+  ],
+  mnemonics:[
+    {m:"'Please Do Not Throw Sausage Pizza Away = 7 OSI layers (top to bottom)'",exp:"Physical, Data Link, Network, Transport, Session, Presentation, Application"},
+    {m:"'Hub=HOLLERS to everyone. Switch=SELECTS by MAC. Router=ROUTES by IP'",exp:"Hub: broadcasts to all. Switch: uses MAC table. Router: uses IP routing table"},
+    {m:"'TCP = Trustworthy Careful Protocol (reliable). UDP = Ultra-fast Dumb Protocol (no guarantee)'",exp:"TCP: ordered, reliable, slower. UDP: fast, no guarantee, used for streaming/gaming"},
+    {m:"'DNS = Domain Name SOLVER (converts name to IP like a phonebook)'",exp:"You type google.com → DNS resolves to IP address → router routes to that IP"},
+    {m:"'Star topology = SAFEST (one cable fails, rest work). Bus = DANGEROUS (bus fails, all fail)'",exp:"Star: individual failure isolated. Bus: single point of failure for whole network"},
+  ],
+  formulas:[
+    {f:"IPv4: 32-bit (4 octets) e.g. 192.168.1.1",label:"IP address format"},
+    {f:"MAC: 48-bit e.g. 00:1A:2B:3C:4D:5E",label:"MAC address"},
+    {f:"HTTP:80, HTTPS:443, FTP:21, SMTP:25",label:"Port numbers"},
+    {f:"POP3:110, IMAP:143, DNS:53, SSH:22",label:"More ports"},
+    {f:"OSI: 7 layers, TCP/IP: 4 layers",label:"Network models"},
+  ],
+  pyqs:[
+    {y:"2024",m:3,q:"Differentiate between hub and switch. Which is better and why?",ans:"Hub: broadcasts data to all connected ports regardless of destination (Layer 1). Creates unnecessary traffic. No intelligence. Switch: sends data only to the specific port where destination device is (uses MAC address table, Layer 2). More efficient, faster, secure. Switch is better because it reduces network traffic and collisions."},
+    {y:"2024",m:2,q:"What is DNS? How does it work?",ans:"DNS (Domain Name System): translates human-readable domain names (e.g. www.google.com) to machine-readable IP addresses (e.g. 142.250.x.x). Works: Browser queries DNS resolver → checks cache → queries root server → TLD server → authoritative server → returns IP. Like a phonebook for the internet. Port 53."},
+    {y:"2023",m:5,q:"Explain OSI model with all 7 layers and their functions.",ans:"7-Application: user apps, HTTP/FTP/SMTP. 6-Presentation: format/encrypt/compress (SSL, JPEG). 5-Session: establish/maintain sessions. 4-Transport: end-to-end, TCP/UDP, ports. 3-Network: IP addressing, routing. 2-Data Link: MAC address, frames, error detection. 1-Physical: bits, cables, signals, hardware. Mnemonic: Please Do Not Throw Sausage Pizza Away."},
+    {y:"2023",m:3,q:"What are the different types of network topologies? State advantages and disadvantages of Star topology.",ans:"Topologies: Bus, Star, Ring, Mesh, Tree/Hybrid. Star topology — Advantages: easy to add/remove nodes, one failure doesn't affect others, easy troubleshooting. Disadvantages: hub/switch failure = entire network fails, more cable needed, costlier than bus."},
+    {y:"2022",m:3,q:"Distinguish between TCP and UDP with examples.",ans:"TCP: connection-oriented, reliable, ordered delivery, error-checking, slower. Examples: HTTP, FTP, email, file download. UDP: connectionless, unreliable, no ordering, no error recovery, faster. Examples: video streaming, online gaming, DNS, VoIP. TCP is like registered mail (guaranteed). UDP is like radio broadcast (no confirmation)."},
+    {y:"2021",m:2,q:"What is a firewall? What are its types?",ans:"Firewall: security system that monitors and controls incoming/outgoing network traffic based on predetermined rules. Protects against unauthorised access. Types: Packet filtering (examines each packet's header), Stateful inspection (tracks connection states), Proxy firewall (acts as intermediary), Next-gen firewall (deep packet inspection, application awareness)."},
+    {y:"2020",m:2,q:"What is the difference between LAN, MAN and WAN?",ans:"LAN (Local Area Network): limited area (building/campus), high speed (100Mbps-10Gbps), privately owned, e.g. school network. MAN (Metropolitan Area Network): city-wide, medium speed, e.g. city cable TV. WAN (Wide Area Network): country/worldwide, slower than LAN, public/private, e.g. internet, BSNL network."},
+  ],
+  flashcards:[
+    {q:"OSI model layers (bottom to top)?",a:"Physical, Data Link, Network, Transport, Session, Presentation, Application",extra:"Mnemonic (top→bottom): Please Do Not Throw Sausage Pizza Away"},
+    {q:"Router works at which OSI layer?",a:"Layer 3 — Network layer (uses IP addresses)",extra:"Switch: Layer 2 (MAC). Hub: Layer 1 (bits). Firewall: Layer 3-4"},
+    {q:"TCP vs UDP — key difference?",a:"TCP: reliable, ordered, connection-oriented. UDP: fast, unreliable, connectionless",extra:"TCP for accuracy (web, email). UDP for speed (video, gaming)"},
+    {q:"What is MAC address?",a:"48-bit hardware address burned into NIC (e.g. 00:1A:2B:3C:4D:5E)",extra:"Physical address assigned by manufacturer. Switch uses MAC table. Cannot change (usually)."},
+    {q:"Port number for HTTPS?",a:"443 (HTTP=80, FTP=21, SMTP=25, SSH=22, DNS=53)",extra:"Port identifies specific service on a device. IP=device, Port=service"},
+    {q:"What does a modem do?",a:"Converts digital signal ↔ analog signal (MOdulator-DEModulator)",extra:"Needed to send digital data over analog phone lines"},
+    {q:"What is phishing?",a:"Fraudulent attempt to get credentials via fake websites/emails",extra:"Protection: check URL, use 2FA, don't click suspicious links"},
+    {q:"IPv4 vs IPv6?",a:"IPv4: 32-bit (4.3 billion addresses). IPv6: 128-bit (340 undecillion addresses)",extra:"IPv4 running out of addresses → world moving to IPv6"},
+  ]
+},
+{
+  id:7,title:"Database Concepts",unit:"Unit III",marks:7,
+  tags:["5 marks","theory"],
+  hotTopics:["RDBMS","Keys","Data models","Normalization","ACID properties"],
+  concepts:[
+    {h:"Database Fundamentals",p:"<b>Database:</b> organised collection of interrelated data. <b>DBMS:</b> Database Management System — software to create, maintain, access database (MySQL, Oracle, PostgreSQL, SQLite).<br><b>Advantages of DBMS over file system:</b> eliminates data redundancy, data consistency, data sharing, data security, easy data access, data independence, backup/recovery.<br><b>Types:</b> Relational (tables), Hierarchical (tree), Network (graph), Object-oriented."},
+    {h:"Relational Database Concepts",p:"<b>Table/Relation:</b> data organised in rows and columns. <b>Tuple/Row/Record:</b> one complete entry. <b>Attribute/Column/Field:</b> property/characteristic.<br><b>Domain:</b> set of allowed values for an attribute.<br><b>Degree:</b> number of columns/attributes. <b>Cardinality:</b> number of rows/tuples.<br><b>Relation Instance:</b> actual data in table at a point in time. <b>Relation Schema:</b> structure (header)."},
+    {h:"Keys in Database",p:"<b>Super key:</b> any set of attributes that uniquely identifies a tuple.<br><b>Candidate key:</b> minimal super key (no redundant attributes).<br><b>Primary key:</b> chosen candidate key for identification. NOT NULL, UNIQUE. Only one per table.<br><b>Alternate key:</b> candidate key not chosen as primary.<br><b>Foreign key:</b> attribute in one table that references primary key of another. Enforces referential integrity.<br><b>Composite key:</b> primary key made of two or more attributes.<br><b>Unique key:</b> like primary key but allows NULL."},
+    {h:"Data Independence & Integrity",p:"<b>Physical data independence:</b> change physical storage without affecting logical schema.<br><b>Logical data independence:</b> change logical schema without affecting external views/apps.<br><b>Entity Integrity:</b> primary key cannot be NULL.<br><b>Referential Integrity:</b> foreign key value must match existing primary key or be NULL.<br><b>ACID Properties:</b> Atomicity (all or nothing), Consistency (valid state), Isolation (concurrent transactions), Durability (committed data persists)."},
+    {h:"E-R Model & Normalisation",p:"<b>Entity:</b> real-world object (Student, Teacher). <b>Attribute:</b> property (name, age). <b>Relationship:</b> association between entities. Cardinality: 1:1, 1:N, M:N.<br><b>Normalisation:</b> organising database to reduce redundancy.<br>1NF: atomic values, no repeating groups.<br>2NF: 1NF + no partial dependency (on part of composite key).<br>3NF: 2NF + no transitive dependency (non-key depends on another non-key)."},
+  ],
+  mnemonics:[
+    {m:"'ACID = Atomicity, Consistency, Isolation, Durability — A Clean Isolated Database'",exp:"ACID properties ensure reliable transactions in DBMS"},
+    {m:"'Super→Candidate→Primary: Getting smaller and smaller set of keys'",exp:"Super key: any identifying set. Candidate: minimal. Primary: chosen candidate."},
+    {m:"'Foreign key = FRIEND's Primary key (links two tables together)'",exp:"Foreign key in table B references the primary key in table A. Creates relationship."},
+    {m:"'1NF=Atomic. 2NF=No partial dep. 3NF=No transitive dep — Getting cleaner each time'",exp:"Normal forms progressively eliminate redundancy"},
+  ],
+  formulas:[
+    {f:"Degree = number of columns",label:"Table structure"},
+    {f:"Cardinality = number of rows",label:"Table size"},
+    {f:"PK: NOT NULL + UNIQUE",label:"Primary key constraint"},
+    {f:"FK references PK of another table",label:"Foreign key"},
+    {f:"ACID: Atomicity Consistency Isolation Durability",label:"Transaction properties"},
+  ],
+  pyqs:[
+    {y:"2024",m:3,q:"What are the different types of keys in a database? Explain with example.",ans:"Super key: {RollNo, Name, Phone} — any superset that identifies. Candidate key: {RollNo}, {Phone} — minimal. Primary key: RollNo (chosen candidate). Alternate key: Phone (not chosen). Foreign key: DeptID in Student table references DeptID in Department table. Composite key: {StudentID + SubjectID} in Marks table."},
+    {y:"2023",m:2,q:"Define: (i) Entity (ii) Relationship (iii) Cardinality",ans:"Entity: real-world object with independent existence (Student, Book). Relationship: association between entities (Student BORROWS Book). Cardinality: number of entities participating — 1:1 (one employee one desk), 1:N (one teacher many students), M:N (many students many courses)."},
+    {y:"2022",m:3,q:"What are ACID properties in DBMS? Explain each.",ans:"Atomicity: transaction is all-or-nothing (if transfer fails midway, rolls back). Consistency: transaction brings DB from valid state to valid state. Isolation: concurrent transactions don't interfere. Durability: once committed, data persists even if system crashes."},
+    {y:"2021",m:2,q:"What is the difference between a primary key and a foreign key?",ans:"Primary key: uniquely identifies each row in its own table. Cannot be NULL. Only one per table. Foreign key: references primary key of another table. Creates link between tables. Can be NULL. Enforces referential integrity."},
+  ],
+  flashcards:[
+    {q:"Degree vs Cardinality of a table?",a:"Degree = number of columns. Cardinality = number of rows",extra:"Degree tells structure. Cardinality tells data volume."},
+    {q:"What is a candidate key?",a:"Minimal super key — no attribute can be removed and still uniquely identify rows",extra:"All primary keys are candidate keys but not vice versa"},
+    {q:"ACID properties?",a:"Atomicity, Consistency, Isolation, Durability",extra:"Ensures reliable database transactions. ACID = reliable transactions"},
+    {q:"What does foreign key enforce?",a:"Referential integrity — FK value must exist as PK in referenced table",extra:"Prevents orphan records. E.g. StudentID in Marks must exist in Student table"},
+    {q:"1NF requirement?",a:"All attribute values must be atomic (indivisible), no repeating groups",extra:"No multi-valued attributes in a single cell"},
+    {q:"Difference: primary key vs unique key?",a:"Primary: NOT NULL + UNIQUE, only one per table. Unique: allows NULL, multiple allowed",extra:"Both enforce uniqueness but primary key is main identifier"},
+  ]
+},
+{
+  id:8,title:"SQL — Structured Query Language",unit:"Unit III",marks:12,
+  tags:["hot🔥","5 marks","most important","practical"],
+  hotTopics:["DDL/DML/DQL","SELECT with WHERE","Joins","Aggregate functions","ORDER BY/GROUP BY"],
+  concepts:[
+    {h:"SQL Categories",p:"<b>DDL (Data Definition Language):</b> CREATE, ALTER, DROP, TRUNCATE, RENAME<br><b>DML (Data Manipulation Language):</b> INSERT, UPDATE, DELETE<br><b>DQL (Data Query Language):</b> SELECT<br><b>DCL (Data Control Language):</b> GRANT, REVOKE<br><b>TCL (Transaction Control Language):</b> COMMIT, ROLLBACK, SAVEPOINT"},
+    {h:"DDL Commands",p:`<code>-- Create table<br>CREATE TABLE Student(<br>  RollNo INT PRIMARY KEY,<br>  Name VARCHAR(50) NOT NULL,<br>  Age INT,<br>  Marks DECIMAL(5,2),<br>  Class VARCHAR(5) DEFAULT '12A'<br>);<br><br>-- Modify table<br>ALTER TABLE Student ADD Phone VARCHAR(15);<br>ALTER TABLE Student MODIFY Name VARCHAR(100);<br>ALTER TABLE Student DROP COLUMN Phone;<br><br>-- Delete table structure<br>DROP TABLE Student;    -- removes table+data<br>TRUNCATE TABLE Student; -- removes only data</code>`},
+    {h:"DML Commands",p:`<code>-- Insert<br>INSERT INTO Student VALUES(1,'Alice',17,95.5,'12A');<br>INSERT INTO Student(RollNo,Name) VALUES(2,'Bob');<br><br>-- Update<br>UPDATE Student SET Marks=98 WHERE RollNo=1;<br>UPDATE Student SET Class='12B' WHERE Marks>90;<br><br>-- Delete<br>DELETE FROM Student WHERE RollNo=2;<br>DELETE FROM Student WHERE Marks<40;  -- all failures<br>DELETE FROM Student;  -- all rows (structure remains)</code>`},
+    {h:"SELECT — DQL",p:`<code>-- Basic<br>SELECT * FROM Student;<br>SELECT Name, Marks FROM Student;<br>SELECT DISTINCT Class FROM Student;<br><br>-- WHERE clause (conditions)<br>SELECT * FROM Student WHERE Marks>80;<br>SELECT * FROM Student WHERE Class='12A' AND Age=17;<br>SELECT * FROM Student WHERE Marks BETWEEN 80 AND 95;<br>SELECT * FROM Student WHERE Name LIKE 'A%'; -- starts with A<br>SELECT * FROM Student WHERE Name LIKE '%a'; -- ends with a<br>SELECT * FROM Student WHERE Class IN ('12A','12B');<br>SELECT * FROM Student WHERE Phone IS NULL;<br><br>-- ORDER BY<br>SELECT * FROM Student ORDER BY Marks DESC;<br>SELECT * FROM Student ORDER BY Name ASC, Marks DESC;</code>`},
+    {h:"Aggregate Functions & GROUP BY",p:`<code>-- Aggregate functions<br>SELECT COUNT(*) FROM Student;       -- count rows<br>SELECT COUNT(Phone) FROM Student;   -- count non-NULL<br>SELECT SUM(Marks) FROM Student;<br>SELECT AVG(Marks) FROM Student;<br>SELECT MAX(Marks) FROM Student;<br>SELECT MIN(Age) FROM Student;<br><br>-- GROUP BY<br>SELECT Class, COUNT(*) as Total,<br>       AVG(Marks) as AvgMarks<br>FROM Student<br>GROUP BY Class;<br><br>-- HAVING (filter groups, like WHERE for groups)<br>SELECT Class, AVG(Marks)<br>FROM Student<br>GROUP BY Class<br>HAVING AVG(Marks) > 80;</code>`},
+    {h:"Joins & Subqueries",p:`<b>JOINS:</b> combine rows from two or more tables.<br><code>-- Inner Join (matching rows only)<br>SELECT S.Name, D.DeptName<br>FROM Student S<br>INNER JOIN Department D ON S.DeptID = D.DeptID;<br><br>-- Left Join (all from left + matching right)<br>SELECT S.Name, D.DeptName<br>FROM Student S<br>LEFT JOIN Department D ON S.DeptID = D.DeptID;<br><br>-- Subquery<br>SELECT Name FROM Student<br>WHERE Marks = (SELECT MAX(Marks) FROM Student);<br><br>-- Cartesian Product (no ON clause)<br>SELECT * FROM A, B;  -- cross join</code>`},
+    {h:"SQL Functions",p:`<code>-- String functions<br>UCASE('hello') → 'HELLO'<br>LCASE('HELLO') → 'hello'<br>LENGTH('abc') → 3<br>MID('Hello',2,3) → 'ell' (start,length)<br>SUBSTRING('Hello',2,3) → 'ell'<br>LTRIM(' hi') → 'hi'<br>RTRIM('hi ') → 'hi'<br>CONCAT('Hello',' ','World') → 'Hello World'<br><br>-- Numeric functions<br>POWER(2,3) → 8<br>ROUND(3.567,2) → 3.57<br>MOD(10,3) → 1<br>TRUNCATE(3.567,1) → 3.5<br><br>-- Date functions<br>NOW() → current date+time<br>CURDATE() → current date<br>YEAR(date), MONTH(date), DAY(date)</code>`},
+  ],
+  mnemonics:[
+    {m:"'SELECT-FROM-WHERE-GROUP BY-HAVING-ORDER BY — Salty French Waiters Get Hot Orders'",exp:"Correct SQL clause ORDER: SELECT→FROM→WHERE→GROUP BY→HAVING→ORDER BY"},
+    {m:"'DDL = Define (structure). DML = Modify (data). DQL = Query (read)'",exp:"CREATE/ALTER/DROP = DDL. INSERT/UPDATE/DELETE = DML. SELECT = DQL"},
+    {m:"'WHERE filters ROWS. HAVING filters GROUPS. DISTINCT removes duplicates'",exp:"WHERE before GROUP BY. HAVING after GROUP BY. Both filter but at different stages."},
+    {m:"'LIKE: % = any chars, _ = one char — % is greedy, _ is precise'",exp:"'A%' starts with A. '%a' ends with a. '_a_' has a as middle char (3 chars total)"},
+    {m:"'JOIN ON = Inner (matches). LEFT JOIN = all left + matches. RIGHT = all right'",exp:"INNER JOIN: only matching rows. LEFT: all from left table. RIGHT: all from right."},
+  ],
+  formulas:[
+    {f:"SELECT col FROM tbl WHERE cond",label:"Basic query"},
+    {f:"ORDER BY col ASC/DESC",label:"Sorting"},
+    {f:"GROUP BY col HAVING cond",label:"Grouping"},
+    {f:"COUNT(*) SUM() AVG() MAX() MIN()",label:"Aggregate functions"},
+    {f:"INNER JOIN tbl2 ON tbl1.col=tbl2.col",label:"Join"},
+    {f:"LIKE 'A%' / '_ _a'",label:"Pattern matching"},
+    {f:"BETWEEN x AND y / IN (a,b,c)",label:"Range/list filter"},
+  ],
+  pyqs:[
+    {y:"2024",m:5,q:"Consider table EMPLOYEE(EmpID, Name, Department, Salary, JoinDate). Write SQL for: (i) Display all employees with salary>50000 (ii) Count employees per department (iii) Update salary by 10% for IT dept (iv) Add new column 'Bonus' (v) Display top 3 earners.",ans:`(i) SELECT * FROM EMPLOYEE WHERE Salary>50000;<br>(ii) SELECT Department,COUNT(*) FROM EMPLOYEE GROUP BY Department;<br>(iii) UPDATE EMPLOYEE SET Salary=Salary*1.10 WHERE Department='IT';<br>(iv) ALTER TABLE EMPLOYEE ADD Bonus DECIMAL(10,2);<br>(v) SELECT * FROM EMPLOYEE ORDER BY Salary DESC LIMIT 3;`},
+    {y:"2023",m:5,q:"Table STUDENT(RollNo,Name,Class,Marks,City). Write SQL: (i) Names starting with 'S' (ii) Average marks by class (iii) Students from Delhi with marks>80 (iv) Delete students with marks<33 (v) Display distinct cities.",ans:`(i) SELECT Name FROM STUDENT WHERE Name LIKE 'S%';<br>(ii) SELECT Class,AVG(Marks) FROM STUDENT GROUP BY Class;<br>(iii) SELECT * FROM STUDENT WHERE City='Delhi' AND Marks>80;<br>(iv) DELETE FROM STUDENT WHERE Marks<33;<br>(v) SELECT DISTINCT City FROM STUDENT;`},
+    {y:"2022",m:3,q:"What is the difference between WHERE and HAVING? Give an example.",ans:"WHERE: filters individual rows before grouping. HAVING: filters groups after GROUP BY. Example: SELECT Class, AVG(Marks) FROM STUDENT WHERE Age>15 GROUP BY Class HAVING AVG(Marks)>75; — WHERE removes students ≤15, GROUP BY groups, HAVING keeps only classes with avg>75."},
+    {y:"2022",m:2,q:"What is the difference between DROP and TRUNCATE?",ans:"DROP TABLE: removes entire table including structure (schema) and data permanently. Cannot be rolled back (DDL). TRUNCATE TABLE: removes all rows but keeps table structure. Faster than DELETE. Cannot be rolled back. DELETE FROM: removes rows (can have WHERE), can be rolled back (DML)."},
+    {y:"2021",m:3,q:"Write SQL to display name and salary of employee earning second highest salary.",ans:`SELECT Name, Salary FROM EMPLOYEE<br>WHERE Salary = (SELECT MAX(Salary) FROM EMPLOYEE<br>               WHERE Salary < (SELECT MAX(Salary) FROM EMPLOYEE));`},
+    {y:"2020",m:3,q:"Explain INNER JOIN with example using tables STUDENT and COURSE.",ans:`SELECT S.Name, C.CourseName<br>FROM STUDENT S<br>INNER JOIN COURSE C ON S.CourseID = C.CourseID;<br>Returns only students who have a matching course. Students with no course / courses with no students are excluded.`},
+  ],
+  flashcards:[
+    {q:"SQL clause order in SELECT?",a:"SELECT → FROM → WHERE → GROUP BY → HAVING → ORDER BY",extra:"Mnemonic: Salty French Waiters Get Hot Orders"},
+    {q:"Difference: DELETE vs TRUNCATE vs DROP?",a:"DELETE: remove rows (DML, rollback possible). TRUNCATE: remove all rows fast (DDL). DROP: remove table entirely",extra:"DELETE can have WHERE. TRUNCATE cannot. DROP removes structure too."},
+    {q:"LIKE 'A%' vs LIKE 'A_'?",a:"'A%' — starts with A, any chars after. 'A_' — starts with A, exactly ONE more char",extra:"% = zero or more chars. _ = exactly one char"},
+    {q:"WHERE vs HAVING?",a:"WHERE: filters rows before GROUP BY. HAVING: filters groups after GROUP BY",extra:"Cannot use aggregate functions in WHERE. Use HAVING for AVG, COUNT etc."},
+    {q:"What does DISTINCT do?",a:"Removes duplicate values from result set",extra:"SELECT DISTINCT City FROM Student — shows each city only once"},
+    {q:"Aggregate function for count?",a:"COUNT(*) counts all rows. COUNT(col) counts non-NULL values",extra:"SUM, AVG, MAX, MIN also work on non-NULL values only"},
+    {q:"MID('Computer',4,3) result?",a:"'put'",extra:"MID(str, start, length). Start=1-indexed. MID('Computer',4,3)='put'"},
+    {q:"INNER JOIN vs LEFT JOIN?",a:"INNER: only matching rows. LEFT: all rows from left table + matches from right",extra:"If no match in right table for LEFT JOIN, NULLs appear for right columns"},
+  ]
+},
+{
+  id:9,title:"Python-MySQL Interface",unit:"Unit III",marks:5,
+  tags:["5 marks","practical","hot🔥"],
+  hotTopics:["mysql.connector","fetchone/fetchall","execute()","CRUD operations","Parameterised queries"],
+  concepts:[
+    {h:"Connecting Python to MySQL",p:`Install: <code>pip install mysql-connector-python</code><br><code>import mysql.connector<br><br># Create connection<br>mydb = mysql.connector.connect(<br>    host="localhost",<br>    user="root",<br>    password="yourpassword",<br>    database="school"<br>)<br><br># Create cursor<br>cursor = mydb.cursor()<br><br># Always close at end<br>cursor.close()<br>mydb.close()</code><br><b>cursor:</b> object used to execute SQL queries and fetch results. Acts as a pointer to result set.`},
+    {h:"Executing Queries",p:`<code># CREATE TABLE<br>cursor.execute("""CREATE TABLE IF NOT EXISTS Student(<br>    RollNo INT PRIMARY KEY,<br>    Name VARCHAR(50),<br>    Marks FLOAT<br>)""")<br><br># INSERT (with commit)<br>sql = "INSERT INTO Student VALUES(%s, %s, %s)"<br>val = (1, "Alice", 95.5)<br>cursor.execute(sql, val)<br>mydb.commit()  # MUST commit for DML<br><br># INSERT many<br>vals = [(2,"Bob",88), (3,"Carol",91)]<br>cursor.executemany(sql, vals)<br>mydb.commit()</code>`},
+    {h:"Fetching Data",p:`<code># SELECT and fetch<br>cursor.execute("SELECT * FROM Student")<br><br># Fetch methods:<br>row = cursor.fetchone()   # one row as tuple<br>rows = cursor.fetchall()  # all rows as list of tuples<br>rows = cursor.fetchmany(3) # fetch 3 rows<br><br># Display all<br>cursor.execute("SELECT * FROM Student")<br>for row in cursor.fetchall():<br>    print(row)<br><br># With WHERE (parameterised)<br>cursor.execute("SELECT * FROM Student WHERE Marks>%s", (80,))<br>result = cursor.fetchall()<br>print(cursor.rowcount)  # rows affected/returned</code>`},
+    {h:"UPDATE, DELETE & Best Practices",p:`<code># UPDATE<br>sql = "UPDATE Student SET Marks=%s WHERE RollNo=%s"<br>cursor.execute(sql, (99, 1))<br>mydb.commit()<br>print(cursor.rowcount, "rows updated")<br><br># DELETE<br>cursor.execute("DELETE FROM Student WHERE RollNo=%s",(2,))<br>mydb.commit()<br><br># Best Practice: parameterised queries<br># NEVER do string concatenation (SQL injection risk):<br># BAD: "SELECT * FROM t WHERE id="+str(user_input)<br># GOOD: cursor.execute("SELECT * FROM t WHERE id=%s",(user_input,))</code>`},
+    {h:"Complete CRUD Example",p:`<code>import mysql.connector<br>con = mysql.connector.connect(host="localhost",<br>      user="root", password="pass", database="school")<br>cur = con.cursor()<br><br>def insert(roll, name, marks):<br>    cur.execute("INSERT INTO Student VALUES(%s,%s,%s)",<br>                (roll, name, marks))<br>    con.commit()<br><br>def display():<br>    cur.execute("SELECT * FROM Student")<br>    for r in cur.fetchall(): print(r)<br><br>def update(roll, marks):<br>    cur.execute("UPDATE Student SET Marks=%s WHERE RollNo=%s",<br>                (marks, roll))<br>    con.commit()<br><br>def delete(roll):<br>    cur.execute("DELETE FROM Student WHERE RollNo=%s",(roll,))<br>    con.commit()<br><br>insert(1,"Alice",95); display()<br>update(1, 98); delete(2)</code>`},
+  ],
+  mnemonics:[
+    {m:"'Connect → Cursor → Execute → Commit/Fetch → Close = CCECC'",exp:"Steps for Python-MySQL: mysql.connector.connect() → .cursor() → .execute(sql) → .commit() or .fetchall() → .close()"},
+    {m:"'DML needs COMMIT (INSERT/UPDATE/DELETE). SELECT just FETCH.'",exp:"Any change to data must be committed. SELECT just reads — no commit needed"},
+    {m:"'%s placeholder = SAFE from SQL injection. String concat = DANGEROUS'",exp:"Always use parameterised queries with %s tuple. Never concatenate user input into SQL string."},
+    {m:"'fetchone()=1 row, fetchall()=ALL rows, fetchmany(n)=n rows'",exp:"Three fetch methods. fetchall() returns list of tuples. fetchone() returns one tuple."},
+  ],
+  formulas:[
+    {f:"mysql.connector.connect(host,user,password,database)",label:"Connect to MySQL"},
+    {f:"con.cursor()  # create cursor",label:"Cursor object"},
+    {f:"cur.execute(sql, values_tuple)",label:"Execute query"},
+    {f:"cur.fetchall() / fetchone()",label:"Fetch results"},
+    {f:"con.commit()  # after DML",label:"Save changes"},
+    {f:"cur.rowcount  # rows affected",label:"Row count"},
+  ],
+  pyqs:[
+    {y:"2024",m:5,q:"Write a complete Python program to connect to MySQL database 'Library' and perform: (i) Add a book record (ii) Display all books (iii) Search book by title.",ans:`import mysql.connector<br>con = mysql.connector.connect(host="localhost",user="root",<br>      password="pass",database="Library")<br>cur = con.cursor()<br>def add_book(bid,title,author,price):<br>    cur.execute("INSERT INTO Book VALUES(%s,%s,%s,%s)",<br>               (bid,title,author,price))<br>    con.commit(); print("Book added")<br>def display():<br>    cur.execute("SELECT * FROM Book")<br>    for r in cur.fetchall(): print(r)<br>def search(title):<br>    cur.execute("SELECT * FROM Book WHERE Title LIKE %s",('%'+title+'%',))<br>    res=cur.fetchall()<br>    if res:<br>        for r in res: print(r)<br>    else: print("Not found")`},
+    {y:"2023",m:3,q:"What is cursor in Python-MySQL? Write code to fetch and display records where salary > 50000.",ans:`Cursor: object that acts as an interface between Python and MySQL. Used to execute SQL queries and fetch results.<br>import mysql.connector<br>con=mysql.connector.connect(host="localhost",user="root",password="pass",database="company")<br>cur=con.cursor()<br>cur.execute("SELECT * FROM Employee WHERE Salary>%s",(50000,))<br>rows=cur.fetchall()<br>for row in rows: print(row)<br>print("Total:",cur.rowcount)<br>con.close()`},
+    {y:"2022",m:3,q:"Write Python code to update the salary of an employee by roll number using Python-MySQL interface.",ans:`import mysql.connector<br>con=mysql.connector.connect(host="localhost",user="root",<br>    password="pass",database="company")<br>cur=con.cursor()<br>eid=int(input("Enter EmpID:"))<br>nsal=float(input("New Salary:"))<br>cur.execute("UPDATE Employee SET Salary=%s WHERE EmpID=%s",(nsal,eid))<br>con.commit()<br>print(cur.rowcount,"record(s) updated")<br>con.close()`},
+    {y:"2021",m:2,q:"What is the significance of commit() in Python-MySQL? When is it needed?",ans:"commit() saves all changes made to the database permanently. It is required after any DML operation (INSERT, UPDATE, DELETE). Without commit(), changes exist only in the transaction buffer and are lost when connection is closed. SELECT queries don't need commit since they don't modify data."},
+    {y:"2020",m:3,q:"Write a Python function to delete a student record by roll number and display appropriate message.",ans:`import mysql.connector<br>con=mysql.connector.connect(host="localhost",user="root",<br>    password="pass",database="school")<br>cur=con.cursor()<br>def delete_student(roll):<br>    cur.execute("DELETE FROM Student WHERE RollNo=%s",(roll,))<br>    con.commit()<br>    if cur.rowcount>0:<br>        print("Student",roll,"deleted successfully")<br>    else:<br>        print("Student not found")<br>delete_student(101)<br>con.close()`},
+  ],
+  flashcards:[
+    {q:"Steps to connect Python to MySQL?",a:"1.import mysql.connector 2.connect() 3.cursor() 4.execute() 5.commit/fetch 6.close()",extra:"import mysql.connector; con=mysql.connector.connect(host,user,password,database)"},
+    {q:"Difference: fetchone() vs fetchall()?",a:"fetchone(): returns one row as tuple. fetchall(): returns all rows as list of tuples",extra:"fetchmany(n): returns n rows. After fetching all, fetchone() returns None"},
+    {q:"Why is commit() needed?",a:"Saves DML changes (INSERT/UPDATE/DELETE) permanently to database",extra:"Without commit(), changes are lost when connection closes. SELECT doesn't need commit."},
+    {q:"What is cursor.rowcount?",a:"Number of rows affected by last execute() call",extra:"For SELECT: rows in result. For UPDATE/DELETE: rows modified. For INSERT: 1 per row"},
+    {q:"Safe way to pass values in SQL query?",a:"Parameterised query: execute(sql, (val,)) using %s placeholders",extra:"Prevents SQL injection. NEVER use string concatenation with user input."},
+    {q:"executemany() vs execute()?",a:"executemany(sql, list_of_tuples): inserts multiple rows at once",extra:"More efficient than calling execute() in a loop for bulk inserts"},
+  ]
+}
+];
+
+// ── State ──────────────────────────────
+let currentCards = [], fcIndex = 0, showAllCards = false;
+
+function allFC(){ return chapters.flatMap(ch=>(ch.flashcards||[]).map(f=>({chapter:ch.title,chId:ch.id,...f}))); }
+function allPYQ(){ return chapters.flatMap(ch=>(ch.pyqs||[]).map(p=>({chapter:ch.title,chId:ch.id,...p}))); }
+
+// ── INIT ──────────────────────────────
+function init(){
+  renderGrid(chapters);
+  const fcSel=document.getElementById('fcChapter');
+  const pSel=document.getElementById('pyqChapter');
+  chapters.forEach(ch=>{
+    [fcSel,pSel].forEach(s=>{
+      const o=document.createElement('option');
+      o.value=ch.id; o.textContent=`Ch ${ch.id}: ${ch.title}`;
+      s.appendChild(o);
+    });
+  });
+  currentCards=[...allFC()];
+  showCard();
+  renderMnemonics();
+  renderPYQList();
+  renderSyllabus();
+}
+
+function renderGrid(list){
+  document.getElementById('chapterGrid').innerHTML=list.map(ch=>`
+    <div class="ch-card" onclick="openChapter(${ch.id})">
+      <div class="ch-num">${ch.id}</div>
+      <div class="ch-title">${ch.title}</div>
+      <div class="ch-tags">
+        ${ch.tags.map(t=>`<span class="tag ${t.includes('🔥')?'hot':''}">${t}</span>`).join('')}
+        <span class="tag blue">${(ch.flashcards||[]).length} cards</span>
+        <span class="tag">${ch.marks}M</span>
+      </div>
+    </div>`).join('');
+}
+
+function searchChapters(v){
+  if(!v.trim()){renderGrid(chapters);return;}
+  v=v.toLowerCase();
+  renderGrid(chapters.filter(ch=>
+    ch.title.toLowerCase().includes(v)||
+    (ch.hotTopics||[]).some(t=>t.toLowerCase().includes(v))||
+    (ch.concepts||[]).some(c=>c.h.toLowerCase().includes(v)||c.p.toLowerCase().includes(v))
+  ));
+}
+
+function openChapter(id){
+  const ch=chapters.find(c=>c.id===id);
+  document.getElementById('chapterContent').innerHTML=`
+    <div class="unit-badge">${ch.unit} · ${ch.marks} marks</div>
+    <div class="ch-header">
+      <h2>Ch ${ch.id}: ${ch.title}</h2>
+      <div style="color:var(--muted);font-size:0.85rem;margin-top:4px;">Key topics: ${(ch.hotTopics||[]).join(' · ')}</div>
+    </div>
+    <div class="ctabs">
+      <button class="ctab active" onclick="switchCtab(this,'cc')">📖 Concepts</button>
+      <button class="ctab" onclick="switchCtab(this,'cm')">🧠 Mnemonics</button>
+      <button class="ctab" onclick="switchCtab(this,'cf')">⚡ Quick Ref</button>
+      <button class="ctab" onclick="switchCtab(this,'cp')">📋 PYQ</button>
+      <button class="ctab" onclick="switchCtab(this,'cfc')">🃏 Flashcards</button>
+    </div>
+    <div class="ctab-content active" id="cc">
+      ${(ch.concepts||[]).map(c=>`
+        <div class="concept-box">
+          <h4>${c.h}</h4>
+          <div style="font-size:0.88rem;line-height:1.75;">${c.p.replace(/\n/g,'<br>').replace(/<code>([\s\S]*?)<\/code>/g,'<div class="code-block">$1</div>')}</div>
+        </div>`).join('')}
+    </div>
+    <div class="ctab-content" id="cm">
+      ${(ch.mnemonics||[]).map(m=>`
+        <div class="mnemonic-box">
+          <div class="label">🧠 MNEMONIC</div>
+          <p>"${m.m}"</p>
+          <small>${m.exp}</small>
+        </div>`).join('')||'<p style="color:var(--muted)">No mnemonics yet.</p>'}
+    </div>
+    <div class="ctab-content" id="cf">
+      <div class="formula-grid">
+        ${(ch.formulas||[]).map(f=>`
+          <div class="formula-card">
+            <div class="f">${f.f}</div>
+            <small>${f.label}</small>
+          </div>`).join('')}
+      </div>
+    </div>
+    <div class="ctab-content" id="cp">
+      ${(ch.pyqs||[]).map((p,i)=>`
+        <div class="pyq-item">
+          <div class="meta"><span>${p.y} Board</span><span class="marks">${p.m} Marks</span></div>
+          <p>${p.q}</p>
+          <button class="ans-toggle" onclick="toggleAns('ans${id}_${i}',this)">Show Answer</button>
+          <div class="ans-box" id="ans${id}_${i}">${p.ans.replace(/\n/g,'<br>').replace(/<code>([\s\S]*?)<\/code>/g,'<div class="code-block">$1</div>')}</div>
+        </div>`).join('')}
+    </div>
+    <div class="ctab-content" id="cfc">
+      <div class="fc-all">
+        ${(ch.flashcards||[]).map(f=>`
+          <div class="fc-mini">
+            <div class="q">Q: ${f.q}</div>
+            <div class="a">${f.a}</div>
+            <div style="color:var(--muted);font-size:0.76rem;margin-top:4px;font-family:monospace;">${f.extra||''}</div>
+          </div>`).join('')}
+      </div>
+    </div>`;
+  showPage('chapterView');
+}
+
+function switchCtab(btn,id){
+  document.querySelectorAll('.ctab').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.ctab-content').forEach(c=>c.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(id).classList.add('active');
+}
+
+function toggleAns(id,btn){
+  const b=document.getElementById(id);
+  if(b.style.display==='block'){b.style.display='none';btn.textContent='Show Answer';}
+  else{b.style.display='block';btn.textContent='Hide Answer';}
+}
+
+// ── FLASHCARDS ─────────────────────────
+function loadFlashcards(){
+  const s=document.getElementById('fcChapter').value;
+  currentCards=s==='all'?[...allFC()]:allFC().filter(f=>f.chId==s);
+  fcIndex=0; showCard();
+}
+function showCard(){
+  document.getElementById('fcCard').classList.remove('flipped');
+  if(!currentCards.length) return;
+  const f=currentCards[fcIndex];
+  document.getElementById('fcQ').textContent=f.q;
+  document.getElementById('fcHint').textContent='Chapter: '+f.chapter;
+  document.getElementById('fcA').textContent=f.a;
+  document.getElementById('fcExtra').textContent=f.extra||'';
+  document.getElementById('fcCounter').textContent=`${fcIndex+1} / ${currentCards.length}`;
+}
+function flipCard(){document.getElementById('fcCard').classList.toggle('flipped');}
+function nextCard(){fcIndex=(fcIndex+1)%currentCards.length; showCard();}
+function prevCard(){fcIndex=(fcIndex-1+currentCards.length)%currentCards.length; showCard();}
+function shuffleCards(){currentCards=[...currentCards].sort(()=>Math.random()-0.5); fcIndex=0; showCard();}
+function toggleAllCards(){
+  showAllCards=!showAllCards;
+  const c=document.getElementById('allCardsContainer');
+  if(showAllCards){
+    c.innerHTML=`<div class="section-title" style="margin-top:24px;">All Cards</div>
+    <div class="fc-all">${currentCards.map(f=>`
+      <div class="fc-mini">
+        <div style="font-size:0.68rem;color:var(--primary);margin-bottom:4px;">${f.chapter}</div>
+        <div class="q">Q: ${f.q}</div>
+        <div class="a">${f.a}</div>
+        <div style="color:var(--muted);font-size:0.75rem;margin-top:4px;font-family:monospace;">${f.extra||''}</div>
+      </div>`).join('')}</div>`;
+  } else c.innerHTML='';
+}
+
+// ── MNEMONICS ──────────────────────────
+function renderMnemonics(){
+  document.getElementById('mnemonicsList').innerHTML=chapters.filter(ch=>ch.mnemonics?.length).map(ch=>`
+    <div class="trick-card">
+      <h4>Ch ${ch.id}: ${ch.title}</h4>
+      ${ch.mnemonics.map(m=>`
+        <div class="mnemonic-box" style="margin-bottom:8px;">
+          <div class="label">🧠 MNEMONIC</div>
+          <p>"${m.m}"</p>
+          <small>${m.exp}</small>
+        </div>`).join('')}
+    </div>`).join('');
+}
+
+// ── PYQ ────────────────────────────────
+function renderPYQList(list){
+  const pyqs=list||allPYQ();
+  document.getElementById('pyqList').innerHTML=pyqs.length?pyqs.map((p,i)=>`
+    <div class="pyq-item">
+      <div class="meta"><span>${p.y} Board · ${p.chapter}</span><span class="marks">${p.m} Marks</span></div>
+      <p>${p.q}</p>
+      <button class="ans-toggle" onclick="toggleAns('pa${i}',this)">Show Answer</button>
+      <div class="ans-box" id="pa${i}">${p.ans.replace(/\n/g,'<br>').replace(/<code>([\s\S]*?)<\/code>/g,'<div class="code-block">$1</div>')}</div>
+    </div>`).join(''):'<p style="color:var(--muted)">No questions match.</p>';
+}
+function filterPYQ(){
+  const ch=document.getElementById('pyqChapter').value;
+  const yr=document.getElementById('pyqYear').value;
+  const mk=document.getElementById('pyqMarks').value;
+  let list=allPYQ();
+  if(ch!=='all') list=list.filter(p=>p.chId==ch);
+  if(yr!=='all') list=list.filter(p=>p.y==yr);
+  if(mk!=='all') list=list.filter(p=>p.m==mk);
+  renderPYQList(list);
+}
+
+// ── SYLLABUS ───────────────────────────
+function renderSyllabus(){
+  const units=[
+    {name:"Unit I: Computational Thinking & Programming",marks:40,chs:[1,2,3,4,5],
+     topics:["OOP: classes, objects, inheritance, polymorphism","Exception handling: try-except-finally-raise","File handling: text, binary (pickle), CSV","Stack: push, pop, applications, infix-postfix","Queue: enqueue, dequeue, circular, deque"]},
+    {name:"Unit II: Computer Networks",marks:15,chs:[6],
+     topics:["Network types & topologies","Network devices (hub, switch, router, modem)","OSI model & TCP/IP model","Protocols: HTTP, FTP, SMTP, DNS, DHCP","Network security & firewall"]},
+    {name:"Unit III: Database Management",marks:15,chs:[7,8,9],
+     topics:["Database concepts, keys, ACID","SQL: DDL, DML, DQL commands","Aggregate functions, joins, subqueries","SQL functions: string, numeric, date","Python-MySQL interface with mysql.connector"]},
+  ];
+  document.getElementById('syllabusList').innerHTML=units.map(u=>`
+    <div class="syllabus-unit">
+      <h3>${u.name} — <span style="color:var(--accent)">${u.marks} marks</span></h3>
+      <div style="margin:8px 0;">
+        ${u.chs.map(id=>{
+          const ch=chapters.find(c=>c.id===id);
+          return ch?`<span class="ch-pill" onclick="openChapter(${id})">Ch ${id}: ${ch.title}</span>`:'';
+        }).join('')}
+      </div>
+      <ul style="padding-left:16px;margin-top:8px;">
+        ${u.topics.map(t=>`<li style="font-size:0.85rem;color:var(--muted);margin:3px 0;">${t}</li>`).join('')}
+      </ul>
+    </div>`).join('');
+}
+
+// ── NAVIGATION ─────────────────────────
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  const map={home:0,flashcards:1,mnemonics:2,pyq:3,syllabus:4};
+  if(map[id]>=0) document.querySelectorAll('.nav-tab')[map[id]].classList.add('active');
+}
+
+init();
+</script>
+</body>
+</html>
